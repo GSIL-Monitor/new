@@ -1,0 +1,17 @@
+<view hidden='{{hidden}}'>
+  <!-- <view>
+    <image src='/source/images/login.png' style="width:100%;"></image>
+  </view>  -->
+  <form bindsubmit="formSubmit">
+    <view>
+      <input name="tenant" class="input" type='text' placeholder='当前租户' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm"/>
+    </view>
+    <view>
+      <input name="account" class="input" type='text' placeholder='账号' focus='{{focus==1}}' confirm-hold='true' data-index='2' confirm-type='next' bindconfirm="bindconfirm"/>
+    </view>
+    <view>
+      <input name="password" class="input" type='text' placeholder='密码' focus='{{focus==2}}' password='true'/>
+    </view>
+    <button form-type='submit'>登陆</button>
+  </form>
+</view>

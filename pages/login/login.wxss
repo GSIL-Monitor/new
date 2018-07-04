@@ -1,0 +1,4 @@
+/* pages/login/login.wxss */
+.input {
+  border-bottom:1px solid purple;
+}
