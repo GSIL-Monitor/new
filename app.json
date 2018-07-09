@@ -7,7 +7,7 @@
     "pages/user/user"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "智慧门店小帮手",
     "navigationBarTextStyle": "black"

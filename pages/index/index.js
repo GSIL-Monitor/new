@@ -7,13 +7,31 @@ Page({
     motto: 'Hello World',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    webSrc:'https://www.baidu.com'
   },
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
     })
+  },
+  onShow(){
+    setTimeout(() => {
+      this.setData({
+        webSrc: 'localhost:3030'
+      })
+    }, 1000)
+    setTimeout(() => {
+      this.setData({
+        webSrc: ''
+      })
+    }, 5000)
+    setTimeout(() => {
+      this.setData({
+        webSrc: 'localhost:3030'
+      })
+    }, 10000)
   },
   onLoad: function () {
     if (app.globalData.userInfo) {
@@ -43,6 +61,14 @@ Page({
       })
     }
   },
+  onPullDownRefresh: function () {
+    // console.log('pulldown')
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '自定义转发标题'
+    }
+  },
   getUserInfo: function(e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -50,6 +76,9 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  msg(data){
+    console.log(data)
   }
 })
 

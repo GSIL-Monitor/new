@@ -1,17 +1,17 @@
 <view hidden='{{hidden}}'>
-  <!-- <view>
-    <image src='/source/images/login.png' style="width:100%;"></image>
-  </view>  -->
+  <view>
+    <image src='/source/images/login.png' style="width:100%;height:53vw;"></image>
+  </view>
   <form bindsubmit="formSubmit">
-    <view>
-      <input name="tenant" class="input" type='text' placeholder='当前租户' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm"/>
+    <view class="auto w9 m2">
+      <input name="tenant" class="input {{nowFoucs==1?'focus':''}}" type='text' placeholder='当前租户' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
     </view>
-    <view>
-      <input name="account" class="input" type='text' placeholder='账号' focus='{{focus==1}}' confirm-hold='true' data-index='2' confirm-type='next' bindconfirm="bindconfirm"/>
+    <view class="auto w9 m2">
+      <input name="account" class="input {{nowFoucs==2?'focus':''}}" type='text' placeholder='账号' focus='{{focus==1}}' confirm-hold='true' data-index='2' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
     </view>
-    <view>
-      <input name="password" class="input" type='text' placeholder='密码' focus='{{focus==2}}' password='true'/>
+    <view class="auto w9 m2">
+      <input name="password" class="input {{nowFoucs==3?'focus':''}}" type='text' placeholder='密码' focus='{{focus==2}}' data-index='3' password bindfocus="bindfocus" />
     </view>
-    <button form-type='submit'>登陆</button>
+    <button form-type='submit' class='w9 auto m2'>登陆</button>
   </form>
 </view>

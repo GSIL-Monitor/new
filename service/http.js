@@ -28,7 +28,6 @@ function req(param){
     method: param.method || 'GET',
     header: {},
     success: function (res) {
-      console.log(res,1111)
       if (res.statusCode == 200) {
         param.success(res.data.result);
       }else if(res.statusCode == 401){
@@ -53,7 +52,6 @@ function req(param){
       }
     },
     fail: function (res) {
-      console.log(res,222)
       wx.showToast({
         title: res.errMsg,
         icon: 'none',

@@ -1,1 +1,12 @@
 /* pages/user/user.wxss */
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.userinfo-nickname {
+  color: #aaa;
+  text-align: center;
+}

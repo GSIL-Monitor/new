@@ -3,7 +3,8 @@ Page({
 
   data: {
     focus:0,
-    hidden:true
+    hidden:true,
+    nowFoucs:0
   },
   formSubmit(e){
     if (!(e.detail.value.tenant&&e.detail.value.account&&e.detail.value.password)){
@@ -55,9 +56,14 @@ Page({
     })
   },
   bindconfirm(e){//下一个
-    console.log(e.target.dataset.index)
     this.setData({
       'focus': e.target.dataset.index
+    })
+  },
+  bindfocus(e){
+    console.log('e', e.target.dataset.index)
+    this.setData({
+      nowFoucs: e.target.dataset.index
     })
   },
   /**

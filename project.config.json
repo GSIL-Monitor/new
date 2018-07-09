@@ -2,14 +2,14 @@
 	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": [
-      {
-        "type": "suffix",
-        "value": ".md"
-      }
-    ]
+			{
+				"type": "suffix",
+				"value": ".md"
+			}
+		]
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"postcss": true,
 		"minified": true,

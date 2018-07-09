@@ -1,1 +1,12 @@
-<button bindtap="Cancellation">注销</button>
+<view class="userinfo-avatar m1">
+  <open-data type="userAvatarUrl"></open-data>
+</view>
+<view class="userinfo-nickname m1">
+  <open-data type="userNickName"></open-data>
+</view>
+<view class='w8 auto m1'>
+  <button type="warn" bindtap="Cancellation">注销</button>
+</view>
+<view class='w8 auto m1'>
+  <button type="primary" open-type='feedback'>意见反馈</button>
+</view>

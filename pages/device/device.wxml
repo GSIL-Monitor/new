@@ -4,15 +4,19 @@
   </view>
   <view class="table">
       <view class="tr">
-          <view class="th">名称</view>
-          <view class="th">运行状态</view>
+          <view class="th grow">名称</view>
+          <view class="th w2">状态</view>
       </view>
       <view class="tr" wx:for="{{deviceList}}">
           <!-- <view class="td">{{index+1}}</view> -->
-          <view class="td">{{item.name}}</view>
-          <view class="td" style="width:50%" wx:if="{{item.status==0}}">OFF</view>
-          <view class="td" wx:if="{{item.status==1}}">ON</view>
+          <view class="td grow">{{item.name}}</view>
+          <view class="td w2" wx:if="{{item.status==1}}">
+            <icon type="success"></icon>
+          </view>
+          <view class="td w2" wx:if="{{item.status==0}}">
+            <icon type="clear"></icon>
+          </view>
       </view>
   </view>
-  <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length==totalCount}}'></infinite-scroll>
+  <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
 </view>
