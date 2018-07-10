@@ -8,7 +8,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    webSrc:'https://www.baidu.com'
+    webSrc:'https://www.baidu.com',
   },
   //事件处理函数
   bindViewTap: function() {

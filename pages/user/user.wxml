@@ -7,6 +7,6 @@
 <view class='w8 auto m1'>
   <button type="warn" bindtap="Cancellation">注销</button>
 </view>
-<view class='w8 auto m1'>
+<!-- <view class='w8 auto m1'>
   <button type="primary" open-type='feedback'>意见反馈</button>
-</view>
+</view> -->

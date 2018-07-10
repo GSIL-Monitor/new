@@ -16,11 +16,14 @@ Page({
     //   url: '/pages/index/index'
     // })
   },
+  tap(){
+    console.log(222)
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(1)
+
   },
 
   /**
@@ -34,7 +37,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log(2)
+    
   },
 
   /**

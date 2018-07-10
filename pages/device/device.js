@@ -8,7 +8,7 @@ Page({
     deviceList: [],
     totalCount: '',
     page: 0,
-    MaxResultCount: 10
+    MaxResultCount: 12
   },
   getDeviceList(cb) {
     getApp().promise(getApp().req)({

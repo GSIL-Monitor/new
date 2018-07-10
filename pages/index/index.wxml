@@ -12,4 +12,6 @@
   <view>hello</view>
   <text>hello</text>
 </view>
-<web-view wx:if="{{webSrc}}" src="{{webSrc}}" bindmessage="msg"></web-view>
+
+<!-- <web-view wx:if="{{webSrc}}" src="{{webSrc}}" bindmessage="msg"></web-view> -->
+<!-- {{...data}} -->
