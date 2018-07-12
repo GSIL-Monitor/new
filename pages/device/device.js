@@ -12,7 +12,7 @@ Page({
   },
   getDeviceList(cb) {
     getApp().promise(getApp().req)({
-      url: '/Device/GetDevices',
+      url: '/s/api/services/app/Device/GetDevices',
       data: {
         // Status: 0,
         // Sorting: 'name',
@@ -26,6 +26,13 @@ Page({
         totalCount: res.totalCount
       })
       wx.stopPullDownRefresh();
+    })
+  },
+  goDevice(e){
+    wx.setStorageSync('deviceDetail', e.currentTarget.dataset.device);
+    console.log(e.currentTarget.dataset.device)
+    wx.navigateTo({
+      url: '/pages/device/deviceDetail/deviceDetail',
     })
   },
 

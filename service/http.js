@@ -1,10 +1,9 @@
 const server = {
-  s_app: 'https://s.api.troncell.com/api/services/app',
-  s_api:'https://s.api.troncell.com/api/',
-
+  all_api: 'https://all.api.troncell.com',
+  s_api:'https://s.api.troncell.com/api',
+  test:''
 }
 const Promise = require('../utils/es6-promise')
-
 
 function httpsPromisify(fn) {
   return function (obj = {}) {
@@ -20,10 +19,9 @@ function httpsPromisify(fn) {
   }
 }
 
-
 function req(param){
-  var request = {
-    url: server[param.server ? param.server : 's_app'] + param.url,
+  let request = {
+    url: server[param.server ? param.server : 'all_api'] + param.url,
     data: param.data,
     method: param.method || 'GET',
     header: {},

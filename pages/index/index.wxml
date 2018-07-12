@@ -7,11 +7,19 @@
     </block>
   </view>
 </view> -->
-
-<view class='flex'>
-  <view>hello</view>
-  <text>hello</text>
+<view>
+  热销产品
+</view>
+<view wx:for="{{topSku}}" wx:key="*this.SkuId">
+  <view>
+    {{item.SkuId}}
+    {{item.TotalPayment}}
+  </view>
 </view>
 
-<!-- <web-view wx:if="{{webSrc}}" src="{{webSrc}}" bindmessage="msg"></web-view> -->
-<!-- {{...data}} -->
+<view>
+  统计数据
+</view>
+<view wx:for="{{statisticalData}}" wx:key="*this.name">
+  <view>{{item.name}} : {{item.id}}</view>
+</view>

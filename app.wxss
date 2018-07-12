@@ -48,6 +48,30 @@
   margin-top:20rpx;
   margin-bottom: 20rpx;
 }
+.m3{
+  margin-top:30rpx;
+  margin-bottom: 30rpx;
+}
+.m4{
+  margin-top:40rpx;
+  margin-bottom: 40rpx;
+}
+.m5{
+  margin-top:50rpx;
+  margin-bottom: 50rpx;
+}
+.m6{
+  margin-top:60rpx;
+  margin-bottom: 60rpx;
+}
+.m7{
+  margin-top:70rpx;
+  margin-bottom: 70rpx;
+}
+.m8{
+  margin-top:80rpx;
+  margin-bottom: 80rpx;
+}
 
 
 

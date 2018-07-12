@@ -18,16 +18,14 @@ Page({
 
     getApp().promise(getApp().req)({
       method: 'POST',
-      url: '/Account/IsTenantAvailable',
+      url: '/s/api/services/app/Account/IsTenantAvailable',
       data: { tenancyName: e.detail.value.tenant }
     }).then(res=>{
       if(res.state==1){
         wx.setStorageSync('tenantId', res.tenantId);
-        console.log(266)
         getApp().promise(getApp().req)({
           method: 'POST',
-          server: 's_api',
-          url: '/TokenAuth/Authenticate',
+          url: '/s/api/TokenAuth/Authenticate',
           data: { 
             password: e.detail.value.password, 
             userNameOrEmailAddress: e.detail.value.account,

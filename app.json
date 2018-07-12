@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/index/index",
     "pages/device/device",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/device/deviceDetail/deviceDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",
