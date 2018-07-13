@@ -1,9 +1,11 @@
 <view class='flex tab center'>
-  <view wx:if="{{Devices}}">设备</view>
-  <view wx:if="{{Ads}}">广告</view>
+  <block wx:for="{{permissions}}" wx:key="*this.name">
+    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab">
+      {{item.name}}
+    </view>
+  </block>
 </view>
-{{nowTab}}
-<view class="container">
+<view class="container" wx:if="{{nowTab=='Devices'}}">
   <view>
     设备总数：{{totalCount_d}}
   </view>
