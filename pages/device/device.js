@@ -5,10 +5,23 @@ Page({
    * 页面的初始数据
    */
   data: {
+    permissions:{
+      Device:3,
+      Ads:1,
+      Devices:2
+    },
+    get nowTab(){
+      for (var i of [1,2,3]){
+        console.log(i)
+      }
+      return this.MaxResultCount_d
+    },
+    Ads:false,
+    Devices:false,
     deviceList: [],
-    totalCount: '',
-    page: 0,
-    MaxResultCount: 12
+    totalCount_d: '',
+    page_d: 0,
+    MaxResultCount_d: 12
   },
   getDeviceList(cb) {
     getApp().promise(getApp().req)({
@@ -16,14 +29,14 @@ Page({
       data: {
         // Status: 0,
         // Sorting: 'name',
-        MaxResultCount: this.data.MaxResultCount,
-        SkipCount: this.data.page * this.data.MaxResultCount
+        MaxResultCount: this.data.MaxResultCount_d,
+        SkipCount: this.data.page_d * this.data.MaxResultCount_d
       }
     }).then(res => {
       console.log(res);
       this.setData({
         deviceList: this.data.deviceList.concat(res.items),
-        totalCount: res.totalCount
+        totalCount_d: res.totalCount
       })
       wx.stopPullDownRefresh();
     })
@@ -41,6 +54,16 @@ Page({
    */
   onLoad: function(options) {
     this.getDeviceList();
+    
+    getApp().promise(getApp().req)({
+      url: '/s/AbpUserConfiguration/GetAll'
+    }).then(res => {
+      console.log(res)
+      this.setData({
+        Ads: res.auth.grantedPermissions['Pages.Tenant.Ads']=="true"?true:false,
+        Devices: res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true" ? true : false
+      })
+    })
   },
 
   /**
@@ -77,9 +100,9 @@ Page({
   onPullDownRefresh: function() {
     // console.log('pulldown')
     this.setData({
-      totalCount: '',
+      totalCount_d: '',
       deviceList: [],
-      page:0
+      page_d:0
     })
     this.getDeviceList();
   },
@@ -88,8 +111,8 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    if (this.data.deviceList.length < this.data.totalCount) {
-      this.data.page++;
+    if (this.data.deviceList.length < this.data.totalCount_d) {
+      this.data.page_d++;
       this.getDeviceList();
     }
   },

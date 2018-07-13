@@ -1,6 +1,11 @@
+<view class='flex tab center'>
+  <view wx:if="{{Devices}}">设备</view>
+  <view wx:if="{{Ads}}">广告</view>
+</view>
+{{nowTab}}
 <view class="container">
   <view>
-    设备总数：{{totalCount}}
+    设备总数：{{totalCount_d}}
   </view>
   <view class="table">
       <view class="tr">
@@ -17,5 +22,5 @@
           </view>
       </view>
   </view>
-  <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
+  <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length===totalCount_d}}'></infinite-scroll>
 </view>

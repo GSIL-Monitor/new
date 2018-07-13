@@ -1,1 +1,7 @@
 /* pages/deviceManagement/deviceManagement.wxss */
+.tab{
+  justify-content:center
+}
+.tab>view{
+  flex-basis: 20%;
+}

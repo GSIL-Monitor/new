@@ -72,7 +72,9 @@
   margin-top:80rpx;
   margin-bottom: 80rpx;
 }
-
+.center{
+  text-align: center;
+}
 
 
 /* table */
