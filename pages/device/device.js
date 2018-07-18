@@ -26,13 +26,35 @@ Page({
     deviceList: [],
     totalCount_d: '',
     page_d: 0,
-    MaxResultCount_d: 12
+    MaxResultCount_d: 12,
     //广告
+    adList: [],
+    totalCount_a: '',
+    page_a: 0,
+    MaxResultCount_a: 12,
+    //红包
+    couponList: [],
+    totalCount_c: '',
+    page_c: 0,
+    MaxResultCount_c: 12
   },
   changeTab(e) {
     this.setData({
       nowTab: e.currentTarget.dataset.tab
     })
+    this.goGetList(this.data.nowTab);
+  },
+  goGetList(e) {//第一次获取数据
+    switch (e) {
+      case 'Devices':
+        if (!this.data.totalCount_d) this.getDeviceList();
+        break;
+      case 'Ads':
+        if (!this.data.totalCount_a) this.getAdList();
+        break;
+      default:
+        console.log('没有任何权限,请联系管理员')
+    }
   },
   //设备
   getDeviceList(cb) {
@@ -66,29 +88,35 @@ Page({
       data: {
         // Status: 0,
         // Sorting: 'name',
-        // MaxResultCount: this.data.MaxResultCount_d,
-        // SkipCount: this.data.page_d * this.data.MaxResultCount_d
+        MaxResultCount: this.data.MaxResultCount_a,
+        SkipCount: this.data.page_a * this.data.MaxResultCount_a
       }
     }).then(res => {
       console.log(res);
+      this.setData({
+        adList: this.data.adList.concat(res.items),
+        totalCount_a: res.totalCount
+      })
       wx.stopPullDownRefresh();
     })
+  },
+  goAd(e) {
+    console.log(e);
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    this.getDeviceList();
-
     getApp().promise(getApp().req)({
       url: '/s/AbpUserConfiguration/GetAll'
     }).then(res => {
-      console.log(res)
+      console.log(res);
       this.setData({
         'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
         'permissions.Devices.permit': res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true" ? true : false,
         'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
       })
+      this.goGetList(this.data.nowTab);
     })
   },
 
@@ -127,18 +155,29 @@ Page({
     this.setData({
       totalCount_d: '',
       deviceList: [],
-      page_d: 0
+      page_d: 0,
+      totalCount_a: '',
+      adList: [],
+      page_a: 0
     })
-    this.getDeviceList();
+    this.goGetList(this.data.nowTab);
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    if (this.data.deviceList.length < this.data.totalCount_d) {
-      this.data.page_d++;
-      this.getDeviceList();
+    switch (this.data.nowTab) {
+      case 'Devices':
+        if (this.data.deviceList.length < this.data.totalCount_d) {
+          this.data.page_d++;
+          this.getDeviceList();
+        }
+      case 'Ads':
+        if (this.data.adList.length < this.data.totalCount_a) {
+          this.data.page_a++;
+          this.getAdList();
+        }
     }
   },
 

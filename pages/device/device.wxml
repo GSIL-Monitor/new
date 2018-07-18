@@ -1,6 +1,6 @@
 <view class='flex tab center'>
   <block wx:for="{{permissions}}" wx:key="*this.name">
-    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab" style="color:{{nowTab==item.self?'red':'#ccc'}}">
+    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
       {{item.name}}
     </view>
   </block>
@@ -25,4 +25,26 @@
     </view>
   </view>
   <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length===totalCount_d}}'></infinite-scroll>
+</view>
+
+<view class="container" wx:if="{{nowTab=='Ads'}}">
+  <view>
+    广告总数：{{totalCount_a}}
+  </view>
+  <view class="table">
+    <view class="tr">
+      <view class="th grow">名称</view>
+      <view class="th w2">状态</view>
+    </view>
+    <view class="tr" wx:for="{{adList}}" wx:key="*this.id" bind:tap="goAd" data-device="{{item}}">
+      <view class="td grow">{{item.name}}</view>
+      <view class="td w2" wx:if="{{item.auditStatus==1}}">
+        <icon type="success"></icon>
+      </view>
+      <view class="td w2" wx:if="{{item.auditStatus==0}}">
+        <icon type="clear"></icon>
+      </view>
+    </view>
+  </view>
+  <infinite-scroll bind:getList="alert" isCompleted='{{adList.length===totalCount_a}}'></infinite-scroll>
 </view>
