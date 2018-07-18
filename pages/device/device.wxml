@@ -1,6 +1,6 @@
 <view class='flex tab center'>
   <block wx:for="{{permissions}}" wx:key="*this.name">
-    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab">
+    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab" style="color:{{nowTab==item.self?'red':'#ccc'}}">
       {{item.name}}
     </view>
   </block>
@@ -10,19 +10,19 @@
     设备总数：{{totalCount_d}}
   </view>
   <view class="table">
-      <view class="tr">
-          <view class="th grow">名称</view>
-          <view class="th w2">状态</view>
+    <view class="tr">
+      <view class="th grow">名称</view>
+      <view class="th w2">状态</view>
+    </view>
+    <view class="tr" wx:for="{{deviceList}}" wx:key="*this.id" bind:tap="goDevice" data-device="{{item}}">
+      <view class="td grow">{{item.name}}</view>
+      <view class="td w2" wx:if="{{item.status==1}}">
+        <icon type="success"></icon>
       </view>
-      <view class="tr" wx:for="{{deviceList}}" wx:key="*this.id" bind:tap="goDevice" data-device="{{item}}">
-          <view class="td grow">{{item.name}}</view>
-          <view class="td w2" wx:if="{{item.status==1}}">
-            <icon type="success"></icon>
-          </view>
-          <view class="td w2" wx:if="{{item.status==0}}">
-            <icon type="clear"></icon>
-          </view>
+      <view class="td w2" wx:if="{{item.status==0}}">
+        <icon type="clear"></icon>
       </view>
+    </view>
   </view>
   <infinite-scroll bind:getList="alert" isCompleted='{{deviceList.length===totalCount_d}}'></infinite-scroll>
 </view>

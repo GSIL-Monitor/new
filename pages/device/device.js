@@ -1,11 +1,24 @@
 Page({
   data: {
-    permissions:{
-      Ads:{name:'广告',permit:false,self:'Ads'},
-      Devices: { name: '设备', permit: false,self:'Devices' }
+    permissions: {
+      Ads: {
+        name: '广告',
+        permit: false,
+        self: 'Ads'
+      },
+      Devices: {
+        name: '设备',
+        permit: false,
+        self: 'Devices'
+      },
+      Coupons: {
+        name: '红包',
+        permit: false,
+        self: 'Coupons'
+      }
     },
-    get nowTab(){
-      for (var i in this.permissions){
+    get nowTab() {
+      for (var i in this.permissions) {
         if (this.permissions[i]) return i
       }
     },
@@ -16,7 +29,7 @@ Page({
     MaxResultCount_d: 12
     //广告
   },
-  changeTab(e){
+  changeTab(e) {
     this.setData({
       nowTab: e.currentTarget.dataset.tab
     })
@@ -39,7 +52,7 @@ Page({
       wx.stopPullDownRefresh();
     })
   },
-  goDevice(e){
+  goDevice(e) {
     wx.setStorageSync('deviceDetail', e.currentTarget.dataset.device);
     console.log(e.currentTarget.dataset.device)
     wx.navigateTo({
@@ -66,14 +79,15 @@ Page({
    */
   onLoad: function(options) {
     this.getDeviceList();
-    
+
     getApp().promise(getApp().req)({
       url: '/s/AbpUserConfiguration/GetAll'
     }).then(res => {
       console.log(res)
       this.setData({
-        'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads']=="true"?true:false,
-        'permissions.Devices.permit': res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true" ? true : false
+        'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
+        'permissions.Devices.permit': res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true" ? true : false,
+        'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
       })
     })
   },
@@ -113,7 +127,7 @@ Page({
     this.setData({
       totalCount_d: '',
       deviceList: [],
-      page_d:0
+      page_d: 0
     })
     this.getDeviceList();
   },

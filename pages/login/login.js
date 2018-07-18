@@ -59,7 +59,6 @@ Page({
     })
   },
   bindfocus(e){
-    console.log('e', e.target.dataset.index)
     this.setData({
       nowFoucs: e.target.dataset.index
     })
