@@ -1,43 +1,102 @@
-//index.js
 //获取应用实例
 const app = getApp()
+const wxCharts = require('../../utils/wxcharts.js')
+var columnChart = null;
+
 
 Page({
   data: {
-    // motto: 'Hello World',
-    // userInfo: {},
-    // hasUserInfo: false,
     // canIUse: wx.canIUse('button.open-type.getUserInfo'),
     topSku: []
   },
-  //事件处理函数
-  bindViewTap: function () {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   onShow() {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       method: 'POST',
       url: '/o/api/services/app/Report/TopSkus',
       data: {
-        "startTime": getApp().getTime(0, 0, 0, -7),
-        "endTime": getApp().getTime(),
+        "startTime": app.getTime(0, 0, 0, -14),
+        "endTime": app.getTime(),
         "top": 3
       }
     }).then(res => {
+      console.log(res)
       this.setData({
         topSku: JSON.parse(res)
       })
     })
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/api/services/app/Report/GetCountReport',
     }).then(res => {
-      for (var i of res) { i.name = getApp().translate(i.name) }
+      for (var i of res) {
+        i.name = app.translate(i.name)
+      }
       this.setData({
         statisticalData: res
       })
-    })
+    }),
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/d/api/services/app/Report/GetBehaviorChartReport',
+        data: {
+          actions:"click,playvideo,enter",
+          categories:null,
+          endTime:"2018-07-20T23:59:59.999Z",
+          startTime:"2018-06-20T00:00:00.000Z",
+          type:"dd",
+          organizationUnitIds:[30552]
+        }
+      }).then(res => {
+        console.log(res)
+      })
+  },
+  onReady: function (e) {
+    var windowWidth = 320;
+    try {
+      var res = wx.getSystemInfoSync();
+      windowWidth = res.windowWidth;
+    } catch (e) {
+      console.error('getSystemInfoSync failed!');
+    }
+
+    columnChart = new wxCharts({
+      canvasId: 'myCanvas',
+      type: 'line', //饼pie,圆ring,线line,柱column,区域area,雷达radar
+      animation: false,
+      categories: ['2013', '2014', '2015', '2016', '2017'],
+      series: [{
+        name: '订单量',
+        color: '#188df0',
+        data: [23, 28, 35, 54, 95],
+        format: function (val, name) {
+          return val.toFixed(2) + '万';
+        }
+      }, {
+        name: '人数',
+        color: '#aaa',
+        data: [2, 3, 4, 5, 9],
+        format: function (val, name) {
+          return val + '人';
+        }
+      }],
+      yAxis: {
+        format: function (val) {
+          return val + '万';
+        },
+        min: 0
+      },
+      xAxis: {
+        disableGrid: false,
+        type: 'calibration'
+      },
+      extra: {
+        column: {
+          width: 15,
+        },
+        legendTextColor: '#000000'
+      },
+      width: windowWidth,
+      height: 180,
+    });
   },
   onPullDownRefresh: function () {
     // console.log('pulldown')
@@ -84,5 +143,3 @@ Page({
   //   }
   // }
 })
-
-

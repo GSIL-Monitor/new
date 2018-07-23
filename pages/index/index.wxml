@@ -1,19 +1,9 @@
-<!-- <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-</view> -->
 <view>
   热销产品
 </view>
 <view wx:for="{{topSku}}" wx:key="*this.SkuId">
   <view>
-    {{item.SkuId}}
-    {{item.TotalPayment}}
+    {{item.SkuId}} {{item.TotalPayment}}
   </view>
 </view>
 
@@ -22,4 +12,9 @@
 </view>
 <view wx:for="{{statisticalData}}" wx:key="*this.name">
   <view>{{item.name}} : {{item.id}}</view>
+</view>
+
+
+<view>
+  <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>
 </view>

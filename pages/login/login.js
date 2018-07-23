@@ -1,4 +1,4 @@
-
+const app = getApp()
 Page({
 
   data: {
@@ -16,14 +16,14 @@ Page({
       return
     }
 
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       method: 'POST',
       url: '/s/api/services/app/Account/IsTenantAvailable',
       data: { tenancyName: e.detail.value.tenant }
     }).then(res=>{
       if(res.state==1){
         wx.setStorageSync('tenantId', res.tenantId);
-        getApp().promise(getApp().req)({
+        app.promise(app.req)({
           method: 'POST',
           url: '/s/api/TokenAuth/Authenticate',
           data: { 

@@ -20,6 +20,7 @@ Page({
    */
   onReady: function () {
     this.setData({ deviceDetail: wx.getStorageSync('deviceDetail') })
+    console.log(this.data.deviceDetail)
   },
 
   /**

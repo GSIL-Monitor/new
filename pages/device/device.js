@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   data: {
     permissions: {
@@ -75,7 +76,7 @@ Page({
   },
   //设备
   getDeviceList(cb) {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/api/services/app/Device/GetDevices',
       data: {
         // Status: 0,
@@ -103,7 +104,7 @@ Page({
   },
   //广告
   getAdList(cb) {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/api/services/app/Ad/GetAds',
       data: {
         // Status: 0,
@@ -128,7 +129,7 @@ Page({
   },
   //红包
   getCouponList(cb) {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/api/services/app/Coupon/GetCoupons',
       data: {
         // Status: 0,
@@ -153,7 +154,7 @@ Page({
   },
   //商品
   getProductList(cb) {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/api/services/app/Product/GetProducts',
       data: {
         // Status: 0,
@@ -180,7 +181,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    getApp().promise(getApp().req)({
+    app.promise(app.req)({
       url: '/s/AbpUserConfiguration/GetAll'
     }).then(res => {
       console.log(res);
@@ -227,7 +228,7 @@ Page({
    */
   onPullDownRefresh: function() {
     this.setData({
-      stopReachBottom:false,
+      stopReachBottom: false,
       totalCount_d: '',
       deviceList: [],
       page_d: 0,

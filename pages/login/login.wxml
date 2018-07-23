@@ -1,6 +1,6 @@
 <view hidden='{{hidden}}'>
    <view>
-    <image src='/source/images/login.png' style="width:100%;height:53vw;"></image>
+     <image src='/source/images/login.png' style="width:100%;height:53vw;"></image> 
   </view> 
   <form bindsubmit="formSubmit">
     <view class="auto w9 m6">
