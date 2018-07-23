@@ -1,34 +1,47 @@
 const app = getApp()
 Page({
   data: {
+    currentIndex: 0,
     deviceDetail: {},
     permissions: {
+      Detail: {
+        name: '详情',
+        permit: true,
+        self: 'Detail',
+        index:0
+      },
       Ads: {
         name: '广告',
-        permit: true,
-        self: 'Ads'
+        permit: false,
+        self: 'Ads',
+        index:1
       },
       Apps: {
         name: '应用',
-        permit: true,
-        self: 'Apps'
+        permit: false,
+        self: 'Apps',
+        index:2
       },
       Products: {
         name: '商品',
-        permit: true,
-        self: 'Products'
+        permit: false,
+        self: 'Products',
+        index:3
       },
       Coupons: {
         name: '红包',
-        permit: true,
-        self: 'Coupons'
+        permit: false,
+        self: 'Coupons',
+        index:4
+      },
+      Control: {
+        name: '控制',
+        permit: false,
+        self: 'Control',
+        index:5
       }
     },
-    get nowTab() {
-      for (var i in this.permissions) {
-        if (this.permissions[i]) return i
-      }
-    },
+    nowTab:'Detail',
     stopReachBottom: false,
     //应用
     appList: [],
@@ -52,13 +65,24 @@ Page({
     MaxResultCount_p: 12
   },
   changeTab(e) {
+    var i = e.currentTarget.dataset.index;
+    var newIndex = 0;
+    if (i == 3) {
+      newIndex = 1
+    } else if (i > 3) {
+      newIndex = 2
+    }
     this.setData({
-      nowTab: e.currentTarget.dataset.tab
+      nowTab: e.currentTarget.dataset.tab,
+      currentIndex: newIndex
     })
     this.goGetList(this.data.nowTab);
   },
   goGetList(e) { //第一次获取数据
     switch (e) {
+      case 'Detail':
+        console.log('显示详情');
+        break;
       case 'Apps':
         if (!this.data.totalCount_ap) this.getAppList();
         break;
@@ -100,7 +124,7 @@ Page({
   //广告
   getAdList(cb) {
     app.promise(app.req)({
-      url:'/s/api/services/app/Device/GetAdsByDeviceId',
+      url: '/s/api/services/app/Device/GetAdsByDeviceId',
       data: {
         DeviceId: this.data.deviceDetail.id,
         AuditStatus: 'Online',
@@ -170,19 +194,19 @@ Page({
     this.setData({
       deviceDetail: wx.getStorageSync('deviceDetail')
     })
-    console.log(this.data.deviceDetail.id);
-    // app.promise(app.req)({
-    //   url: '/s/AbpUserConfiguration/GetAll'
-    // }).then(res => {
-    //   console.log(res);
-    //   this.setData({
-    //     'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
-    //     'permissions.Apps.permit': res.auth.grantedPermissions['Pages.Tenant.Apps'] == "true" ? true : false,
-    //     'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
-    //     'permissions.Products.permit': res.auth.grantedPermissions['Pages.Tenant.Products'] == "true" ? true : false,
-    //   })
-    //   this.goGetList(this.data.nowTab);
-    // })
+    app.promise(app.req)({
+      url: '/s/AbpUserConfiguration/GetAll'
+    }).then(res => {
+      console.log(res);
+      this.setData({
+        'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
+        'permissions.Apps.permit': res.auth.grantedPermissions['Pages.Softwares'] == "true" ? true : false,
+        'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
+        'permissions.Products.permit': res.auth.grantedPermissions['Pages.Tenant.Products'] == "true" ? true : false,
+        'permissions.Control.permit': res.auth.grantedPermissions['Pages.Tenant.Devices.Control'] == "true" ? true : false,
+      })
+      this.goGetList(this.data.nowTab);
+    })
     this.goGetList(this.data.nowTab);
   },
 

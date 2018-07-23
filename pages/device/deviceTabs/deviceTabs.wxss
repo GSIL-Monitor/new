@@ -13,3 +13,6 @@
   color:#ccc;
   border:1px solid transparent;
 }
+swiper{
+  height:50px !important;
+}

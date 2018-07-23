@@ -12,6 +12,9 @@
 .flex{
   display: flex;
 }
+.flex-wrap{
+  flex-wrap: wrap;
+}
 .w2{
   width:20%;
 }
@@ -35,6 +38,9 @@
 }
 .w9{
   width:90%;
+}
+.w10{
+  width:100%;
 }
 .auto{
   margin-left:auto;
