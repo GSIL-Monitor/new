@@ -31,9 +31,7 @@ Page({
   },
   goDevice(e) {
     wx.setStorageSync('deviceDetail', e.currentTarget.dataset.device);
-    console.log(e.currentTarget.dataset.device)
     wx.navigateTo({
-      // url: '/pages/device/deviceDetail/deviceDetail',
       url: '/pages/device/deviceTabs/deviceTabs',
     })
   },

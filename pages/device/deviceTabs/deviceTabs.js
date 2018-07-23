@@ -1,6 +1,7 @@
 const app = getApp()
 Page({
   data: {
+    deviceDetail: {},
     permissions: {
       Ads: {
         name: '广告',
@@ -77,10 +78,10 @@ Page({
   //应用
   getAppList(cb) {
     app.promise(app.req)({
-      url: '/s/api/services/app/Device/GetDevices',
+      url: '/s/api/services/app/Device/GetSoftwaresByDeviceId',
       data: {
-        // Status: 0,
-        // Sorting: 'name',
+        DeviceId: this.data.deviceDetail.id,
+        AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_ap,
         SkipCount: this.data.page_ap * this.data.MaxResultCount_ap
       }
@@ -99,10 +100,10 @@ Page({
   //广告
   getAdList(cb) {
     app.promise(app.req)({
-      url: '/s/api/services/app/Ad/GetAds',
+      url:'/s/api/services/app/Device/GetAdsByDeviceId',
       data: {
-        // Status: 0,
-        // Sorting: 'name',
+        DeviceId: this.data.deviceDetail.id,
+        AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_ad,
         SkipCount: this.data.page_ad * this.data.MaxResultCount_ad
       }
@@ -121,10 +122,10 @@ Page({
   //红包
   getCouponList(cb) {
     app.promise(app.req)({
-      url: '/s/api/services/app/Coupon/GetCoupons',
+      url: '/s/api/services/app/Device/GetCouponsByDeviceId',
       data: {
-        // Status: 0,
-        // Sorting: 'name',
+        DeviceId: this.data.deviceDetail.id,
+        AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_c,
         SkipCount: this.data.page_c * this.data.MaxResultCount_c
       }
@@ -143,10 +144,10 @@ Page({
   //商品
   getProductList(cb) {
     app.promise(app.req)({
-      url: '/s/api/services/app/Product/GetProducts',
+      url: '/s/api/services/app/Device/GetProductsByDeviceId',
       data: {
-        // Status: 0,
-        // Sorting: 'name',
+        DeviceId: this.data.deviceDetail.id,
+        AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_p,
         SkipCount: this.data.page_p * this.data.MaxResultCount_p
       }
@@ -165,7 +166,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
+    this.setData({
+      deviceDetail: wx.getStorageSync('deviceDetail')
+    })
+    console.log(this.data.deviceDetail.id);
     // app.promise(app.req)({
     //   url: '/s/AbpUserConfiguration/GetAll'
     // }).then(res => {
@@ -184,36 +189,35 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-    this.setData({ deviceDetail: wx.getStorageSync('deviceDetail') })
-    console.log(this.data.deviceDetail)
+  onReady: function() {
+
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
     wx.removeStorageSync('deviceDetail')
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.setData({
       stopReachBottom: false,
       totalCount_ap: '',
@@ -235,7 +239,7 @@ Page({
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
     if (this.data.stopReachBottom) return
     console.log(this.data.nowTab)
     switch (this.data.nowTab) {
@@ -281,7 +285,7 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
       title: '自定义转发标题'
     }
