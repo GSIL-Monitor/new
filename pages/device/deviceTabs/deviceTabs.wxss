@@ -1,0 +1,15 @@
+/* pages/deviceManagement/deviceManagement.wxss */
+.tab{
+  justify-content:center
+}
+.tab>view{
+  flex-basis: 20%;
+}
+.selected{
+  color:red;
+  border:1px solid red;
+}
+.unselected{
+  color:#ccc;
+  border:1px solid transparent;
+}

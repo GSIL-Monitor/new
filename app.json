@@ -5,7 +5,7 @@
     "pages/index/index",
     "pages/device/device",
     "pages/user/user",
-    "pages/device/deviceDetail/deviceDetail"
+    "pages/device/deviceTabs/deviceTabs"
   ],
   "window": {
     "backgroundTextStyle": "dark",

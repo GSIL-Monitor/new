@@ -1,13 +1,6 @@
-<view class='flex tab center'>
-  <block wx:for="{{permissions}}" wx:key="*this.name">
-    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
-      {{item.name}}
-    </view>
-  </block>
-</view>
-<view class="container" wx:if="{{nowTab=='Devices'}}">
+<view class="container">
   <view>
-    设备总数：{{totalCount_d}}
+    设备总数：{{totalCount}}
   </view>
   <view class="table">
     <view class="tr">
@@ -24,71 +17,5 @@
       </view>
     </view>
   </view>
-  <infinite-scroll isCompleted='{{deviceList.length===totalCount_d}}'></infinite-scroll>
-</view>
-
-<view class="container" wx:if="{{nowTab=='Ads'}}">
-  <view>
-    广告总数：{{totalCount_a}}
-  </view>
-  <view class="table">
-    <view class="tr">
-      <view class="th grow">名称</view>
-      <view class="th w2">状态</view>
-    </view>
-    <view class="tr" wx:for="{{adList}}" wx:key="*this.id" bind:tap="goAd" data-device="{{item}}">
-      <view class="td grow">{{item.name}}</view>
-      <view class="td w2" wx:if="{{item.auditStatus==1}}">
-        <icon type="success"></icon>
-      </view>
-      <view class="td w2" wx:if="{{item.auditStatus==0}}">
-        <icon type="clear"></icon>
-      </view>
-    </view>
-  </view>
-  <infinite-scroll isCompleted='{{adList.length===totalCount_a}}'></infinite-scroll>
-</view>
-
-<view class="container" wx:if="{{nowTab=='Coupons'}}">
-  <view>
-    红包总数：{{totalCount_c}}
-  </view>
-  <view class="table">
-    <view class="tr">
-      <view class="th grow">名称</view>
-      <view class="th w2">状态</view>
-    </view>
-    <view class="tr" wx:for="{{couponList}}" wx:key="*this.id" bind:tap="goCoupon" data-device="{{item}}">
-      <view class="td grow">{{item.title}}</view>
-      <view class="td w2" wx:if="{{item.auditStatus==1}}">
-        <icon type="success"></icon>
-      </view>
-      <view class="td w2" wx:if="{{item.auditStatus==0}}">
-        <icon type="clear"></icon>
-      </view>
-    </view>
-  </view>
-  <infinite-scroll isCompleted='{{couponList.length===totalCount_c}}'></infinite-scroll>
-</view>
-
-<view class="container" wx:if="{{nowTab=='Products'}}">
-  <view>
-    商品总数：{{totalCount_p}}
-  </view>
-  <view class="table">
-    <view class="tr">
-      <view class="th grow">名称</view>
-      <view class="th w2">状态</view>
-    </view>
-    <view class="tr" wx:for="{{productList}}" wx:key="*this.id" bind:tap="goProduct" data-device="{{item}}">
-      <view class="td grow">{{item.title}}</view>
-      <view class="td w2" wx:if="{{item.auditStatus=='Online'}}">
-        <icon type="success"></icon>
-      </view>
-      <view class="td w2" wx:if="{{item.auditStatus=='Offline'}}">
-        <icon type="clear"></icon>
-      </view>
-    </view>
-  </view>
-  <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
+  <infinite-scroll isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
 </view>
