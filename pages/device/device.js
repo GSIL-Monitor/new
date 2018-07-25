@@ -39,11 +39,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // app.promise(app.req)({
+    //   url: '/s/AbpUserConfiguration/GetAll'
+    // }).then(res => {
+    //   console.log(res);
+    //   if (res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true") {
+    //     this.getDeviceList();
+    //   } else {
+    //     console.log('没有权限');
+    //   }
+    // })
     app.promise(app.req)({
-      url: '/s/AbpUserConfiguration/GetAll'
+      url: '/s/api/services/app/User/GetUserPermissionsForEdit?Id=17'
     }).then(res => {
-      console.log(res);
-      if (res.auth.grantedPermissions['Pages.Tenant.Devices'] == "true") {
+      wx.setStorageSync('permission', res.grantedPermissionNames);
+      if (app.checkPermission('Pages.Tenant.Devices')) {
         this.getDeviceList();
       } else {
         console.log('没有权限');

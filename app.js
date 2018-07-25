@@ -42,5 +42,6 @@ App({
   req:http.req,
   promise: http.promise,
   getTime: util.getTime,
-  translate: util.translate
+  translate: util.translate,
+  checkPermission: util.checkPermission
 })

@@ -1,7 +1,7 @@
 <view hidden='{{hidden}}'>
-   <view>
+   <!-- <view>
      <image src='/source/images/login.png' style="width:100%;height:53vw;"></image> 
-  </view> 
+  </view>  -->
   <form bindsubmit="formSubmit">
     <view class="auto w9 m6">
       <input name="tenant" class="input {{nowFoucs==1?'focus':''}}" type='text' placeholder='当前租户' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />

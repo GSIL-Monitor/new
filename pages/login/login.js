@@ -40,6 +40,7 @@ Page({
               duration: 1000
             })
             wx.setStorageSync('accessToken', 'Bearer '+res.accessToken);
+            wx.setStorageSync('userId', res.userId);
             wx.switchTab({
               url: '../index/index'
             })

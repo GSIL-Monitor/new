@@ -8,40 +8,40 @@ Page({
         name: '详情',
         permit: true,
         self: 'Detail',
-        index:0
+        index: 0
       },
       Ads: {
         name: '广告',
         permit: false,
         self: 'Ads',
-        index:1
+        index: 1
       },
       Apps: {
         name: '应用',
         permit: false,
         self: 'Apps',
-        index:2
+        index: 2
       },
       Products: {
         name: '商品',
         permit: false,
         self: 'Products',
-        index:3
+        index: 3
       },
       Coupons: {
         name: '红包',
         permit: false,
         self: 'Coupons',
-        index:4
+        index: 4
       },
       Control: {
         name: '控制',
         permit: false,
         self: 'Control',
-        index:5
+        index: 5
       }
     },
-    nowTab:'Detail',
+    nowTab: 'Detail',
     stopReachBottom: false,
     //应用
     appList: [],
@@ -194,18 +194,12 @@ Page({
     this.setData({
       deviceDetail: wx.getStorageSync('deviceDetail')
     })
-    app.promise(app.req)({
-      url: '/s/AbpUserConfiguration/GetAll'
-    }).then(res => {
-      console.log(res);
-      this.setData({
-        'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
-        'permissions.Apps.permit': res.auth.grantedPermissions['Pages.Softwares'] == "true" ? true : false,
-        'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
-        'permissions.Products.permit': res.auth.grantedPermissions['Pages.Tenant.Products'] == "true" ? true : false,
-        'permissions.Control.permit': res.auth.grantedPermissions['Pages.Tenant.Devices.Control'] == "true" ? true : false,
-      })
-      this.goGetList(this.data.nowTab);
+    this.setData({
+      'permissions.Ads.permit': app.checkPermission('Pages.Tenant.Ads'),
+      'permissions.Apps.permit': app.checkPermission('Pages.Softwares'),
+      'permissions.Coupons.permit': app.checkPermission('Pages.Tenant.Coupons'),
+      'permissions.Products.permit': app.checkPermission('Pages.Tenant.Products'),
+      'permissions.Control.permit': app.checkPermission('Pages.Tenant.Devices.Control')
     })
     this.goGetList(this.data.nowTab);
   },
