@@ -194,6 +194,19 @@ Page({
     this.setData({
       deviceDetail: wx.getStorageSync('deviceDetail')
     })
+    // app.promise(app.req)({
+    //   url: '/s/AbpUserConfiguration/GetAll'
+    // }).then(res => {
+    //   console.log(res);
+    //   this.setData({
+    //     'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
+    //     'permissions.Apps.permit': res.auth.grantedPermissions['Pages.Softwares'] == "true" ? true : false,
+    //     'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
+    //     'permissions.Products.permit': res.auth.grantedPermissions['Pages.Tenant.Products'] == "true" ? true : false,
+    //     'permissions.Control.permit': res.auth.grantedPermissions['Pages.Tenant.Devices.Control'] == "true" ? true : false,
+    //   })
+    //   this.goGetList(this.data.nowTab);
+    // })
     this.setData({
       'permissions.Ads.permit': app.checkPermission('Pages.Tenant.Ads'),
       'permissions.Apps.permit': app.checkPermission('Pages.Softwares'),
