@@ -50,7 +50,10 @@ Page({
     //   }
     // })
     app.promise(app.req)({
-      url: '/s/api/services/app/User/GetUserPermissionsForEdit?Id=17'
+      url: '/s/api/services/app/User/GetUserPermissionsForEdit',
+      data:{
+        id: wx.getStorageSync('userId')
+      }
     }).then(res => {
       wx.setStorageSync('permission', res.grantedPermissionNames);
       if (app.checkPermission('Pages.Tenant.Devices')) {
