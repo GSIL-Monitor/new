@@ -1,6 +1,5 @@
 const app = getApp()
 Page({
-
   data: {
     focus:0,
     hidden:true,

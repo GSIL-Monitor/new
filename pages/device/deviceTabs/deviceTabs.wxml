@@ -70,3 +70,14 @@
   </view>
   <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
 </view>
+
+<view class="container" wx:if="{{nowTab=='Control'}}">
+  <view>
+    设备控制
+  </view>
+  <view class="flex w10 flex-wrap">
+    <view class="w5">
+      hello
+    </view>
+  </view>
+</view>

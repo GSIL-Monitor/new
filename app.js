@@ -3,7 +3,7 @@ const http = require('service/http.js');
 const util = require('utils/util.js');
 
 App({
-  onLaunch: function () {
+  // onLaunch: function () {
     // 展示本地存储能力
     // var logs = wx.getStorageSync('logs') || []
     // logs.unshift(Date.now())
@@ -35,10 +35,10 @@ App({
     //     }
     //   }
     // })
-  },
-  globalData: {
-    userInfo: null
-  },
+  // },
+  // globalData: {
+    // userInfo: null
+  // },
   req:http.req,
   promise: http.promise,
   getTime: util.getTime,

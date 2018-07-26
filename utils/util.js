@@ -1,4 +1,4 @@
-//时间格式
+//对当前时间的操作,并转换为api所需格式
 const formatTime = (s = 0, m = 0, h = 0, d = 0) => {
   const timestamp = Date.parse(new Date()) + 1000 * (s + m * 60 + h * 60 * 60 + d * 60 * 60 * 24)
   const date = new Date(timestamp)
