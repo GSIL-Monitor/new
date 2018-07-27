@@ -9,6 +9,9 @@
   box-sizing: border-box;
 } 
 
+.fixed{
+  position:fixed;
+}
 .flex{
   display: flex;
 }

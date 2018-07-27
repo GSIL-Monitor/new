@@ -5,7 +5,8 @@
     "pages/index/index",
     "pages/device/device",
     "pages/user/user",
-    "pages/device/deviceTabs/deviceTabs"
+    "pages/device/deviceTabs/deviceTabs",
+    "pages/device/detail/detail"    
   ],
   "window": {
     "backgroundTextStyle": "dark",

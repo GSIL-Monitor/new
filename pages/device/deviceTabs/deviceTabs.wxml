@@ -5,15 +5,18 @@
     </view>
   </block>
 </view>  -->
-<swiper display-multiple-items="4" next-margin="75rpx" style="text-align:center" current="{{currentIndex}}">
-  <block wx:for="{{permissions}}" wx:key="*this.name">
-    <swiper-item>
-      <view wx:if="{{item.permit}}" data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
-        {{item.name}}
-      </view>
-    </swiper-item>
-  </block>
-</swiper>
+<view class="fixed w10">
+  <swiper display-multiple-items="4" next-margin="75rpx" class="center" current="{{currentIndex}}">
+    <block wx:for="{{permissions}}" wx:key="*this.name">
+      <swiper-item>
+        <view wx:if="{{item.permit}}" data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
+          {{item.name}}
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+
 <view class="container" wx:if="{{nowTab=='Detail'}}">
   硬件序列号{{deviceDetail.hardwareCode}} 设备编码{{deviceDetail.outerId}} 名称{{deviceDetail.name}} Mac{{deviceDetail.mac}} IP地址{{deviceDetail.intranetIP}} 系统{{deviceDetail.os}} 密钥{{deviceDetail.subKey}} 分辨率{{deviceDetail.resolution_Width}}{{deviceDetail.resolution_Height}}
   <!-- 外设{{deviceDetail.}} -->
@@ -28,7 +31,7 @@
   </view>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="w5">
-      <view>{{item.name}}</view>
+      <view catch:tap="goDetailPage">{{item.name}}</view>
     </view>
   </view>
   <infinite-scroll isCompleted='{{appList.length===totalCount_ap}}'></infinite-scroll>
@@ -40,7 +43,7 @@
   </view>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{adList}}" wx:key="*this.id" class="w5">
-      <view>{{item.name}}</view>
+      <view catch:tap="goDetailPage">{{item.name}}</view>
     </view>
   </view>
 
@@ -53,7 +56,7 @@
   </view>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{couponList}}" wx:key="*this.id" class="w5">
-      <view>{{item.title}}</view>
+      <view catch:tap="goDetailPage">{{item.title}}</view>
     </view>
   </view>
   <infinite-scroll isCompleted='{{couponList.length===totalCount_c}}'></infinite-scroll>
@@ -65,7 +68,7 @@
   </view>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="w5">
-      <view>{{item.title}}</view>
+      <view catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>{{item.title}}</view>
     </view>
   </view>
   <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>

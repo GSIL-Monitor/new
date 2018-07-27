@@ -1,0 +1,2 @@
+<!--pages/device/detail/detail.wxml-->
+<detail-component detailList="{{detailList}}"></detail-component>

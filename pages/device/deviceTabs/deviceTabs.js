@@ -99,6 +99,12 @@ Page({
         console.log('没有任何权限,请联系管理员')
     }
   },
+  goDetailPage(e){
+    // wx.setStorageSync('detailData', e.target.dataset.item);
+    // wx.navigateTo({
+      // url: '/pages/device/detail/detail?type='+e.target.dataset.type
+    // })
+  },
   //应用
   getAppList(cb) {
     app.promise(app.req)({

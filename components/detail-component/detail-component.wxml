@@ -1,0 +1,5 @@
+<!--components/detail-component/detail-component.wxml-->
+<view wx:for="{{detailList}}" wx:key="*this">
+{{item.key}}
+{{item.value}}
+</view>
