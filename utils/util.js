@@ -18,10 +18,12 @@ const formatNumber = n => {
 
 //翻译
 const languageList = {
-  store: '店铺',
+  // store: '店铺',
   product: '商品',
   ads: '广告',
-  device: '设备'
+  // device: '设备',
+  // OrderCount:'订单总数',
+  TotalSales:'销量总数'
 }
 const translate = n => {
   return languageList[n] ? languageList[n] : n

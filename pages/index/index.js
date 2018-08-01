@@ -7,49 +7,71 @@ var columnChart = null;
 Page({
   data: {
     // canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    topSku: []
+    topSku: [],
+    statisticalData: []
   },
   onShow() {
     app.promise(app.req)({
       method: 'POST',
       url: '/o/api/services/app/Report/TopSkus',
       data: {
-        "startTime": app.getTime(0, 0, 0, -14),
+        "startTime": app.getTime(0, 0, 0, -30),
         "endTime": app.getTime(),
         "top": 3
       }
     }).then(res => {
-      console.log(res)
+      console.log(JSON.parse(res))
       this.setData({
         topSku: JSON.parse(res)
       })
     })
+    //报表数据
     app.promise(app.req)({
       url: '/s/api/services/app/Report/GetCountReport',
     }).then(res => {
-      for (var i of res) {
-        i.name = app.translate(i.name)
-      }
+      console.log(res)
+      // for (var i of res) {
+      //   i.name = app.translate(i.name)
+      // }
       this.setData({
-        statisticalData: res
+        statisticalData: this.data.statisticalData.push('...res')
       })
-    }),
-      app.promise(app.req)({
-        method: 'POST',
-        url: '/d/api/services/app/Report/GetBehaviorChartReport',
-        data: {
-          actions:"click,playvideo,enter",
-          categories:null,
-          endTime:"2018-07-20T23:59:59.999Z",
-          startTime:"2018-06-20T00:00:00.000Z",
-          type:"dd",
-          organizationUnitIds:[30552]
-        }
-      }).then(res => {
-        console.log(res)
-      })
+      console.log(this.data.statisticalData)
+    })
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/o/api/services/app/Report/OrderCountAndSales',
+      data: {
+        storeId: null
+      }
+    }).then(res => {
+      console.log(res)
+      console.log(JSON.parse(res)[0].OrderCount)
+      
+      // for (var i of res) {
+      //   i.name = app.translate(i.name)
+      // }
+      // this.setData({
+      //   statisticalData: res
+      // })
+    })
+
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/d/api/services/app/Report/GetBehaviorChartReport',
+      data: {
+        actions: "click,playvideo,enter",
+        categories: null,
+        endTime: "2018-07-20T23:59:59.999Z",
+        startTime: "2018-06-20T00:00:00.000Z",
+        type: "dd",
+        organizationUnitIds: [30552]
+      }
+    }).then(res => {
+      console.log(res)
+    })
   },
-  onReady: function (e) {
+  onReady: function(e) {
     var windowWidth = 320;
     try {
       var res = wx.getSystemInfoSync();
@@ -67,19 +89,19 @@ Page({
         name: '订单量',
         color: '#188df0',
         data: [23, 28, 35, 54, 95],
-        format: function (val, name) {
+        format: function(val, name) {
           return val.toFixed(2) + '万';
         }
       }, {
         name: '人数',
         color: '#aaa',
         data: [2, 3, 4, 5, 9],
-        format: function (val, name) {
+        format: function(val, name) {
           return val + '人';
         }
       }],
       yAxis: {
-        format: function (val) {
+        format: function(val) {
           return val + '万';
         },
         min: 0
@@ -98,14 +120,22 @@ Page({
       height: 180,
     });
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     // console.log('pulldown')
   },
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
     return {
       title: '自定义转发标题'
     }
   },
+  checkCompleted(res) {
+    for (var i of res) {
+      i.name = app.translate(i.name)
+    }
+    this.setData({
+      statisticalData: res
+    })
+  }
   // getUserInfo: function(e) {
   //   console.log(e)
   //   app.globalData.userInfo = e.detail.userInfo

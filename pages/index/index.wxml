@@ -1,9 +1,14 @@
+<view class="icon-chevron-down"></view>
+<span class="icon-chevron-right"></span>
+<span class="icon-pencil"></span>
+<span class="icon-search"></span>
 <view>
-  热销产品
+  热销商品排行(月)
 </view>
 <view wx:for="{{topSku}}" wx:key="*this.SkuId">
   <view>
     {{item.SkuId}} {{item.TotalPayment}}
+    <image src='{{item.PicUrl}}'></image>
   </view>
 </view>
 
@@ -12,8 +17,8 @@
 </view>
 <view wx:for="{{statisticalData}}" wx:key="*this.name">
   <view>{{item.name}} : {{item.id}}</view>
+  {{item}}
 </view>
-
 
 <view>
   <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>

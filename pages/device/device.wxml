@@ -2,6 +2,12 @@
   <view>
     设备总数：{{totalCount}}
   </view>
+  <view>
+    开机运行数：
+  </view>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+  <input></input>
+  </form>
   <view class="table">
     <view class="tr">
       <view class="th grow">名称</view>
