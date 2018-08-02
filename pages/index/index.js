@@ -58,7 +58,6 @@ Page({
         storeId: null
       }
     }).then(res => {
-      console.log(JSON.parse(res)[0].Total)
       this.setData({
         'statisticalData.member': JSON.parse(res)[0].Total
       })
@@ -77,7 +76,7 @@ Page({
         organizationUnitIds: [30552]
       }
     }).then(res => {
-      console.log(res)
+      console.log('报表数据',res)
     })
   },
   onReady: function(e) {
