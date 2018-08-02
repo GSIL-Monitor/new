@@ -29,18 +29,7 @@ function req(param){
       if (res.statusCode == 200) {
         param.success(res.data.result);
       }else if(res.statusCode == 401){
-        wx.showModal({
-          title: '提示',
-          content: '登陆已过期，请重新登陆',
-          showCancel: false,
-          success: function (res) {
-            wx.removeStorageSync('tenantId');
-            wx.removeStorageSync('accessToken');
-            if (res.confirm) {
-              wx.redirectTo({ url: '../login/login' });
-            }
-          }
-        })
+        wx.redirectTo({ url: '../login/login?showTip=1' });
       }else{
         wx.showToast({
           title: res.data.err.message,

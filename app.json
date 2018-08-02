@@ -12,7 +12,11 @@
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "智慧门店小帮手",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+
+    "navigationBarTextStyle?": "white",
+    "backgroundTextStyle?": "light",
+    "navigationStyle?":"custom/default"
   },
   "tabBar": {
     "color": "#ccc",

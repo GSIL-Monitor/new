@@ -25,19 +25,19 @@ Page({
         topSku: JSON.parse(res)
       })
     })
-    //报表数据
+
+    //商品 广告 软件 红包
     app.promise(app.req)({
       url: '/s/api/services/app/Report/GetCountReport',
     }).then(res => {
-      console.log(res)
-      // for (var i of res) {
-      //   i.name = app.translate(i.name)
-      // }
       this.setData({
-        statisticalData: this.data.statisticalData.push('...res')
+        'statisticalData.product': res[1].id,
+        'statisticalData.ads': res[2].id,
+        'statisticalData.software': res[4].id,
+        'statisticalData.coupon': res[5].id,
       })
-      console.log(this.data.statisticalData)
     })
+    //订单 销量
     app.promise(app.req)({
       method: 'POST',
       url: '/o/api/services/app/Report/OrderCountAndSales',
@@ -45,17 +45,26 @@ Page({
         storeId: null
       }
     }).then(res => {
-      console.log(res)
-      console.log(JSON.parse(res)[0].OrderCount)
-      
-      // for (var i of res) {
-      //   i.name = app.translate(i.name)
-      // }
-      // this.setData({
-      //   statisticalData: res
-      // })
+      this.setData({
+        'statisticalData.orderCount': JSON.parse(res)[0].OrderCount,
+        'statisticalData.totalSales': JSON.parse(res)[0].TotalSales,
+      })
+    })
+    //会员
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/o/api/services/app/Report/MembersCount',
+      data: {
+        storeId: null
+      }
+    }).then(res => {
+      console.log(JSON.parse(res)[0].Total)
+      this.setData({
+        'statisticalData.member': JSON.parse(res)[0].Total
+      })
     })
 
+    //报表数据
     app.promise(app.req)({
       method: 'POST',
       url: '/d/api/services/app/Report/GetBehaviorChartReport',

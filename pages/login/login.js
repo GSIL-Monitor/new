@@ -67,7 +67,18 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.showTip){
+      wx.removeStorageSync('tenantId');
+      wx.removeStorageSync('accessToken');
+      wx.showModal({
+        title: '提示',
+        content: '登陆已过期，请重新登陆',
+        showCancel: false,
+        success: function (res) {
 
+        }
+      })
+    }
   },
 
   /**

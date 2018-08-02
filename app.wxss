@@ -1,136 +1,157 @@
 /* 通用设置 */
+
 .container {
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 100rpx 0 0; 
+  padding: 100rpx 0 0;
   box-sizing: border-box;
-} 
-
-.fixed{
-  position:fixed;
 }
-.flex{
+
+.fixed {
+  position: fixed;
+}
+
+.flex {
   display: flex;
 }
-.flex-wrap{
+
+.flex-wrap {
   flex-wrap: wrap;
 }
-.w2{
-  width:20%;
+
+.w2 {
+  width: 20%;
 }
-.w3{
-  width:30%;
+
+.w3 {
+  width: 30%;
 }
-.w4{
-  width:40%;
+
+.w4 {
+  width: 40%;
 }
-.w5{
+
+.w5 {
   width: 50%;
 }
-.w6{
-  width:60%;
+
+.w6 {
+  width: 60%;
 }
-.w7{
-  width:70%;
+
+.w7 {
+  width: 70%;
 }
-.w8{
-  width:80%;
+
+.w8 {
+  width: 80%;
 }
-.w9{
-  width:90%;
+
+.w9 {
+  width: 90%;
 }
-.w10{
-  width:100%;
+
+.w10 {
+  width: 100%;
 }
-.auto{
-  margin-left:auto;
-  margin-right:auto;
+
+.auto {
+  margin-left: auto;
+  margin-right: auto;
 }
-.m1{
-  margin-top:10rpx;
+
+.m1 {
+  margin-top: 10rpx;
   margin-bottom: 10rpx;
 }
-.m2{
-  margin-top:20rpx;
+
+.m2 {
+  margin-top: 20rpx;
   margin-bottom: 20rpx;
 }
-.m3{
-  margin-top:30rpx;
+
+.m3 {
+  margin-top: 30rpx;
   margin-bottom: 30rpx;
 }
-.m4{
-  margin-top:40rpx;
+
+.m4 {
+  margin-top: 40rpx;
   margin-bottom: 40rpx;
 }
-.m5{
-  margin-top:50rpx;
+
+.m5 {
+  margin-top: 50rpx;
   margin-bottom: 50rpx;
 }
-.m6{
-  margin-top:60rpx;
+
+.m6 {
+  margin-top: 60rpx;
   margin-bottom: 60rpx;
 }
-.m7{
-  margin-top:70rpx;
+
+.m7 {
+  margin-top: 70rpx;
   margin-bottom: 70rpx;
 }
-.m8{
-  margin-top:80rpx;
+
+.m8 {
+  margin-top: 80rpx;
   margin-bottom: 80rpx;
 }
-.center{
+
+.center {
   text-align: center;
 }
 
-
 /* table */
+
 .table {
-  border:1px solid #dadada;
+  border: 1px solid #dadada;
   border-right: 0;
   border-bottom: 0;
   width: 98%;
 }
+
 .tr {
   width: 100%;
   display: flex;
   /* justify-content: space-between; */
 }
-.th,.td {
+
+.th, .td {
   padding: 10px;
   border-bottom: 1px solid #dadada;
   border-right: 1px solid #dadada;
   text-align: center;
   /* width:100% */
 }
+
 .th {
   font-weight: 400;
   background-color: #dadada;
   text-align: center;
 }
-.grow{
-  flex-grow:1;
+
+.grow {
+  flex-grow: 1;
 }
 
-
-
-
 /* icon-font */
+
 @font-face {
   font-family: 'icomoon';
-  src:  url('source/fonts/fonts/icomoon.eot?5b3rq1');
-  src:  url('source/fonts/fonts/icomoon.eot?5b3rq1#iefix') format('embedded-opentype'),
-    url('source/fonts/fonts/icomoon.ttf?5b3rq1') format('truetype'),
-    url('source/fonts/fonts/icomoon.woff?5b3rq1') format('woff'),
-    url('source/fonts/fonts/icomoon.svg?5b3rq1#icomoon') format('svg');
+  src: url(data:application/font-woff2;charset=utf-8;base64,d09GMgABAAAAAANoAA0AAAAAB6gAAAMRAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP0ZGVE0cGh4GYACCbhEICoQIgyELFAABNgIkAx4EIAWDGwdjG0YGyJ6DcePc2rlsDlt2aaEEZZG9okao5ATVWv1n9czOA0BWBPRREgpHrB5KVBdfsR144Mfl+0dObiIijLpVOArNcfEWqbQ2osnd9hgIxhTCG5S+5P1/3Dv+490Hbi9aBpHNTd2nQNo4N2DaeZjV+RhLI+iyD5hqw7aRZUSNw9Rr6oLQrRDw5L1uKnh2seOie7VAbTSFJITqQo6ELPtE3EJOekvyB9wE/eNP4aIGp0/UN3I8UXUh+6b8RkoQDQKotieQ3b81AbaTCrQmNxvqqi4phPZ/UVWpulBeljAkfKSsmbxZanoGqVAXol7IiILIgEhIHPhn5OA7QpSleqAGaAg1cRv+AMgBgaDhTMqgTrNmukreo7VIOLo8b1dR5SctztpXLm1rr+46Vq/MOQyMHRXQv7Q0h63sPrFwz+xXTiVViz60jS7fdHDpks0Ltx1d+smZ3c2zOF319MFwNVcqHt9xmV3y5H4X7dXH4ntbvpX79/6HD/1X4q4egk7E6eDTx/jr+Z1jL+8Dj5ntfXQXcwEADPiZ8buP7eWrxFAO+6PjbVlurRRFZSs19EK2foHmJcfLYCgjW3/U1PxxZeco6TcT16yZ2IrX5fPn5Vj9y76SPT2Ti4uff456/frrkXQ+kljx9er5v/4z2fPbZLhntm6fggIlJa3dnTra0KaSpR+UfbK/i/H/1L+OZ2Yfr0tnTsWQ14+mTBmTFBmZlJiZ+eh3iKc+IICH54+cqak3+j/V5KJ2OUqylH0D1SUQRNpgcpAnfh4UOSCWACTkPMFfCdQwhRQkYVxdXxAgVFO/QxJ0RzIYj+SwXFRRyyFRoZp742tqyUNSkdcQ6gKQBM2RDPojOUwXVTRlvaNYgnML1zSYd7Vp0KNLjx7d2LE7xY7HQk1aDOlUpx9/uHXiaIVQfakm/Qa0ZXsxgL70x7uvy9CgkGuuqcP0QV5s06T7Edk6g5o0pm40xosZCArJIPR20ZeAzG3Y+YbYA5Kwaw0iSZHJIo9KFFGt2NZ5eNf2Acr93Tv6B1PFmjIiJARC8chgTBQAAAA=) format('woff2'),
+         url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAUcAA0AAAAAB6gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABGRlRNAAAFAAAAABoAAAAchLJsMUdERUYAAATkAAAAHAAAAB4AJwAPT1MvMgAAAZQAAAA/AAAAYA8TBltjbWFwAAAB7AAAAF0AAAFu/+nEF2dhc3AAAATcAAAACAAAAAgAAAAQZ2x5ZgAAAmAAAAFkAAACCNY7NwloZWFkAAABMAAAACwAAAA2Ei6Jo2hoZWEAAAFcAAAAHQAAACQHxAPHaG10eAAAAdQAAAAXAAAAHgyqANVsb2NhAAACTAAAABQAAAAUAPQBkG1heHAAAAF8AAAAGAAAACAADQBHbmFtZQAAA8QAAADcAAABm/pYTdhwb3N0AAAEoAAAADsAAABj2wqq8XjaY2BkAINHrVV58fw2Xxm4WcD86+1KUxD0/30sTMwHgFwOBiaQKAA1zAq3eNpjYGRgYD7w/wADAwsDCLAwMTAyoAI2AEx+ApUAAAB42mNgZGBg4GRwZWBmAAEmBjQAAAhWAFV42mNgZl7FOIGBlYGBaSbTGQYGhn4IzfiawZiRkwEVMAqgCTA4MDC+bGM+8P8AgwMzEIPUIMkqMDACAGdQC3kAeNpjYYAAxlAIzQTELAwMVyF8AA9rAYwAeNpjYGBgZoBgGQZGBhDIAPIYwXwWBh8gzcfAwcDEwAYUU3jJ+JL1Zdv/v///g1UqvGRA8P8/EWcVZxJrAuvmY0AGjCDzGdmAmBkqwAQkmBgY0FQBLRzeAABiHhK3AAAAAAAAAAAIAAgAEAAYAEIAbACaAQR42oWQwWrCQBCGZzYhoTZbE4wRDERJMSkISqJJWigSpEaKFy8eepFefQvpg/QF+g4l1168eesh6Bt4bTXdrC0Veugcdv/dmfnmZwDhJwjADYH/32sEoU1mYACgY5fRdWxZ0mtoYc8PIwz7rmBRm2427KAUQdYkSZMRKCX3irLdKgpL5CBLUvFpU4bBGSzJC1kXzDPkvAYW0F8mec6BAxmXyrRUohyJbwgcyMedMAWAPBVBSOEcVNDZEN+o6hKzGw0QhRa6NXRReBzOtXKcxbr3+RFjk0yz20N8jamQzoemp7NMWds3D1nMMu88c9xE/ioSxr6CO4CW20F5gEGf3a5zacsXzHu1MF8zCvuS0WDLiUIHbV4R9JmFKOz5vKKq83oh21Vcte1Z1iIZTaejZGFZRz1e+qhqK3Ni1sX9U9DtJDqLpNMNTvTDSlPRX45PG4/aa6tuZWeJdXOC5E/ft4Yv7qNWD3jadc6xasJQGMXxfzRatCCdSul0R6eg4AN0KnVw6SAdG+MlBPReiBF07yN07DP0YXwiT8K3JnDD7zs35yPAjH8S2ifhgSfzQJ6bh/KbOZW/zCMeuZjHyn/NU165qZWkEyWzbkPrgfxiHsoLcyp/mEc8820eK/8xT1nxR0VB5KgTCVAV8Rij8Imn5MyBnFqjL8+HXOj7vi/fak/NSfdt7liS6S/Z+vpUxeCW2aK/+97NjVqltoRuU67Zs1e246r3uuturJupFEPjSh98nTd+73ZXty7iRvsy7uXbPkN42mNgYsAPOBkYGJkYmBiZGZgZWRhZGdkY2dnScyoLMgzZS/MyDQwMwLSrpYEBlIbxTSG0hRkAUe4NeQAAAQAB//8AD3jaY2BkYGDgAWIxIGZiYARCDiBmAfMYAAP2ADd42mNgYGBkAIKrS9Q5QPT1dqUpMBoAPH0F0gAA) format('woff'),
+         url('icomoon.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
@@ -138,8 +159,6 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
-
-  /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -147,12 +166,15 @@
 .icon-chevron-down:before {
   content: "\e900";
 }
+
 .icon-chevron-right:before {
   content: "\e901";
 }
+
 .icon-pencil:before {
   content: "\e905";
 }
+
 .icon-search:before {
   content: "\e986";
 }
