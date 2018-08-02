@@ -2,6 +2,7 @@
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 50,
   "usingComponents": {
-    "infinite-scroll": "../../../components/infinite-scroll/infinite-scroll"
+    "infinite-scroll": "../../../components/infinite-scroll/infinite-scroll",
+    "device-component": "../../../components/device-component/device-component"
   }
 }

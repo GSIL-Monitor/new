@@ -10,6 +10,12 @@
   box-sizing: border-box;
 }
 
+.relative{
+  position: relative;
+}
+.absolute{
+  position: absolute;
+}
 .fixed {
   position: fixed;
 }
@@ -24,6 +30,10 @@
 
 .grow {
   flex-grow: 1;
+}
+
+.w1 {
+  width: 10%;
 }
 
 .w2 {

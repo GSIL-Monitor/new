@@ -1,1 +1,57 @@
 /* pages/deviceManagement/deviceManagement.wxss */
+
+.table-bottom {
+  height: 1px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  left: 10%;
+}
+
+.table-container {
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  font-size: 35rpx;
+}
+
+.table-item {
+  padding-top: 35rpx;
+  padding-bottom: 35rpx;
+}
+
+.icon-chevron-right {
+  color: #ccc;
+  height: 100%;
+  margin-left: 20rpx;
+  font-size: 42rpx;
+}
+
+.point {
+  width: 20rpx;
+  height: 20rpx;
+  background: red;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+}
+
+.green {
+  background: #09bb07;
+}
+
+.grey {
+  background: #b2b2b2;
+}
+
+.search-container {
+  background: #eee;
+  padding: 15rpx 30rpx;
+  font-size: 26rpx;
+}
+
+.search-container view {
+  color: #b2b2b2;
+  margin-right: 8rpx;
+  top: 16rpx;
+  position: relative;
+}
