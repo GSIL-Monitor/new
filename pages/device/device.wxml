@@ -6,20 +6,17 @@
     开机运行数：
   </view>
   <form bindsubmit="formSubmit" bindreset="formReset">
-  <input></input>
+    <input></input>
   </form>
   <view class="table">
-    <view class="tr">
-      <view class="th grow">名称</view>
-      <view class="th w2">状态</view>
-    </view>
     <view class="tr" wx:for="{{deviceList}}" wx:key="*this.id" bind:tap="goDevice" data-device="{{item}}">
       <view class="td grow">{{item.name}}</view>
-      <view class="td w2" wx:if="{{item.status==1}}">
-        <icon type="success"></icon>
+      <view class="td w2">
+        <view wx:if="{{item.status==1}}">ON</view>
+        <view wx:if="{{item.status==0}}" style="font-size:35rpx">OFF</view>
       </view>
-      <view class="td w2" wx:if="{{item.status==0}}">
-        <icon type="clear"></icon>
+      <view class="td w1">
+        <view class="icon-chevron-right"></view>
       </view>
     </view>
   </view>
