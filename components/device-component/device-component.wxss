@@ -1,1 +1,11 @@
 /* components/device-component/device-component.wxss */
+.table-item {
+  padding-top: 35rpx;
+  padding-bottom: 35rpx;
+}
+.table-bottom {
+  height: 1px;
+  border-bottom: 1px solid #eee;
+  position: relative;
+  left: 10%;
+}

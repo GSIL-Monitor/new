@@ -1,2 +1,10 @@
 <!--components/device-component/device-component.wxml-->
-<text>components/device-component/device-component.wxml</text>
+1111111111
+<view class="flex table-item">
+  <view class="w2">设备编号</view>
+  <view class="w"></view>
+  <view>
+    <view class="icon-pencil"></view>
+  </view>
+</view>
+<view class='table-bottom'></view>
