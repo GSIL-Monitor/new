@@ -133,7 +133,9 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+/* [class^="icon-"], [class*=" icon-"] { */
+/* 导入component时无法解析复杂的css选择器 */
+.icon{
   font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
