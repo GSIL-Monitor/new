@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/logs/logs",
-    "pages/index/index",
-    "pages/device/device",
     "pages/user/user",
     "pages/device/deviceTabs/deviceTabs",
+    "pages/device/device",
+    "pages/logs/logs",
+    "pages/index/index",
     "pages/device/detail/detail"    
   ],
   "window": {
@@ -16,7 +16,7 @@
 
     "navigationBarTextStyle?": "white",
     "backgroundTextStyle?": "light",
-    "navigationStyle?":"custom/default"
+    "navigationStyle":"custom"
   },
   "tabBar": {
     "color": "#ccc",
@@ -26,20 +26,20 @@
     "position": "bottom",
     "list": [
       {
-        "iconPath": "/source/images/indexTabAct.png",
-        "selectedIconPath": "/source/images/indexTab.png",
+        "iconPath": "/source/images/indexTab.png",
+        "selectedIconPath": "/source/images/indexTabAct.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "iconPath": "/source/images/deviceTabAct.png",
-        "selectedIconPath": "/source/images/deviceTab.png",
+        "iconPath": "/source/images/deviceTab.png",
+        "selectedIconPath": "/source/images/deviceTabAct.png",
         "pagePath": "pages/device/device",
         "text": "设备管理"
       },
       {
-        "iconPath": "/source/images/userTabAct.png",
-        "selectedIconPath": "/source/images/userTab.png",
+        "iconPath": "/source/images/userTab.png",
+        "selectedIconPath": "/source/images/userTabAct.png",
         "pagePath": "pages/user/user",
         "text": "我的"
       }

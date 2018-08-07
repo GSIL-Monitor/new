@@ -1,18 +1,200 @@
 /* pages/deviceManagement/deviceManagement.wxss */
-.tab{
-  justify-content:center
+
+.header {
+  width: 690rpx;
+  height: 160rpx;
+  margin: 0 auto;
+  position: relative;
+  top: 90rpx;
+  border-radius: 10rpx;
+  padding-top: 20rpx;
 }
-.tab>view{
+
+.header .text {
+  z-index: 3;
+  font-size: 50rpx;
+}
+
+.header .grow {
+  color: #666;
+  font-size: 28rpx;
+  justify-content: center;
+  z-index: 3;
+}
+
+.point {
+  position: absolute;
+  left: -20rpx;
+  top: 12rpx;
+  width: 15rpx;
+  height: 15rpx;
+  border-radius: 50%;
+  color: #666;
+}
+
+.green {
+  background: #09bb07;
+}
+
+.grey {
+  background: #b2b2b2;
+}
+
+.tab {
+  justify-content: center;
+}
+
+.tab>view {
   flex-basis: 20%;
 }
-.selected{
-  color:red;
-  border:1px solid red;
+
+.selected {
+  color: #c3228a;
 }
-.unselected{
-  color:#ccc;
-  border:1px solid transparent;
+
+.selected view {
+  position: absolute;
+  bottom: 0;
+  height: 4rpx;
+  width: 72rpx;
+  background-image: linear-gradient(165deg, #f04095 2%, #c3228a 73%, #b31785 100%);
+  border-radius: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -12rpx;
 }
-swiper{
-  height:50px !important;
+
+.unselected {
+  color: #969696;
+  border: 1px solid transparent;
+}
+
+swiper {
+  height: 55rpx !important;
+  margin-top: 110rpx;
+  font-size: 32rpx;
+}
+
+swiper+.bottom {
+  height: 1px;
+  background: #e2e2e2;
+}
+
+.container {
+  padding-top: 350rpx;
+}
+
+.ads, .apps, .coupons, .products {
+  width: 690rpx;
+  margin: 0 auto;
+}
+
+.container .flex.w10.flex-wrap {
+  justify-content: space-between;
+  padding-top: 25rpx;
+  margin: 0 25rpx;
+}
+
+.container .listItem {
+  width: 334rpx;
+  height: 474rpx;
+  border-radius: 15rpx;
+  border: 1rpx solid #e2e2e2;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+}
+
+.container .listItem image {
+  width: 100%;
+  height: 334rpx;
+}
+
+.ads .title, .apps .title, .products .title, .coupons .title {
+  font-size: 28rpx;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ads .size {
+  color: #969696;
+}
+
+.ads .type {
+  border: none !important;
+  font-size: 16rpx;
+  color: #ff1744;
+  background: #f2f2f2;
+  border-radius: 10rpx;
+  padding: 5rpx;
+}
+
+.ads .tags {
+  font-size: 16rpx;
+  color: #ff1744;
+  margin-top: 20rpx;
+}
+
+.ads .tags view {
+  border: 1rpx solid #ff1744;
+  border-radius: 10rpx;
+  padding: 0 5rpx;
+  margin-right: 10rpx;
+}
+
+.control .update {
+  background-image: linear-gradient(165deg, #f04095 2%, #c3228a 73%, #b31785 100%);
+  box-shadow: 0 6px 8px 0 #ffdbf1;
+  border-radius: 100rpx;
+  color: #fff;
+  padding: 16rpx 35rpx;
+}
+
+.control .update image, .control .appendix image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 10rpx;
+  position: relative;
+  top: 4rpx;
+}
+
+.control .appendix {
+  justify-content: space-around;
+  padding: 40rpx 0 70rpx;
+  border-bottom: 1rpx solid #e2e2e2;
+}
+
+.control .appendix .flex {
+  border-radius: 100rpx;
+  padding: 14rpx 22rpx;
+  border: 1px solid #e5e5e5;
+}
+
+.control .main {
+  font-size: 22rpx;
+  padding-top: 88rpx;
+  justify-content: space-between;
+}
+
+.control .main .icon {
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 50%;
+  margin-bottom: 15rpx;
+}
+
+.control .main .icon.restart {
+  background: #09bb07;
+  box-shadow: 0 6px 8px 0 #c0f4bf;
+}
+
+.control .main .icon.close {
+  background: #f76260;
+  box-shadow: 0 6px 8px 0 #ffd0cf;
+}
+
+.control .main image {
+  width: 44rpx;
+  height: 44rpx;
 }

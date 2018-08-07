@@ -1,16 +1,35 @@
 <view hidden='{{hidden}}'>
-   <!-- <view>
-     <image src='/source/images/login.png' style="width:100%;height:53vw;"></image> 
-  </view>  -->
+  <!-- <view class="relative">
+    <image src='/source/images/login.png' class="w10" style="height:366rpx;"></image>
+    <image src='/source/images/logo.png' class="absolute-center" style="width:210rpx;height:175rpx"></image>
+  </view> -->
+
   <form bindsubmit="formSubmit">
-    <view class="auto w9 m6">
-      <input name="tenant" class="input {{nowFoucs==1?'focus':''}}" type='text' placeholder='当前租户' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
+    <view class='flex auto w9 m6'>
+      <view>
+        <image class="image-icon" src='/source/images/tenantName.png'></image>
+      </view>
+      <view class="grow">
+        <input name="tenant" class="input {{nowFoucs==1?'focus':''}}" type='text' placeholder=' 租户名称' data-index='1' confirm-hold='true' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
+      </view>
     </view>
-    <view class="auto w9 m6">
-      <input name="account" class="input {{nowFoucs==2?'focus':''}}" type='text' placeholder='账号' focus='{{focus==1}}' confirm-hold='true' data-index='2' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
+
+    <view class='flex auto w9 m6'>
+      <view>
+        <image class="image-icon" src='/source/images/userName.png'></image>
+      </view>
+      <view class="grow">
+        <input name="account" class="input {{nowFoucs==2?'focus':''}}" type='text' placeholder=' 用户名' focus='{{focus==1}}' confirm-hold='true' data-index='2' confirm-type='next' bindconfirm="bindconfirm" bindfocus="bindfocus" />
+      </view>
     </view>
-    <view class="auto w9 m6">
-      <input name="password" class="input {{nowFoucs==3?'focus':''}}" type='text' placeholder='密码' focus='{{focus==2}}' data-index='3' password bindfocus="bindfocus" />
+
+    <view class='flex auto w9 m6'>
+      <view>
+        <image class="image-icon" src='/source/images/password.png'></image>
+      </view>
+      <view class="grow">
+        <input name="password" class="input {{nowFoucs==3?'focus':''}}" type='text' placeholder=' 密码' focus='{{focus==2}}' data-index='3' password bindfocus="bindfocus" />
+      </view>
     </view>
     <view class='w9 auto m8'>
       <button form-type='submit'>登陆</button>

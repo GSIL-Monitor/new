@@ -1,5 +1,42 @@
 /* pages/deviceManagement/deviceManagement.wxss */
 
+.header {
+  width: 690rpx;
+  height: 288rpx;
+  margin: 0 auto;
+  position: relative;
+  top: 90rpx;
+  border-radius: 10rpx;
+  padding-top: 40rpx;
+}
+
+.header .grow {
+  color: #666;
+  font-size: 28rpx;
+  justify-content: center;
+}
+
+.header .grow .text {
+  color: #ff1744;
+  font-size: 44rpx;
+  position: relative;
+  top: -13rpx;
+  margin-left: 15rpx;
+}
+
+.header .grow .green {
+  position: absolute;
+  left: -30rpx;
+  top: 8rpx;
+}
+
+.header .scanTip {
+  font-size: 28rpx;
+  position: absolute;
+  bottom: 50rpx;
+  left: 0;
+}
+
 .table-bottom {
   height: 1px;
   border-bottom: 1px solid #eee;
@@ -11,11 +48,23 @@
   padding-left: 15rpx;
   padding-right: 15rpx;
   font-size: 35rpx;
+  width: 92%;
+}
+
+.table-container image {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+}
+
+.table-container .grow {
+  padding-left: 15rpx;
 }
 
 .table-item {
   padding-top: 35rpx;
   padding-bottom: 35rpx;
+  margin-left: 0;
 }
 
 .icon-chevron-right {
@@ -28,11 +77,7 @@
 .point {
   width: 20rpx;
   height: 20rpx;
-  background: red;
   border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) translateX(-50%);
 }
 
 .green {
@@ -45,8 +90,9 @@
 
 .search-container {
   background: #eee;
-  padding: 15rpx 30rpx;
+  padding: 15rpx 40rpx;
   font-size: 26rpx;
+  border-radius: 12rpx;
 }
 
 .search-container view {
@@ -54,4 +100,5 @@
   margin-right: 8rpx;
   top: 16rpx;
   position: relative;
+  left: -8rpx;
 }

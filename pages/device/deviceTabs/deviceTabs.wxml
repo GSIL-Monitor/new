@@ -1,87 +1,147 @@
-<!-- <view class='flex tab center'>
-  <block wx:for="{{permissions}}" wx:key="*this.name">
-    <view wx:if="{{item.permit}}" data-tab="{{item.self}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
-      {{item.name}}
+<view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
+<view class='fixed w10 ff'>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
+  <view class='header ff overflow center'>
+    <view class='relative text m1'>
+      2:09:38
     </view>
-  </block>
-</view>  -->
-<view class="fixed w10">
-  <swiper display-multiple-items="4" next-margin="75rpx" class="center" current="{{currentIndex}}">
-    <block wx:for="{{permissions}}" wx:key="*this.name">
-      <swiper-item>
-        <view wx:if="{{item.permit}}" data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}}">
-          {{item.name}}
+    <view class='flex'>
+      <view class='grow relative flex'>
+        <view class='relative'>
+          <view class="point green"></view>
+          今日运行时间
         </view>
-      </swiper-item>
-    </block>
-  </swiper>
+      </view>
+    </view>
+    <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+  </view>
+
+  <view class="w10 center">
+    <swiper display-multiple-items="4" next-margin="75rpx" current="{{currentIndex}}">
+      <block wx:for="{{permissions}}" wx:key="*this.name">
+        <swiper-item>
+          <view wx:if="{{item.permit}}" data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}} ff relative">
+            {{item.name}}
+            <view></view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class='bottom'></view>
+  </view>
 </view>
 
+
 <view class="container" wx:if="{{nowTab=='Detail'}}">
-<device-component class="w10"></device-component>
+  <device-component class="w10"></device-component>
   硬件序列号{{deviceDetail.hardwareCode}} 设备编码{{deviceDetail.outerId}} 名称{{deviceDetail.name}} Mac{{deviceDetail.mac}} IP地址{{deviceDetail.intranetIP}} 系统{{deviceDetail.os}} 密钥{{deviceDetail.subKey}} 分辨率{{deviceDetail.resolution_Width}}{{deviceDetail.resolution_Height}}
   <!-- 外设{{deviceDetail.}} -->
   地址{{deviceDetail.address}} 电商类别{{deviceDetail.onlineTrafficTarget}} 设备类型{{deviceDetail.deviceTypeId}} 所属组织机构{{deviceDetail.organizationUnitName}} 描述{{deviceDetail.description}}
 </view>
 
-
-
-<view class="container" wx:if="{{nowTab=='Apps'}}">
-  <view>
-    应用总数：{{totalCount_ap}}
-  </view>
+<view class="container ads" wx:if="{{nowTab=='Ads'}}">
   <view class="flex w10 flex-wrap">
-    <view wx:for="{{appList}}" wx:key="*this.id" class="w5">
-      <view catch:tap="goDetailPage">{{item.name}}</view>
+    <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+      <image src='{{item.fileUrl}}'></image>
+      <view class='title'>{{item.name}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.creationTime}}</view>
+      </view>
+      <view class='flex w9 auto tags'>
+        <view class='type'>{{item.resourceType}}</view>
+        <block wx:for="{{item.adsTags}}" wx:key="{{index}}">
+          <view wx:if="{{index<2}}">{{item.name}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <infinite-scroll isCompleted='{{adList.length===totalCount_ad}}'></infinite-scroll>
+</view>
+
+<view class="container apps" wx:if="{{nowTab=='Apps'}}">
+  <view class="flex w10 flex-wrap">
+    <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+      <image src='{{item.fileUrl}}'></image>
+      <view class='title'>{{item.name}} | {{item.alias}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.endTime}}</view>
+      </view>
+      <view class='flex w9 auto'>
+        <view>运行环境 : {{item.envType}}</view>
+      </view>
     </view>
   </view>
   <infinite-scroll isCompleted='{{appList.length===totalCount_ap}}'></infinite-scroll>
 </view>
 
-<view class="container" wx:if="{{nowTab=='Ads'}}">
-  <view>
-    广告总数：{{totalCount_ad}}
-  </view>
+<view class="container products" wx:if="{{nowTab=='Products'}}">
   <view class="flex w10 flex-wrap">
-    <view wx:for="{{adList}}" wx:key="*this.id" class="w5">
-      <view catch:tap="goDetailPage">{{item.name}}</view>
-    </view>
-  </view>
-
-  <infinite-scroll isCompleted='{{adList.length===totalCount_ad}}'></infinite-scroll>
-</view>
-
-<view class="container" wx:if="{{nowTab=='Coupons'}}">
-  <view>
-    红包总数：{{totalCount_c}}
-  </view>
-  <view class="flex w10 flex-wrap">
-    <view wx:for="{{couponList}}" wx:key="*this.id" class="w5">
-      <view catch:tap="goDetailPage">{{item.title}}</view>
-    </view>
-  </view>
-  <infinite-scroll isCompleted='{{couponList.length===totalCount_c}}'></infinite-scroll>
-</view>
-
-<view class="container" wx:if="{{nowTab=='Products'}}">
-  <view>
-    商品总数：{{totalCount_p}}
-  </view>
-  <view class="flex w10 flex-wrap">
-    <view wx:for="{{productList}}" wx:key="*this.id" class="w5">
-      <view catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>{{item.title}}</view>
+    <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
+      <image src='{{item.picUrl}}'></image>
+      <view class='title'>{{item.title}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.creationTime}}</view>
+      </view>
+      <view class='flex w9 auto'>
+        <view>价格 : {{item.price}}</view>
+      </view>
     </view>
   </view>
   <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
 </view>
 
-<view class="container" wx:if="{{nowTab=='Control'}}">
-  <view>
-    设备控制
-  </view>
+
+<view class="container coupons" wx:if="{{nowTab=='Coupons'}}">
   <view class="flex w10 flex-wrap">
-    <view class="w5">
-      hello
+    <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+      <image src='{{item.pictures}}'></image>
+      <view class='title'>{{item.title}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.creationTime}}</view>
+      </view>
+      <view class='flex w9 auto'>
+        <view>数量 : {{item.amount}}</view>
+      </view>
     </view>
   </view>
+  <infinite-scroll isCompleted='{{couponList.length===totalCount_c}}'></infinite-scroll>
+</view>
+
+
+
+<view class="container control" wx:if="{{nowTab=='Control'}}">
+  <view class='m3'>最后资源更新时间 : </view>
+  <view class='flex update' catch:tap="publishEvent" data-actionName="update-resource">
+    <image src='/source/images/device/update.png'></image>
+    <view>重新更新资源</view>
+  </view>
+  <view class='flex appendix w10'>
+    <view class='flex' catch:tap="publishEvent" data-actionName="restart-app">
+      <image src='/source/images/device/restart.png'></image>
+      <view>重启应用</view>
+    </view>
+    <view class='flex' catch:tap="publishEvent" data-actionName="close-app">
+      <image src='/source/images/device/close.png'></image>
+      <view>关闭应用</view>
+    </view>
+    <view class='flex' catch:tap="publishEvent" data-actionName="close-container">
+      <image src='/source/images/device/close.png'></image>
+      <view>关闭AppPod</view>
+    </view>
+  </view>
+  <view class='flex w5 auto main'>
+    <view catch:tap="publishEvent" data-actionName="restart-pc">
+      <view class="overflow relative restart icon">
+        <image src='/source/images/device/restart.png' class="absolute-center;"></image>
+      </view>
+      <view>重启机器</view>
+    </view>
+    <view catch:tap="publishEvent" data-actionName="shutdown-pc">
+      <view class="overflow relative close icon">
+        <image src='/source/images/device/close.png' class="absolute-center;"></image>
+      </view>
+      <view>关闭机器</view>
+    </view>
+  </view>
+
 </view>

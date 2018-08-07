@@ -1,25 +1,2 @@
 /* components/device-component/device-component.wxss */
 @import "../../app.wxss";
-
-.table-item {
-  padding: 35rpx 0;
-  color: #888;
-  margin-left: 25rpx;
-  font-size: 32rpx;
-  line-height: 52rpx;
-}
-
-.table-item input {
-  color: #000;
-}
-
-.table-bottom {
-  height: 1px;
-  border-bottom: 1px solid #eee;
-  position: relative;
-  left: 4%;
-}
-
-.picker{
-  height:52rpx;
-}

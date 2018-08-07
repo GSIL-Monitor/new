@@ -1,7 +1,21 @@
 /* pages/login/login.wxss */
 .input {
-  border-bottom:1px solid #aaa;
+  border-bottom:1px solid #d2d2d2;
 }
 .input.focus{
   border-bottom:1px solid #ff0099;
+}
+
+.image-icon{
+  height:40rpx;
+  width:40rpx;
+  margin-right: 20rpx;
+  position: relative;
+  top:15rpx;
+}
+button{
+  background: linear-gradient(90deg, #F04095 50%, #C3228A 86%, #B31785 100%);
+  color:#fff;
+  border-radius: 45rpx;
+  box-shadow: 0 4px 10px 0 rgba(255,154,207,0.60);
 }

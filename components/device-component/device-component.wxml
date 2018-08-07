@@ -3,7 +3,7 @@
   <view class="flex table-item w10">
     <view class="w3">{{item.name}}</view>
     <view class="grow">
-      <input type='text' placeholder='{{item.placeholder}}'></input>
+      <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}'></input>
     </view>
     <view class="w1">
       <view class="icon-pencil icon"></view>
@@ -11,12 +11,13 @@
   </view>
   <view class='table-bottom'></view>
 </block>
+
 <view class="flex table-item w10">
   <view class="w3">外设</view>
   <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{array[index].id}}" range="{{array0}}" class="w10">
+    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
       <view class="picker" style="">
-        {{array[index].name}}
+        {{peripheralRange[index]}}
       </view>
     </picker>
   </view>
@@ -25,3 +26,66 @@
   </view>
 </view>
 <view class='table-bottom'></view>
+
+<view class="flex table-item w10">
+  <view class="w3">所属组织</view>
+  <view class="grow">
+    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
+      <view class="picker">
+        {{peripheralRange[index]}}
+      </view>
+    </picker>
+  </view>
+  <view class="w1">
+    <view class="icon-chevron-down icon"></view>
+  </view>
+</view>
+<view class='table-bottom'></view>
+
+<view class="flex table-item w10">
+  <view class="w3">设备类型</view>
+  <view class="grow">
+    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
+      <view class="picker" style="">
+        {{peripheralRange[index]}}
+      </view>
+    </picker>
+  </view>
+  <view class="w1">
+    <view class="icon-chevron-down icon"></view>
+  </view>
+</view>
+<view class='table-bottom'></view>
+
+<view class="flex table-item w10">
+  <view class="w3">Subkey</view>
+  <view class="grow">
+    <input type='text' name='Subkey' placeholder='Subkey'></input>
+  </view>
+  <view class="w1"></view>
+</view>
+<view class='table-bottom'></view>
+
+
+<view class="flex table-item w10">
+  <view class="w3">关机时间</view>
+  <view class="grow">
+    <picker mode="time" value="{{time}}" bindchange="bindTimeChange" class="w10">
+      <view class="picker" style="">
+        {{time}}
+      </view>
+    </picker>
+  </view>
+  <view class="w1">
+    <view class="icon-chevron-down icon"></view>
+  </view>
+</view>
+<view class='table-bottom'></view>
+<view class="greyBack"></view>
+<view class="flex table-item w10">
+  <view class="w3">备注</view>
+</view>
+<view class='table-bottom' style="left:0;"></view>
+<view class="flex table-item w10">
+  <textarea placeholder='请输入你的备注'></textarea>
+</view>

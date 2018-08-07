@@ -1,47 +1,90 @@
-<view>
-  热销商品排行(月)
-</view>
-<view>
-  本月总销量:{{statisticalData.totalSales}}
-</view>
-<view class="flex">
-  <view wx:for="{{topSku}}" wx:key="*this.SkuId" class="w3">
-    <view>
-      销量:{{item.TotalPayment}}
-      <image src='{{item.PicUrl}}'></image>
+<view wx:if="{{dashboardPermit}}">
+  <image src='/source/images/header.png' class="w10" style="height:190rpx;"></image>
+
+  <view class='absolute w10 center title'>{{title}}</view>
+
+  <view wx:if="{{productsPermit}}">
+    <view class="topSkus-head m3">
+      热销商品排行(月)
+    </view>
+    <view class='flex topSkus-mid m2'>
+      <view>
+        <image src='/source/images/home/sales.png'></image>
+      </view>
+      <text class='text1'>
+    本月总销量
+  </text>
+      <view class='text2'>
+        {{statisticalData.totalSales}}
+      </view>
+    </view>
+    <view class="flex topSkus-body">
+      <view wx:for="{{topSku}}" wx:key="*this.SkuId" class="grow">
+        <view class="w6 auto relative;">
+          <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
+          <image src='{{item.PicUrl}}' class="w10" style="height:120rpx;"></image>
+        </view>
+        <view class='w10 center sales'>
+          <text>销量</text>
+          <view>{{item.TotalPayment}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class='greyBack'></view>
+  </view>
+  <view class="flex flex-wrap statistics center" style="justify-content:center;">
+    <view wx:if="{{adsPermit}}" class="w3">
+      <image src='/source/images/home/ads.png'></image>
+      <view>{{statisticalData.ads}}</view>
+      <view>广告总数</view>
+    </view>
+    <view wx:if="{{softwarePermit}}" class="w3">
+      <image src='/source/images/home/software.png'></image>
+      <view>{{statisticalData.software}}</view>
+      <view>App总数</view>
+    </view>
+    <view wx:if="{{productsPermit}}" class="w3">
+      <image src='/source/images/home/product.png'></image>
+      <view>{{statisticalData.product}}</view>
+      <view>商品总数</view>
+    </view>
+    <view wx:if="{{couponsPermit}}" class="w3">
+      <image src='/source/images/home/coupon.png'></image>
+      <view>{{statisticalData.coupon}}</view>
+      <view>红包总数</view>
+    </view>
+    <view class="w3">
+      <image src='/source/images/home/order.png'></image>
+      <view>{{statisticalData.orderCount}}</view>
+      <view>订单总数</view>
+    </view>
+    <view class="w3">
+      <image src='/source/images/home/member.png'></image>
+      <view>{{statisticalData.member}}</view>
+      <view>会员总数</view>
     </view>
   </view>
-</view>
-
-
-<view class="flex flex-wrap" style="justify-content:center;">
-  <view wx:if="{{statisticalData.ads}}" class="w3">
-    <view>{{statisticalData.ads}}</view>
-    <view>广告总数</view>
+  <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
+    <view class="grow {{selectedTab=='day'?'selected':''}}" bind:tap="changeTab" data-type="day">日</view>
+    <view class="grow {{selectedTab=='month'?'selected':''}}" bind:tap="changeTab" data-type="month">月</view>
+    <view class="grow {{selectedTab=='hour'?'selected':''}}" bind:tap="changeTab" data-type="hour">时</view>
   </view>
-  <view wx:if="{{statisticalData.software}}" class="w3">
-    <view>{{statisticalData.software}}</view>
-    <view>App总数</view>
+  <block wx:if="{{selectedTab=='day'}}">
+    <view class="flex table-item w9 dateSearch">
+      <view class="grow">
+        <picker mode="date" value="{{date}}" bindchange="bindDateChange" class="w10" start="2018-08-30" end="2018-10-33">
+          <view class="picker" style="">
+            {{date}}
+          </view>
+        </picker>
+      </view>
+      <view class="center" style="width:15%;background:#B31786;">
+        <view class="icon-search icon" style="color:#fff;"></view>
+      </view>
+    </view>
+  </block>
+  <view>
+    <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>
   </view>
-  <view wx:if="{{statisticalData.product}}" class="w3">
-    <view>{{statisticalData.product}}</view>
-    <view>商品总数</view>
-  </view>
-  <view wx:if="{{statisticalData.coupon}}" class="w3">
-    <view>{{statisticalData.coupon}}</view>
-    <view>红包总数</view>
-  </view>
-  <view wx:if="{{statisticalData.orderCount}}" class="w3">
-    <view>{{statisticalData.orderCount}}</view>
-    <view>订单总数</view>
-  </view>
-  <view wx:if="{{statisticalData.member}}" class="w3">
-    <view>{{statisticalData.member}}</view>
-    <view>会员总数</view>
-  </view>
-</view>
-
-
-<view>
-  <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>
 </view>

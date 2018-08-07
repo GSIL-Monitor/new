@@ -1,5 +1,6 @@
 /* pages/user/user.wxss */
-.userinfo-avatar {
+
+/* .userinfo-avatar {
   width: 128rpx;
   height: 128rpx;
   margin: 0 auto;
@@ -9,4 +10,28 @@
 .userinfo-nickname {
   color: #aaa;
   text-align: center;
+} */
+
+.headImg {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2rpx solid #fff;
+  top: 150rpx;
+  left: 50rpx;
+}
+
+.name {
+  font-size: 34rpx;
+  color: #fff;
+  top: 165rpx;
+  left: 220rpx;
+}
+
+.store {
+  font-size: 24rpx;
+  color: #ffc1df;
+  top: 230rpx;
+  left: 220rpx;
 }

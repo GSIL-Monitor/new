@@ -3,12 +3,30 @@ const app = getApp()
 const wxCharts = require('../../utils/wxcharts.js')
 var columnChart = null;
 
-
 Page({
   data: {
-    // canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    title: wx.getStorageSync('ouStore') != '暂无' ? wx.getStorageSync('ouStore') : wx.getStorageSync('userName'),
     topSku: [],
-    statisticalData: []
+    statisticalData: [],
+    date: '',
+    get selectedTab() {
+      return 'day'
+    },
+    get adsPermit() {
+      return app.checkPermission('Pages.Tenant.Ads')
+    },
+    get softwarePermit() {
+      return app.checkPermission('Pages.Softwares')
+    },
+    get productsPermit() {
+      return app.checkPermission('Pages.Tenant.Products')
+    },
+    get couponsPermit() {
+      return app.checkPermission('Pages.Tenant.Coupons')
+    },
+    get dashboardPermit(){
+      return app.checkPermission('Pages.Tenant.Dashboard')
+    }
   },
   onShow() {
     app.promise(app.req)({
@@ -30,6 +48,7 @@ Page({
     app.promise(app.req)({
       url: '/s/api/services/app/Report/GetCountReport',
     }).then(res => {
+      console.log(res)
       this.setData({
         'statisticalData.product': res[1].id,
         'statisticalData.ads': res[2].id,
@@ -76,10 +95,21 @@ Page({
         organizationUnitIds: [30552]
       }
     }).then(res => {
-      console.log('报表数据',res)
+      console.log('报表数据', res)
     })
   },
   onReady: function(e) {
+    this.drawCanvas();
+  },
+  onPullDownRefresh: function() {
+    // console.log('pulldown')
+  },
+  onShareAppMessage: function() {
+    return {
+      title: '自定义转发标题'
+    }
+  },
+  drawCanvas() {
     var windowWidth = 320;
     try {
       var res = wx.getSystemInfoSync();
@@ -87,25 +117,25 @@ Page({
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
-
     columnChart = new wxCharts({
       canvasId: 'myCanvas',
       type: 'line', //饼pie,圆ring,线line,柱column,区域area,雷达radar
-      animation: false,
+      animation: true,
       categories: ['2013', '2014', '2015', '2016', '2017'],
+      dataPointShape: true,
       series: [{
-        name: '订单量',
+        name: '订单量(万)',
         color: '#188df0',
         data: [23, 28, 35, 54, 95],
         format: function(val, name) {
-          return val.toFixed(2) + '万';
+          return val.toFixed(2);
         }
       }, {
         name: '人数',
         color: '#aaa',
         data: [2, 3, 4, 5, 9],
         format: function(val, name) {
-          return val + '人';
+          return val;
         }
       }],
       yAxis: {
@@ -128,21 +158,12 @@ Page({
       height: 180,
     });
   },
-  onPullDownRefresh: function() {
-    // console.log('pulldown')
-  },
-  onShareAppMessage: function() {
-    return {
-      title: '自定义转发标题'
-    }
-  },
-  checkCompleted(res) {
-    for (var i of res) {
-      i.name = app.translate(i.name)
-    }
+  changeTab(e) {
+    var i = e.currentTarget.dataset.type;
     this.setData({
-      statisticalData: res
+      selectedTab: i
     })
+    this.drawCanvas();
   }
   // getUserInfo: function(e) {
   //   console.log(e)

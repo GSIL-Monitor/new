@@ -1,25 +1,41 @@
+<image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
+<view class='header ff overflow center'>
+  <view class='flex'>
+    <view class='grow flex'>
+      <view>
+        设备总数
+      </view>
+      <view class='text'>{{totalCount}}</view>
+    </view>
+    <view class='grow relative flex'>
+      <view class='relative'>
+        <view class="point green"></view>
+        开机运行数
+      </view>
+      <view class='text'>{{onlineCount}}</view>
+    </view>
+  </view>
+  <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+  <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;" bind:tap="scan"></image>
+  <view class='w10 scanTip'>扫一扫添加设备</view>
+</view>
 <view class="container">
-  <view>
-    设备总数：{{totalCount}}
-  </view>
-  <view>
-    开机运行数：
-  </view>
   <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
     <view class='flex w8 search-container auto'>
       <view class="icon-search icon"></view>
-      <input placeholder='搜索设备'></input>
+      <input placeholder='搜索设备' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
     </view>
-
   </form>
-  <view class="w9 auto table-container">
+  <view class="auto table-container">
     <block wx:for="{{deviceList}}" wx:key="*this.id">
       <view class="flex table-item" bind:tap="goDevice" data-device="{{item}}">
-        <view class="w1"></view>
+        <view class="w1">
+          <image src='{{item.deviceType.iconUrl}}'></image>
+        </view>
         <view class="grow">{{item.name}}</view>
         <view class="w1 relative">
-          <view wx:if="{{item.status==1}}" class="point absolute green"></view>
-          <view wx:if="{{item.status==0}}" class="point absolute grey"></view>
+          <view wx:if="{{item.status==1}}" class="point absolute-center green"></view>
+          <view wx:if="{{item.status==0}}" class="point absolute-center grey"></view>
         </view>
         <view class="w1">
           <view wx:if="{{item.status==1}}">ON</view>

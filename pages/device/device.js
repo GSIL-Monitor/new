@@ -2,23 +2,38 @@ const app = getApp()
 Page({
   data: {
     stopReachBottom: false,
-    //设备
     deviceList: [],
     totalCount: '',
+    onlineCount: '',
+    filter: '',
     page: 0,
-    MaxResultCount: 12,
+    MaxResultCount: 12
   },
-  //设备
+  bindconfirm(e) {
+    console.log(e)
+    this.setData({
+      filter: e.detail.value,
+      stopReachBottom: false,
+      totalCount: '',
+      deviceList: [],
+      page: 0
+    })
+    this.getDeviceList();
+  },
   getDeviceList(cb) {
     app.promise(app.req)({
       url: '/s/api/services/app/Device/GetDevices',
       data: {
         // Status: 0,
-        // Sorting: 'name',
+        Sorting: 'name',
+        Filter: this.data.filter,
         MaxResultCount: this.data.MaxResultCount,
         SkipCount: this.data.page * this.data.MaxResultCount
       }
     }).then(res => {
+      // console.log(res)
+      res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
+      console.log(res)
       this.setData({
         deviceList: this.data.deviceList.concat(res.items),
         totalCount: res.totalCount
@@ -27,6 +42,33 @@ Page({
       this.setData({
         stopReachBottom: false
       })
+    })
+  },
+  getOnlineDeviceCount() {
+    app.promise(app.req)({
+      url: '/s/api/services/app/Device/GetDevices',
+      data: {
+        Status: 1,
+        // Sorting: 'name',
+        MaxResultCount: 1,
+        SkipCount: 0
+      }
+    }).then(res => {
+      this.setData({
+        onlineCount: res.totalCount
+      })
+    })
+  },
+  scan() {
+    wx.scanCode({
+      scanType: ['qrCode'],
+      success: (res) => {
+        wx.showModal({
+          title: '提示',
+          content: res.result,
+          showCancel: false
+        })
+      }
     })
   },
   goDevice(e) {
@@ -49,19 +91,13 @@ Page({
     //     console.log('没有权限');
     //   }
     // })
-    app.promise(app.req)({
-      url: '/s/api/services/app/User/GetUserPermissionsForEdit',
-      data:{
-        id: wx.getStorageSync('userId')
-      }
-    }).then(res => {
-      wx.setStorageSync('permission', res.grantedPermissionNames);
-      if (app.checkPermission('Pages.Tenant.Devices')) {
-        this.getDeviceList();
-      } else {
-        console.log('没有权限');
-      }
-    })
+
+    if (app.checkPermission('Pages.Tenant.Devices')) {
+      this.getDeviceList();
+      this.getOnlineDeviceCount();
+    } else {
+      console.log('没有权限');
+    }
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -70,10 +106,13 @@ Page({
     this.setData({
       stopReachBottom: false,
       totalCount: '',
+      onlineCount: '',
+      filter: '',
       deviceList: [],
       page: 0
     })
     this.getDeviceList();
+    this.getOnlineDeviceCount();
   },
 
   /**

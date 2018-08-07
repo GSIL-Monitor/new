@@ -78,7 +78,7 @@ Page({
     })
     this.goGetList(this.data.nowTab);
   },
-  goGetList(e) { //第一次获取数据
+  goGetList(e) { 
     switch (e) {
       case 'Detail':
         console.log('显示详情');
@@ -95,14 +95,14 @@ Page({
       case 'Products':
         if (!this.data.totalCount_p) this.getProductList();
         break;
-      default:
-        console.log('没有任何权限,请联系管理员')
+      // default:
+        // console.log('没有任何权限,请联系管理员')
     }
   },
-  goDetailPage(e){
+  goDetailPage(e) {
     // wx.setStorageSync('detailData', e.target.dataset.item);
     // wx.navigateTo({
-      // url: '/pages/device/detail/detail?type='+e.target.dataset.type
+    // url: '/pages/device/detail/detail?type='+e.target.dataset.type
     // })
   },
   //应用
@@ -116,6 +116,11 @@ Page({
         SkipCount: this.data.page_ap * this.data.MaxResultCount_ap
       }
     }).then(res => {
+      console.log(res)
+      res.items = app.changeFileUrl(res.items, 'largeImageUrl');
+      for (var item of res.items) {
+        item.endTime = app.formatTime(item.endTime)
+      }
       this.setData({
         appList: this.data.appList.concat(res.items),
         totalCount_ap: res.totalCount
@@ -138,32 +143,14 @@ Page({
         SkipCount: this.data.page_ad * this.data.MaxResultCount_ad
       }
     }).then(res => {
-      console.log(res);
+      res.items = app.changeFileUrl(res.items, 'fileUrl');
+      for (var item of res.items) {
+        item.creationTime = app.formatTime(item.creationTime)
+      }
+      console.log(res.items)
       this.setData({
         adList: this.data.adList.concat(res.items),
         totalCount_ad: res.totalCount
-      })
-      wx.stopPullDownRefresh();
-      this.setData({
-        stopReachBottom: false
-      })
-    })
-  },
-  //红包
-  getCouponList(cb) {
-    app.promise(app.req)({
-      url: '/s/api/services/app/Device/GetCouponsByDeviceId',
-      data: {
-        DeviceId: this.data.deviceDetail.id,
-        AuditStatus: 'Online',
-        MaxResultCount: this.data.MaxResultCount_c,
-        SkipCount: this.data.page_c * this.data.MaxResultCount_c
-      }
-    }).then(res => {
-      console.log(res);
-      this.setData({
-        couponList: this.data.couponList.concat(res.items),
-        totalCount_c: res.totalCount
       })
       wx.stopPullDownRefresh();
       this.setData({
@@ -183,6 +170,10 @@ Page({
       }
     }).then(res => {
       console.log(res)
+      // res.items = app.changeFileUrl(res.items, 'picUrl');
+      for (var item of res.items) {
+        item.creationTime = app.formatTime(item.creationTime)
+      }
       this.setData({
         productList: this.data.productList.concat(res.items),
         totalCount_p: res.totalCount
@@ -193,6 +184,64 @@ Page({
       })
     })
   },
+
+  //红包
+  getCouponList(cb) {
+    app.promise(app.req)({
+      url: '/s/api/services/app/Device/GetCouponsByDeviceId',
+      data: {
+        DeviceId: this.data.deviceDetail.id,
+        AuditStatus: 'Online',
+        MaxResultCount: this.data.MaxResultCount_c,
+        SkipCount: this.data.page_c * this.data.MaxResultCount_c
+      }
+    }).then(res => {
+      console.log(res);
+      res.items = app.changeFileUrl(res.items, 'pictures');
+      for (var item of res.items) {
+        item.creationTime = app.formatTime(item.creationTime)
+      }
+      this.setData({
+        couponList: this.data.couponList.concat(res.items),
+        totalCount_c: res.totalCount
+      })
+      wx.stopPullDownRefresh();
+      this.setData({
+        stopReachBottom: false
+      })
+    })
+  },
+
+
+  //控制
+  publishEvent(e) {
+    wx.showLoading({
+      title: '处理中,请稍候',
+      mask: true,
+    })
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/s/api/services/app/DeviceAction/PublishEvent',
+      data: {
+        actionName: e.currentTarget.dataset.actionname,
+        deviceId: this.data.deviceDetail.id
+      }
+    }).then(res => {
+      wx.hideLoading();
+      if (res === true) {
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 1500
+        })
+      }
+    })
+  },
+
+  goBack(){
+    wx.navigateBack();
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
