@@ -1,2 +1,83 @@
-<!--pages/device/detail/detail.wxml-->
-<detail-component detailList="{{detailList}}"></detail-component>
+<view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
+
+<block wx:if="{{type=='apps'}}">
+  <image class="w10" src='{{detail.fileUrl}}'></image>
+  <view class='name'>{{detail.name}}</view>
+  <view class='m2 title'>{{detail.alias}}</view>
+  <view class="greyBack"></view>
+  <view class='m3 title'>是否默认启动
+    <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled='{{disabled}}' />
+  </view>
+  <view class='m3 title'>软件设置</view>
+  <textarea class='w10' disabled='{{disabled}}'></textarea>
+</block>
+
+<block wx:if="{{type=='ads'}}">
+  <image class="w10" src='{{detail.fileUrl}}'></image>
+  <view class='name'>{{detail.name}}</view>
+  <view class="greyBack"></view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>针对年龄层次</view>
+    <view class='value'>{{detail.ageScope}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>针对性别</view>
+    <view class='value'>{{}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>标签</view>
+    <block wx:for="{{detail.adsTags}}" wx:key="{{index}}">
+      <view class='value tag'>{{item.name}}</view>
+    </block>
+  </view>
+</block>
+
+<block wx:if="{{type=='products'}}">
+  <image class="w10" src='{{detail.picUrl}}'></image>
+  <view class='name'>{{detail.title}}</view>
+  <view class='title m2' wx:if="{{detail.subTitle}}">{{detail.subTitle}}</view>
+  <view class="greyBack"></view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>编号</view>
+    <view class='value'>{{detail.itemId}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>价格</view>
+    <view class='value'>{{detail.price}}
+      <block wx:if="{{detail.price2}}">-{{detail.price2}}</block>
+    </view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>年龄</view>
+    <view class='value'>{{detail.ageScope}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>标签</view>
+    <block wx:for="{{detail.productTags}}" wx:key="{{index}}">
+      <view class='value tag'>{{item.name}}</view>
+    </block>
+  </view>
+</block>
+
+
+<block wx:if="{{type=='coupons'}}">
+  <image class="w10" src='{{detail.pictures}}'></image>
+  <view class='name'>{{detail.title}}</view>
+  <view class="greyBack"></view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>金额</view>
+    <view class='value'>{{detail.amount}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>开始时间</view>
+    <view class='value'>{{detail.start_time}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>截止时间</view>
+    <view class='value'>{{detail.end_time}}</view>
+  </view>
+  <view class='flex w10 m3'>
+    <view class='title w3'>红包地址</view>
+    <view class='value'>{{detail.url}}</view>
+  </view>
+</block>

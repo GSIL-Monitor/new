@@ -1,1 +1,29 @@
 /* pages/device/detail/detail.wxss */
+
+image {
+  height: 750rpx;
+}
+
+.name {
+  margin-top: 15rpx;
+  margin-bottom: 15rpx;
+  font-size: 34rpx;
+}
+
+.title {
+  font-size: 28rpx;
+  color: #969696;
+}
+
+.value {
+  font-size: 28rpx;
+  color: #333;  
+}
+
+checkbox {
+  margin-left: 50rpx;
+}
+
+.tag{
+  margin-right: 15rpx;
+}

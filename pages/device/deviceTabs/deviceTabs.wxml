@@ -33,24 +33,26 @@
 
 
 <view class="container" wx:if="{{nowTab=='Detail'}}">
-  <device-component class="w10"></device-component>
-  硬件序列号{{deviceDetail.hardwareCode}} 设备编码{{deviceDetail.outerId}} 名称{{deviceDetail.name}} Mac{{deviceDetail.mac}} IP地址{{deviceDetail.intranetIP}} 系统{{deviceDetail.os}} 密钥{{deviceDetail.subKey}} 分辨率{{deviceDetail.resolution_Width}}{{deviceDetail.resolution_Height}}
-  <!-- 外设{{deviceDetail.}} -->
-  地址{{deviceDetail.address}} 电商类别{{deviceDetail.onlineTrafficTarget}} 设备类型{{deviceDetail.deviceTypeId}} 所属组织机构{{deviceDetail.organizationUnitName}} 描述{{deviceDetail.description}}
+  <device-component class="w10" deviceId="{{deviceId}}"></device-component>
+  <!-- 硬件序列号{{deviceDetail.hardwareCode}} 设备编码{{deviceDetail.outerId}} 名称{{deviceDetail.name}} Mac{{deviceDetail.mac}} IP地址{{deviceDetail.intranetIP}} 系统{{deviceDetail.os}} 密钥{{deviceDetail.subKey}} 分辨率{{deviceDetail.resolution_Width}}{{deviceDetail.resolution_Height}}
+  外设{{deviceDetail}}
+  地址{{deviceDetail.address}} 电商类别{{deviceDetail.onlineTrafficTarget}} 设备类型{{deviceDetail.deviceTypeId}} 所属组织机构{{deviceDetail.organizationUnitName}} 描述{{deviceDetail.description}} -->
+
 </view>
 
 <view class="container ads" wx:if="{{nowTab=='Ads'}}">
   <view class="flex w10 flex-wrap">
-    <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+    <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
       <image src='{{item.fileUrl}}'></image>
       <view class='title'>{{item.name}}</view>
       <view class='flex w9 auto m1'>
-        <view class='size'>{{item.creationTime}}</view>
+        <!-- <view class='size'>{{item.creationTime}}</view> -->
+        <view class='w6 size'>年龄:{{item.ageScope}}</view>
+        <view class='type'>{{item.resourceType}}</view>
       </view>
       <view class='flex w9 auto tags'>
-        <view class='type'>{{item.resourceType}}</view>
         <block wx:for="{{item.adsTags}}" wx:key="{{index}}">
-          <view wx:if="{{index<2}}">{{item.name}}</view>
+          <view wx:if="{{index<3}}">{{item.name}}</view>
         </block>
       </view>
     </view>
@@ -60,7 +62,7 @@
 
 <view class="container apps" wx:if="{{nowTab=='Apps'}}">
   <view class="flex w10 flex-wrap">
-    <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+    <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
       <image src='{{item.fileUrl}}'></image>
       <view class='title'>{{item.name}} | {{item.alias}}</view>
       <view class='flex w9 auto m1'>
@@ -75,15 +77,28 @@
 </view>
 
 <view class="container products" wx:if="{{nowTab=='Products'}}">
+  <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
+    <view class='flex search-container auto'>
+      <view class="icon-search icon"></view>
+      <input placeholder='搜索商品' class='w10' confirm-type="search" bindconfirm="bindconfirm" disabled='true' bind:tap="goSearch"></input>
+    </view>
+  </form>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
       <image src='{{item.picUrl}}'></image>
       <view class='title'>{{item.title}}</view>
-      <view class='flex w9 auto m1'>
+      <!-- <view class='flex w9 auto m1'>
         <view class='size'>{{item.creationTime}}</view>
+      </view> -->
+      <view class='flex w9 auto m1'>
+        <view class='size'>价格 : {{item.price}}
+          <block wx:if="{{item.price2}}">-{{item.price2}}</block>
+        </view>
       </view>
-      <view class='flex w9 auto'>
-        <view>价格 : {{item.price}}</view>
+      <view class='flex w9 auto tags'>
+        <block wx:for="{{item.productTags}}" wx:key="{{index}}">
+          <view wx:if="{{index<3}}">{{item.name}}</view>
+        </block>
       </view>
     </view>
   </view>
@@ -93,14 +108,14 @@
 
 <view class="container coupons" wx:if="{{nowTab=='Coupons'}}">
   <view class="flex w10 flex-wrap">
-    <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage">
+    <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
       <image src='{{item.pictures}}'></image>
       <view class='title'>{{item.title}}</view>
       <view class='flex w9 auto m1'>
-        <view class='size'>{{item.creationTime}}</view>
+        <view class='size'>{{item.start_time}}</view>
       </view>
       <view class='flex w9 auto'>
-        <view>数量 : {{item.amount}}</view>
+        <view>金额 : {{item.amount}}</view>
       </view>
     </view>
   </view>

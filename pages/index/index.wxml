@@ -70,20 +70,24 @@
     <view class="grow {{selectedTab=='month'?'selected':''}}" bind:tap="changeTab" data-type="month">月</view>
     <view class="grow {{selectedTab=='hour'?'selected':''}}" bind:tap="changeTab" data-type="hour">时</view>
   </view>
-  <block wx:if="{{selectedTab=='day'}}">
-    <view class="flex table-item w9 dateSearch">
-      <view class="grow">
-        <picker mode="date" value="{{date}}" bindchange="bindDateChange" class="w10" start="2018-08-30" end="2018-10-33">
-          <view class="picker" style="">
-            {{date}}
-          </view>
-        </picker>
-      </view>
-      <view class="center" style="width:15%;background:#B31786;">
-        <view class="icon-search icon" style="color:#fff;"></view>
-      </view>
+  <view class="flex table-item w9 dateSearch">
+    <view class="grow flex relative picker-container">
+      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{startDate}}" bindchange="bindDateStart" class="w5">
+        <view class="picker center" style="">
+          {{startDate}}
+        </view>
+      </picker>
+      <view class="absolute-center">-</view>
+      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{endDate}}" bindchange="bindDateEnd" class="w5">
+        <view class="picker center" style="">
+          {{endDate}}
+        </view>
+      </picker>
     </view>
-  </block>
+    <view class="center" style="width:15%;background:#B31786;">
+      <view class="icon-search icon" style="color:#fff;" catch:tap="drawCanvas"></view>
+    </view>
+  </view>
   <view>
     <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>
   </view>

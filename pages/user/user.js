@@ -32,7 +32,7 @@ Page({
    */
   onReady: function() {
     this.setData({
-      store: wx.getStorageSync('ouStore'),
+      store: wx.getStorageSync('ouStore').name,
       picData: wx.getStorageSync('headPic'),
       userName: wx.getStorageSync('userName')
     })

@@ -5,13 +5,12 @@ var columnChart = null;
 
 Page({
   data: {
-    title: wx.getStorageSync('ouStore') != '暂无' ? wx.getStorageSync('ouStore') : wx.getStorageSync('userName'),
+    title: wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName'),
     topSku: [],
     statisticalData: [],
-    date: '',
-    get selectedTab() {
-      return 'day'
-    },
+    startDate: app.getTime(0, 0, 0, -30).substr(0, 10),
+    endDate: app.getTime().substr(0, 10),
+    selectedTab: 'day',
     get adsPermit() {
       return app.checkPermission('Pages.Tenant.Ads')
     },
@@ -24,7 +23,7 @@ Page({
     get couponsPermit() {
       return app.checkPermission('Pages.Tenant.Coupons')
     },
-    get dashboardPermit(){
+    get dashboardPermit() {
       return app.checkPermission('Pages.Tenant.Dashboard')
     }
   },
@@ -82,21 +81,6 @@ Page({
       })
     })
 
-    //报表数据
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/d/api/services/app/Report/GetBehaviorChartReport',
-      data: {
-        actions: "click,playvideo,enter",
-        categories: null,
-        endTime: "2018-07-20T23:59:59.999Z",
-        startTime: "2018-06-20T00:00:00.000Z",
-        type: "dd",
-        organizationUnitIds: [30552]
-      }
-    }).then(res => {
-      console.log('报表数据', res)
-    })
   },
   onReady: function(e) {
     this.drawCanvas();
@@ -110,6 +94,38 @@ Page({
     }
   },
   drawCanvas() {
+    var startTime, endTime, type
+    if (this.data.selectedTab == "day") {
+      startTime = this.data.startDate + "T00:00:00.000Z";
+      endTime = this.data.endDate + "T23:59:59.999Z";
+      type: 'dd';
+    } else if (this.data.selectedTab == "month") {
+      startTime = this.data.startDate + "T00:00:00.000Z";
+      endTime = this.data.endDate + "T23:59:59.999Z";
+      type: 'mm';
+    } else if (this.data.selectedTab == "hour") {
+      startTime = app.getTime().substr(0, 11) + this.data.startDate + ":00.000Z";
+      endTime = app.getTime().substr(0, 11) + this.data.endDate + ":59.999Z";
+      type: 'hh'
+    }
+
+    //报表数据
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/d/api/services/app/Report/GetBehaviorChartReport',
+      data: {
+        actions: "click,playvideo,enter",
+        categories: null,
+        startTime,
+        endTime,
+        type,
+        organizationUnitIds: [Number(wx.getStorageSync('ouStore').id)]
+        // organizationUnitIds: [40615, 40616]
+      }
+    }).then(res => {
+      console.log('报表数据', res)
+    })
+
     var windowWidth = 320;
     try {
       var res = wx.getSystemInfoSync();
@@ -124,15 +140,15 @@ Page({
       categories: ['2013', '2014', '2015', '2016', '2017'],
       dataPointShape: true,
       series: [{
-        name: '订单量(万)',
-        color: '#188df0',
+        name: '点击次数',
+        color: '#ff1744',
         data: [23, 28, 35, 54, 95],
         format: function(val, name) {
           return val.toFixed(2);
         }
       }, {
-        name: '人数',
-        color: '#aaa',
+        name: '感应人数',
+        color: '#188df0',
         data: [2, 3, 4, 5, 9],
         format: function(val, name) {
           return val;
@@ -140,65 +156,53 @@ Page({
       }],
       yAxis: {
         format: function(val) {
-          return val + '万';
+          return val;
         },
         min: 0
       },
       xAxis: {
-        disableGrid: false,
+        disableGrid: true,
         type: 'calibration'
       },
       extra: {
-        column: {
-          width: 15,
-        },
-        legendTextColor: '#000000'
+        // lineStyle: 'curve',
+        // legendTextColor: '#000000'
       },
       width: windowWidth,
       height: 180,
     });
   },
   changeTab(e) {
-    var i = e.currentTarget.dataset.type;
+    var i = e.currentTarget.dataset.type,
+      startDate, endDate;
+    if (i == 'day') {
+      startDate = app.getTime(0, 0, 0, -30).substr(0, 10)
+      endDate = app.getTime().substr(0, 10)
+    } else if (i == 'month')  {
+      startDate = app.getTime(0, 0, 0, -365).substr(0, 10)
+      endDate = app.getTime().substr(0, 10)
+    } else if (i == 'hour') {
+      startDate = '00:00'
+      endDate = app.getTime().substr(11, 5)
+    }
     this.setData({
-      selectedTab: i
+      selectedTab: i,
+      reportType: i.substr(0, 1) + i.substr(0, 1),
+      startDate,
+      endDate
     })
-    this.drawCanvas();
+    // this.drawCanvas();
+  },
+  bindDateStart(e) {
+    console.log(e.detail.value)
+    this.setData({
+      startDate: e.detail.value
+    })
+  },
+  bindDateEnd(e) {
+    console.log(e.detail.value)
+    this.setData({
+      endDate: e.detail.value
+    })
   }
-  // getUserInfo: function(e) {
-  //   console.log(e)
-  //   app.globalData.userInfo = e.detail.userInfo
-  //   this.setData({
-  //     userInfo: e.detail.userInfo,
-  //     hasUserInfo: true
-  //   })
-  // },
-  // onLoad: function () {
-  //   if (app.globalData.userInfo) {
-  //     this.setData({
-  //       userInfo: app.globalData.userInfo,
-  //       hasUserInfo: true
-  //     })
-  //   } else if (this.data.canIUse) {
-  //     // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-  //     // 所以此处加入 callback 以防止这种情况
-  //     app.userInfoReadyCallback = res => {
-  //       this.setData({
-  //         userInfo: res.userInfo,
-  //         hasUserInfo: true
-  //       })
-  //     }
-  //   } else {
-  //     // 在没有 open-type=getUserInfo 版本的兼容处理
-  //     wx.getUserInfo({
-  //       success: res => {
-  //         app.globalData.userInfo = res.userInfo
-  //         this.setData({
-  //           userInfo: res.userInfo,
-  //           hasUserInfo: true
-  //         })
-  //       }
-  //     })
-  //   }
-  // }
 })

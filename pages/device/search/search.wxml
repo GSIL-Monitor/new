@@ -1,0 +1,31 @@
+<view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
+<view class='fixed w10 searchHead'>
+  <view class='flex search-container w5'>
+    <view class="icon-search icon"></view>
+    <input placeholder='搜索商品' class='w10' confirm-type="search" bindconfirm="bindconfirm" wx:bind="goSearch" value='{{filter}}' maxlength="15" bind:tap="showHistory"></input>
+  </view>
+</view>
+
+<view class='flex history' wx:if="{{!showList}}">
+  <view wx:for="{{historyArray}}" wx:key="*this" catch:tap="bindconfirm" data-detail="{{item}}">{{item}}</view>
+</view>
+
+<view class="container products" wx:if="{{showList}}">
+  <view class="flex w10 flex-wrap">
+    <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
+      <image src='{{item.picUrl}}'></image>
+      <view class='title'>{{item.title}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>价格 : {{item.price}}
+          <block wx:if="{{item.price2}}">-{{item.price2}}</block>
+        </view>
+      </view>
+      <view class='flex w9 auto tags'>
+        <block wx:for="{{item.productTags}}" wx:key="{{index}}">
+          <view wx:if="{{index<3}}">{{item.name}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
+</view>

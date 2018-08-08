@@ -72,7 +72,7 @@ Page({
     })
   },
   goDevice(e) {
-    wx.setStorageSync('deviceDetail', e.currentTarget.dataset.device);
+    wx.setStorageSync('deviceId', e.currentTarget.dataset.deviceid);
     wx.navigateTo({
       url: '/pages/device/deviceTabs/deviceTabs',
     })

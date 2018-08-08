@@ -84,6 +84,24 @@ swiper+.bottom {
   padding-top: 350rpx;
 }
 
+.search-container {
+  margin-top: 25rpx;
+  background: #eee;
+  padding: 15rpx 40rpx;
+  font-size: 26rpx;
+  border-radius: 12rpx;
+}
+
+.search-container view {
+  color: #b2b2b2;
+  margin-right: 8rpx;
+  top: 16rpx;
+  position: relative;
+  left: -8rpx;
+}
+
+
+
 .ads, .apps, .coupons, .products {
   width: 690rpx;
   margin: 0 auto;
@@ -126,20 +144,20 @@ swiper+.bottom {
   font-size: 16rpx;
   color: #ff1744;
   background: #f2f2f2;
-  border-radius: 10rpx;
-  padding: 5rpx;
+  border-radius: 16rpx;
+  padding: 5rpx 10rpx;
 }
 
-.ads .tags {
+.ads .tags,.products .tags {
   font-size: 16rpx;
   color: #ff1744;
-  margin-top: 20rpx;
+  margin-top: 15rpx;
 }
 
-.ads .tags view {
+.ads .tags view,.products .tags view {
   border: 1rpx solid #ff1744;
   border-radius: 10rpx;
-  padding: 0 5rpx;
+  padding: 0 10rpx;
   margin-right: 10rpx;
 }
 

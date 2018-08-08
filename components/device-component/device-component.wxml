@@ -1,36 +1,39 @@
 <!--components/device-component/device-component.wxml-->
-<block wx:for="{{inputList}}" wx:key="*this">
+<form>
+  <block wx:for="{{inputList}}" wx:key="{{index}}">
+    <view class="flex table-item w10">
+      <view class="w3">{{item.name}}</view>
+      <view class="grow">
+        <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}' disabled='{{disabled}}' value='{{deviceDetail[item.inputName]}}'></input>
+      </view>
+      <view class="w1">
+        <view class="icon-pencil icon"></view>
+      </view>
+    </view>
+    <view class='table-bottom'></view>
+  </block>
+
   <view class="flex table-item w10">
-    <view class="w3">{{item.name}}</view>
+    <view class="w3">外设</view>
     <view class="grow">
-      <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}'></input>
+      <picker bindchange="bindPickerChange" value="{{peripheralArray[index].selectKey}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
+        <view class="picker" style="">
+          <block wx:for="{{peripheralsValueArr}}" wx:key="{{index}}">
+            {{item.name}}
+          </block>
+        </view>
+      </picker>
     </view>
     <view class="w1">
-      <view class="icon-pencil icon"></view>
+      <view class="icon-chevron-down icon"></view>
     </view>
   </view>
   <view class='table-bottom'></view>
-</block>
 
-<view class="flex table-item w10">
-  <view class="w3">外设</view>
-  <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
-      <view class="picker" style="">
-        {{peripheralRange[index]}}
-      </view>
-    </picker>
-  </view>
-  <view class="w1">
-    <view class="icon-chevron-down icon"></view>
-  </view>
-</view>
-<view class='table-bottom'></view>
-
-<view class="flex table-item w10">
+  <!-- <view class="flex table-item w10">
   <view class="w3">所属组织</view>
   <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
+    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
       <view class="picker">
         {{peripheralRange[index]}}
       </view>
@@ -40,52 +43,74 @@
     <view class="icon-chevron-down icon"></view>
   </view>
 </view>
-<view class='table-bottom'></view>
+<view class='table-bottom'></view> -->
 
-<view class="flex table-item w10">
-  <view class="w3">设备类型</view>
-  <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10">
-      <view class="picker" style="">
-        {{peripheralRange[index]}}
-      </view>
-    </picker>
+  <view class="flex table-item w10">
+    <view class="w3">设备类型</view>
+    <view class="grow">
+      <picker bindchange="bindTypeChange" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled}}'>
+        <view class="picker" style="">
+          {{deviceTypeRange?deviceTypeRange[typeIndex]:deviceDetail.deviceType.name}}
+        </view>
+      </picker>
+    </view>
+    <view class="w1">
+      <view class="icon-chevron-down icon"></view>
+    </view>
   </view>
-  <view class="w1">
-    <view class="icon-chevron-down icon"></view>
-  </view>
-</view>
-<view class='table-bottom'></view>
+  <view class='table-bottom'></view>
 
-<view class="flex table-item w10">
-  <view class="w3">Subkey</view>
-  <view class="grow">
-    <input type='text' name='Subkey' placeholder='Subkey'></input>
+  <view class="flex table-item w10">
+    <view class="w3">关机时间</view>
+    <view class="grow">
+      <picker mode="time" value="{{time}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled}}'>
+        <view class="picker" style="">
+          {{time}}
+        </view>
+      </picker>
+    </view>
+    <view class="w1">
+      <view class="icon-chevron-down icon"></view>
+    </view>
   </view>
-  <view class="w1"></view>
-</view>
-<view class='table-bottom'></view>
+  <view class='table-bottom'></view>
 
+  <view class="flex table-item w10">
+    <view class="w3">所属组织</view>
+    <view class="grow">
+      <input type='text' name='organizationUnitName' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
+    </view>
+    <view class="w1"></view>
+  </view>
+  <view class='table-bottom'></view>
 
-<view class="flex table-item w10">
-  <view class="w3">关机时间</view>
-  <view class="grow">
-    <picker mode="time" value="{{time}}" bindchange="bindTimeChange" class="w10">
-      <view class="picker" style="">
-        {{time}}
-      </view>
-    </picker>
+  <view class="flex table-item w10">
+    <view class="w3">Subkey</view>
+    <view class="grow">
+      <input type='text' name='Subkey' placeholder='暂无' disabled='true'></input>
+    </view>
+    <view class="w1"></view>
   </view>
-  <view class="w1">
-    <view class="icon-chevron-down icon"></view>
+  <view class='table-bottom'></view>
+
+  <view class="greyBack"></view>
+  <view class="flex table-item w10">
+    <view class="w3">备注</view>
   </view>
-</view>
-<view class='table-bottom'></view>
-<view class="greyBack"></view>
-<view class="flex table-item w10">
-  <view class="w3">备注</view>
-</view>
-<view class='table-bottom' style="left:0;"></view>
-<view class="flex table-item w10">
-  <textarea placeholder='请输入你的备注'></textarea>
-</view>
+  <view class='table-bottom' style="left:0;"></view>
+  <view class="flex table-item w10">
+    <textarea placeholder='请输入你的备注' name='description' value='{{deviceDetail.description}}' disabled='{{disabled}}'></textarea>
+  </view>
+  <view class='table-bottom' style="left:0;"></view>
+
+  <view style='height:98rpx;'></view>
+
+  <view class='flex fixed center w10 save' wx:if="{{!disabled}}">
+    <view class='grow' bind:tap="cancelEdit">取消</view>
+    <view class='grow' bind:tap="goSave">保存</view>
+  </view>
+  <view class='flex fixed center w10 save' wx:if="{{disabled}}">
+    <view class='grow' bind:tap="goEdit">编辑</view>
+  </view>
+
+</form>

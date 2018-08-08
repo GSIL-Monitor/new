@@ -1,22 +1,22 @@
 {
   "pages": [
-    "pages/login/login",
-    "pages/user/user",
-    "pages/device/deviceTabs/deviceTabs",
     "pages/device/device",
+    "pages/login/login",
+    "pages/device/deviceTabs/deviceTabs",
+    "pages/device/search/search",
+    "pages/device/detail/detail",
+    "pages/user/user",
     "pages/logs/logs",
-    "pages/index/index",
-    "pages/device/detail/detail"    
+    "pages/index/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "智慧门店小帮手",
     "navigationBarTextStyle": "black",
-
     "navigationBarTextStyle?": "white",
     "backgroundTextStyle?": "light",
-    "navigationStyle":"custom"
+    "navigationStyle": "custom"
   },
   "tabBar": {
     "color": "#ccc",

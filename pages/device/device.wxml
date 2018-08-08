@@ -23,12 +23,12 @@
   <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
     <view class='flex w8 search-container auto'>
       <view class="icon-search icon"></view>
-      <input placeholder='搜索设备' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
+      <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
     </view>
   </form>
   <view class="auto table-container">
     <block wx:for="{{deviceList}}" wx:key="*this.id">
-      <view class="flex table-item" bind:tap="goDevice" data-device="{{item}}">
+      <view class="flex table-item" bind:tap="goDevice" data-deviceId="{{item.id}}">
         <view class="w1">
           <image src='{{item.deviceType.iconUrl}}'></image>
         </view>

@@ -2,7 +2,7 @@ const app = getApp()
 Page({
   data: {
     currentIndex: 0,
-    deviceDetail: {},
+    deviceId: {},
     permissions: {
       Detail: {
         name: '详情',
@@ -78,7 +78,7 @@ Page({
     })
     this.goGetList(this.data.nowTab);
   },
-  goGetList(e) { 
+  goGetList(e) {
     switch (e) {
       case 'Detail':
         console.log('显示详情');
@@ -95,22 +95,25 @@ Page({
       case 'Products':
         if (!this.data.totalCount_p) this.getProductList();
         break;
-      // default:
+        // default:
         // console.log('没有任何权限,请联系管理员')
     }
   },
   goDetailPage(e) {
-    // wx.setStorageSync('detailData', e.target.dataset.item);
-    // wx.navigateTo({
-    // url: '/pages/device/detail/detail?type='+e.target.dataset.type
-    // })
+    wx.setStorageSync('detailData', {
+      type: e.currentTarget.dataset.type,
+      detail: e.currentTarget.dataset.item
+    });
+    wx.navigateTo({
+      url: '/pages/device/detail/detail'
+    })
   },
   //应用
   getAppList(cb) {
     app.promise(app.req)({
       url: '/s/api/services/app/Device/GetSoftwaresByDeviceId',
       data: {
-        DeviceId: this.data.deviceDetail.id,
+        DeviceId: this.data.deviceId,
         AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_ap,
         SkipCount: this.data.page_ap * this.data.MaxResultCount_ap
@@ -131,13 +134,12 @@ Page({
       })
     })
   },
-
   //广告
   getAdList(cb) {
     app.promise(app.req)({
       url: '/s/api/services/app/Device/GetAdsByDeviceId',
       data: {
-        DeviceId: this.data.deviceDetail.id,
+        DeviceId: this.data.deviceId,
         AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_ad,
         SkipCount: this.data.page_ad * this.data.MaxResultCount_ad
@@ -163,7 +165,7 @@ Page({
     app.promise(app.req)({
       url: '/s/api/services/app/Device/GetProductsByDeviceId',
       data: {
-        DeviceId: this.data.deviceDetail.id,
+        DeviceId: this.data.deviceId,
         AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_p,
         SkipCount: this.data.page_p * this.data.MaxResultCount_p
@@ -184,13 +186,17 @@ Page({
       })
     })
   },
-
+  goSearch(){
+    wx.navigateTo({
+      url: '/pages/device/search/search'
+    })
+  },
   //红包
   getCouponList(cb) {
     app.promise(app.req)({
       url: '/s/api/services/app/Device/GetCouponsByDeviceId',
       data: {
-        DeviceId: this.data.deviceDetail.id,
+        DeviceId: this.data.deviceId,
         AuditStatus: 'Online',
         MaxResultCount: this.data.MaxResultCount_c,
         SkipCount: this.data.page_c * this.data.MaxResultCount_c
@@ -200,6 +206,8 @@ Page({
       res.items = app.changeFileUrl(res.items, 'pictures');
       for (var item of res.items) {
         item.creationTime = app.formatTime(item.creationTime)
+        item.start_time = app.formatTime(item.start_time)
+        item.end_time = app.formatTime(item.end_time)
       }
       this.setData({
         couponList: this.data.couponList.concat(res.items),
@@ -211,8 +219,6 @@ Page({
       })
     })
   },
-
-
   //控制
   publishEvent(e) {
     wx.showLoading({
@@ -224,7 +230,7 @@ Page({
       url: '/s/api/services/app/DeviceAction/PublishEvent',
       data: {
         actionName: e.currentTarget.dataset.actionname,
-        deviceId: this.data.deviceDetail.id
+        deviceId: this.data.deviceId
       }
     }).then(res => {
       wx.hideLoading();
@@ -237,8 +243,7 @@ Page({
       }
     })
   },
-
-  goBack(){
+  goBack() {
     wx.navigateBack();
   },
 
@@ -247,7 +252,7 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      deviceDetail: wx.getStorageSync('deviceDetail')
+      deviceId: wx.getStorageSync('deviceId')
     })
     // app.promise(app.req)({
     //   url: '/s/AbpUserConfiguration/GetAll'
@@ -297,13 +302,17 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    wx.removeStorageSync('deviceDetail')
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
+    if (this.data.nowTab == "Detail" || this.data.nowTab == "Control") {
+      wx.stopPullDownRefresh();
+      return
+    }
     this.setData({
       stopReachBottom: false,
       totalCount_ap: '',

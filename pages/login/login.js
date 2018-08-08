@@ -104,7 +104,7 @@ Page({
         url: '/s/api/services/app/OrganizationUnit/GetCurrentUserOrganizationUnits'
       }).then(ou => {
         wx.hideLoading()
-        wx.setStorageSync('ouStore', ou.items[0] ? ou.items[0].name : '暂无')
+        wx.setStorageSync('ouStore', { name: ou.items[0] ? ou.items[0].name : '暂无', id: ou.items[0] ? ou.items[0].value : ''})
         wx.setStorageSync('userName', res.user.name)
         wx.switchTab({
           url: '../index/index'
