@@ -69,14 +69,14 @@
 
 .statistics {
   margin-bottom: 75rpx;
+  justify-content:center;
 }
 
 .statistics>.w3 {
-  /* width:auto; */
   flex-grow: 1;
   padding: 25rpx 0;
-  /* outline: 1px solid #e2e2e2; */
   border-bottom: 1px solid #e2e2e2;
+  height: 165rpx;
 }
 
 .statistics>.w3:nth-child(1), .statistics>.w3:nth-child(4) {
@@ -121,4 +121,14 @@ picker {
 .selected {
   color: #fff;
   background: #b31786;
+}
+
+
+canvas{
+  height: 550rpx;
+  width: 100%;
+}
+
+.canvasContainer{
+  position: relative;
 }

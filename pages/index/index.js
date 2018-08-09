@@ -1,14 +1,13 @@
 //获取应用实例
 const app = getApp()
 const wxCharts = require('../../utils/wxcharts.js')
-var columnChart = null;
 
 Page({
   data: {
     title: wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName'),
     topSku: [],
     statisticalData: [],
-    startDate: app.getTime(0, 0, 0, -30).substr(0, 10),
+    startDate: app.getTime(0, 0, 0, -10).substr(0, 10),
     endDate: app.getTime().substr(0, 10),
     selectedTab: 'day',
     get adsPermit() {
@@ -83,73 +82,88 @@ Page({
 
   },
   onReady: function(e) {
-    this.drawCanvas();
+    this.drawCanvas([], [], []);
+    this.getChartReport();
   },
   onPullDownRefresh: function() {
-    // console.log('pulldown')
+    wx.reLaunch({
+      url: '../index/index',
+    })
   },
   onShareAppMessage: function() {
     return {
       title: '自定义转发标题'
     }
   },
-  drawCanvas() {
-    var startTime, endTime, type
+  getChartReport() {
+    if (this.data.loadingCanvas) return
+    var startTime, endTime, type;
     if (this.data.selectedTab == "day") {
       startTime = this.data.startDate + "T00:00:00.000Z";
       endTime = this.data.endDate + "T23:59:59.999Z";
-      type: 'dd';
+      type = 'dd';
     } else if (this.data.selectedTab == "month") {
       startTime = this.data.startDate + "T00:00:00.000Z";
       endTime = this.data.endDate + "T23:59:59.999Z";
-      type: 'mm';
+      type = 'mm';
     } else if (this.data.selectedTab == "hour") {
       startTime = app.getTime().substr(0, 11) + this.data.startDate + ":00.000Z";
       endTime = app.getTime().substr(0, 11) + this.data.endDate + ":59.999Z";
-      type: 'hh'
+      type = 'hh';
     }
-
+    this.setData({
+      loadingCanvas: true
+    })
     //报表数据
     app.promise(app.req)({
       method: 'POST',
       url: '/d/api/services/app/Report/GetBehaviorChartReport',
       data: {
-        actions: "click,playvideo,enter",
+        actions: "click,enter",
         categories: null,
         startTime,
         endTime,
         type,
         organizationUnitIds: [Number(wx.getStorageSync('ouStore').id)]
-        // organizationUnitIds: [40615, 40616]
+        // organizationUnitIds: [30552, 30564, 40580, 40583, 30560, 10058, 30558, 10054, 30550, 30551, 30561, 30559, 10057, 10055, 10053, 10056, 10052]
       }
     }).then(res => {
+      this.setData({
+        loadingCanvas: false
+      })
       console.log('报表数据', res)
+      var categories = res[0].chartItems.map((item) => {
+        return item.date
+      })
+      var clickData = res[0].chartItems.map((item) => {
+        return item.value
+      })
+      var enterData = res[1].chartItems.map((item) => {
+        return item.value
+      })
+      this.drawCanvas(categories, clickData, enterData)
     })
 
-    var windowWidth = 320;
-    try {
-      var res = wx.getSystemInfoSync();
-      windowWidth = res.windowWidth;
-    } catch (e) {
-      console.error('getSystemInfoSync failed!');
-    }
-    columnChart = new wxCharts({
+  },
+  drawCanvas(categories, clickData, enterData) {
+    var windowWidth = wx.getSystemInfoSync().windowWidth;
+    var columnChart = new wxCharts({
       canvasId: 'myCanvas',
       type: 'line', //饼pie,圆ring,线line,柱column,区域area,雷达radar
-      animation: true,
-      categories: ['2013', '2014', '2015', '2016', '2017'],
+      animation: false,
+      categories,
       dataPointShape: true,
       series: [{
         name: '点击次数',
         color: '#ff1744',
-        data: [23, 28, 35, 54, 95],
+        data: clickData,
         format: function(val, name) {
-          return val.toFixed(2);
+          return val;
         }
       }, {
         name: '感应人数',
         color: '#188df0',
-        data: [2, 3, 4, 5, 9],
+        data: enterData,
         format: function(val, name) {
           return val;
         }
@@ -158,27 +172,28 @@ Page({
         format: function(val) {
           return val;
         },
-        min: 0
+        min: 0,
+        max: 10
       },
       xAxis: {
         disableGrid: true,
         type: 'calibration'
       },
       extra: {
-        // lineStyle: 'curve',
-        // legendTextColor: '#000000'
+        lineStyle: 'curve',
+        // legendTextColor: 'red'
       },
       width: windowWidth,
-      height: 180,
+      height: windowWidth * 2 / 3,
     });
   },
   changeTab(e) {
     var i = e.currentTarget.dataset.type,
       startDate, endDate;
     if (i == 'day') {
-      startDate = app.getTime(0, 0, 0, -30).substr(0, 10)
+      startDate = app.getTime(0, 0, 0, -10).substr(0, 10)
       endDate = app.getTime().substr(0, 10)
-    } else if (i == 'month')  {
+    } else if (i == 'month') {
       startDate = app.getTime(0, 0, 0, -365).substr(0, 10)
       endDate = app.getTime().substr(0, 10)
     } else if (i == 'hour') {
@@ -191,7 +206,8 @@ Page({
       startDate,
       endDate
     })
-    // this.drawCanvas();
+    // this.drawCanvas([],[],[])
+    this.getChartReport()
   },
   bindDateStart(e) {
     console.log(e.detail.value)

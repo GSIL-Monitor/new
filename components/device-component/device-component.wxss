@@ -7,28 +7,26 @@
   white-space: nowrap;
 }
 
-.icon,.table-item .w3{
-  color:#969696;
+.icon, .table-item .w3 {
+  color: #969696;
 }
-
 
 .save {
   bottom: 0;
   font-size: 34rpx;
+  z-index: 50;
 }
 
 .save view {
   height: 98rpx;
   line-height: 98rpx;
-}
-
-.save view:nth-child(1) {
   color: #969696;
   background: #fff;
   box-shadow: 0 1px 6px 0 rgba(118, 118, 118, 0.50);
 }
 
-.save view:nth-child(2) {
+.save button {
   color: #fff;
   background-image: linear-gradient(165deg, #f04095 2%, #c3228a 73%, #b31785 100%);
+  border-radius: 0;
 }

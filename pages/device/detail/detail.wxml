@@ -1,7 +1,7 @@
 <view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
 
 <block wx:if="{{type=='apps'}}">
-  <image class="w10" src='{{detail.fileUrl}}'></image>
+  <image class="w10" src='{{detail.largeImageUrl}}'></image>
   <view class='name'>{{detail.name}}</view>
   <view class='m2 title'>{{detail.alias}}</view>
   <view class="greyBack"></view>

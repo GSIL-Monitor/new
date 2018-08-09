@@ -1,5 +1,5 @@
 <!--components/device-component/device-component.wxml-->
-<form>
+<form bindsubmit="goSave">
   <block wx:for="{{inputList}}" wx:key="{{index}}">
     <view class="flex table-item w10">
       <view class="w3">{{item.name}}</view>
@@ -16,7 +16,7 @@
   <view class="flex table-item w10">
     <view class="w3">外设</view>
     <view class="grow">
-      <picker bindchange="bindPickerChange" value="{{peripheralArray[index].selectKey}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
+      <picker name="peripheralIds" bindchange="bindPickerChange" value="{{peripheralsValueArr}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
         <view class="picker" style="">
           <block wx:for="{{peripheralsValueArr}}" wx:key="{{index}}">
             {{item.name}}
@@ -48,7 +48,7 @@
   <view class="flex table-item w10">
     <view class="w3">设备类型</view>
     <view class="grow">
-      <picker bindchange="bindTypeChange" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled}}'>
+      <picker bindchange="bindTypeChange" name="deviceTypeId" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled}}'>
         <view class="picker" style="">
           {{deviceTypeRange?deviceTypeRange[typeIndex]:deviceDetail.deviceType.name}}
         </view>
@@ -63,9 +63,9 @@
   <view class="flex table-item w10">
     <view class="w3">关机时间</view>
     <view class="grow">
-      <picker mode="time" value="{{time}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled}}'>
+      <picker mode="time" name="shutdownTime" value="{{deviceDetail.shutdownTime}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled}}'>
         <view class="picker" style="">
-          {{time}}
+          {{deviceDetail.shutdownTime}}
         </view>
       </picker>
     </view>
@@ -78,7 +78,7 @@
   <view class="flex table-item w10">
     <view class="w3">所属组织</view>
     <view class="grow">
-      <input type='text' name='organizationUnitName' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
+      <input type='text' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
     </view>
     <view class="w1"></view>
   </view>
@@ -87,7 +87,7 @@
   <view class="flex table-item w10">
     <view class="w3">Subkey</view>
     <view class="grow">
-      <input type='text' name='Subkey' placeholder='暂无' disabled='true'></input>
+      <input type='text' placeholder='暂无' disabled='true'></input>
     </view>
     <view class="w1"></view>
   </view>
@@ -107,7 +107,8 @@
 
   <view class='flex fixed center w10 save' wx:if="{{!disabled}}">
     <view class='grow' bind:tap="cancelEdit">取消</view>
-    <view class='grow' bind:tap="goSave">保存</view>
+    <!-- <view class='grow' bind:tap="goSave">保存</view> -->
+    <button class='grow' form-type='submit'>保存</button>
   </view>
   <view class='flex fixed center w10 save' wx:if="{{disabled}}">
     <view class='grow' bind:tap="goEdit">编辑</view>

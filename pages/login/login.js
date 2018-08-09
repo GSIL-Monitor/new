@@ -126,10 +126,7 @@ Page({
       wx.showModal({
         title: '提示',
         content: '登陆已过期，请重新登陆',
-        showCancel: false,
-        success: function(res) {
-
-        }
+        showCancel: false
       })
     }
   },

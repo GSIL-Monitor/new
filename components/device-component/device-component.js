@@ -13,7 +13,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    deviceDetail: [],
+    deviceDetail: {},
     disabled: true,
     inputList: [{
       name: '设备编号',
@@ -49,10 +49,8 @@ Component({
       inputName: 'resolution_Height'
     }],
     deviceTypeArray: [],
-
     peripheralArray: [],
-    peripheralsValueArr:[],
-    time: ''
+    peripheralsValueArr: []
   },
 
   /**
@@ -61,21 +59,21 @@ Component({
   methods: {
     bindPickerChange: function(e) {
       var index = e.detail.value;
-      for (var i = 0; i < this.data.peripheralsValueArr.length;i++){
-        if(this.data.peripheralsValueArr[i].id == this.data.peripheralArray[index].selectKey){
+      for (var i = 0; i < this.data.peripheralsValueArr.length; i++) {
+        if (this.data.peripheralsValueArr[i].id == this.data.peripheralArray[index].selectKey) {
           var repeatIndex = i
         }
       }
-      if(repeatIndex){
+      if (repeatIndex) {
         this.data.peripheralsValueArr.splice(repeatIndex, 1)
-      }else{
+      } else {
         this.data.peripheralsValueArr.unshift({
           name: this.data.peripheralArray[index].selectValue,
           id: this.data.peripheralArray[index].selectKey
         })
       }
       this.setData({
-        peripheralsValueArr: this.data.peripheralsValueArr,        
+        peripheralsValueArr: this.data.peripheralsValueArr,
         index
       })
     },
@@ -86,7 +84,7 @@ Component({
     },
     bindTimeChange: function(e) {
       this.setData({
-        time: e.detail.value
+        'deviceDetail.shutdownTime': e.detail.value
       })
     },
     goEdit() {
@@ -136,18 +134,49 @@ Component({
       })
 
     },
-    goSave() {
-      console.log('保存')
+    goSave(e) {
+      var submitObj = Object.assign({}, e.detail.value);
+      if (submitObj.peripheralIds) {
+        submitObj.peripheralIds = submitObj.peripheralIds.map((item) => {
+          return item.id
+        })
+      }
+      if (submitObj.shutdownTime) {
+        submitObj.shutdownTime = '2017-12-31T' + submitObj.shutdownTime + ':00'
+      }
+      submitObj.id = this.data.deviceId;
+      wx.showLoading({
+        title: '处理中,请稍候',
+        mask: true
+      })
+      app.promise(app.req)({
+        method: 'PUT',
+        url: '/s/api/services/app/Device/UpdateDevice',
+        data: submitObj
+      }).then(res => {
+        wx.hideLoading()
+        wx.showToast({
+          title: '保存成功',
+          duration: 1000
+        })
+        this.setData({
+          initDeviceDetail: Object.assign({}, this.data.deviceDetail),
+          disabled: true,
+          initPeripheralsValueArr: this.data.peripheralsValueArr.concat()
+        })
+      })
     },
     cancelEdit() {
       this.setData({
-        deviceId: wx.getStorageSync('deviceId'),
-        disabled: true
+        deviceDetail: Object.assign({}, this.data.initDeviceDetail),
+        disabled: true,
+        peripheralsValueArr: this.data.initPeripheralsValueArr.concat()
       })
     }
   },
   ready() {
     wx.showLoading({
+      title: '加载中,请稍候',
       mask: true,
     })
     app.promise(app.req)({
@@ -156,16 +185,22 @@ Component({
         Id: this.data.deviceId
       }
     }).then(res => {
-      console.log(res)
+      wx.hideLoading()
       var peripheralsValueArr = [];
       for (var i = 0; i < res.peripherals.length; i++) {
-        peripheralsValueArr.push({ name: res.peripherals[i].peripheral.name, id: res.peripherals[i].peripheralId})
+        peripheralsValueArr.push({
+          name: res.peripherals[i].peripheral.name,
+          id: res.peripherals[i].peripheralId
+        })
       }
-      wx.hideLoading()
+      if (res.shutdownTime) res.shutdownTime = res.shutdownTime.slice(11, 16)
       this.setData({
-        deviceDetail: res,
-        peripheralsValueArr
+        deviceDetail: Object.assign({}, res),
+        initDeviceDetail: Object.assign({}, res),
+        peripheralsValueArr,
+        initPeripheralsValueArr: peripheralsValueArr.concat()
       })
+
     })
   }
 })

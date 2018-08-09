@@ -14,7 +14,6 @@ Page({
     this.setData({
       filter: e.detail.value,
       stopReachBottom: false,
-      totalCount: '',
       deviceList: [],
       page: 0
     })
@@ -105,7 +104,6 @@ Page({
   onPullDownRefresh: function() {
     this.setData({
       stopReachBottom: false,
-      totalCount: '',
       onlineCount: '',
       filter: '',
       deviceList: [],

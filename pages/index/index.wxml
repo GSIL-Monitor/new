@@ -33,7 +33,7 @@
 
     <view class='greyBack'></view>
   </view>
-  <view class="flex flex-wrap statistics center" style="justify-content:center;">
+  <view class="flex flex-wrap statistics center">
     <view wx:if="{{adsPermit}}" class="w3">
       <image src='/source/images/home/ads.png'></image>
       <view>{{statisticalData.ads}}</view>
@@ -85,10 +85,10 @@
       </picker>
     </view>
     <view class="center" style="width:15%;background:#B31786;">
-      <view class="icon-search icon" style="color:#fff;" catch:tap="drawCanvas"></view>
+      <view class="icon-search icon" style="color:#fff;" catch:tap="getChartReport"></view>
     </view>
   </view>
-  <view>
-    <canvas canvas-id="myCanvas" style="height:300px;width:100%"></canvas>
+  <view class='relative'>
+    <canvas canvas-id="myCanvas" style="opacity:{{loadingCanvas?'0.5':'1'}}"></canvas>
   </view>
 </view>

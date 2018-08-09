@@ -63,7 +63,7 @@
 <view class="container apps" wx:if="{{nowTab=='Apps'}}">
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
-      <image src='{{item.fileUrl}}'></image>
+      <image src='{{item.largeImageUrl}}'></image>
       <view class='title'>{{item.name}} | {{item.alias}}</view>
       <view class='flex w9 auto m1'>
         <view class='size'>{{item.endTime}}</view>

@@ -1,13 +1,13 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/device/device",
     "pages/login/login",
     "pages/device/deviceTabs/deviceTabs",
     "pages/device/search/search",
     "pages/device/detail/detail",
     "pages/user/user",
-    "pages/logs/logs",
-    "pages/index/index"
+    "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "dark",

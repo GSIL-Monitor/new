@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    disabled:true,
     get type() {
       return wx.getStorageSync('detailData').type
     },
