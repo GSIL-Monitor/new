@@ -17,7 +17,7 @@
     <view class="w3">外设</view>
     <view class="grow">
       <picker name="peripheralIds" bindchange="bindPickerChange" value="{{peripheralsValueArr}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
-        <view class="picker" style="">
+        <view class="picker">
           <block wx:for="{{peripheralsValueArr}}" wx:key="{{index}}">
             {{item.name}}
           </block>
@@ -49,7 +49,7 @@
     <view class="w3">设备类型</view>
     <view class="grow">
       <picker bindchange="bindTypeChange" name="deviceTypeId" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled}}'>
-        <view class="picker" style="">
+        <view class="picker">
           {{deviceTypeRange?deviceTypeRange[typeIndex]:deviceDetail.deviceType.name}}
         </view>
       </picker>
@@ -64,7 +64,7 @@
     <view class="w3">关机时间</view>
     <view class="grow">
       <picker mode="time" name="shutdownTime" value="{{deviceDetail.shutdownTime}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled}}'>
-        <view class="picker" style="">
+        <view class="picker">
           {{deviceDetail.shutdownTime}}
         </view>
       </picker>
@@ -99,7 +99,7 @@
   </view>
   <view class='table-bottom' style="left:0;"></view>
   <view class="flex table-item w10">
-    <textarea placeholder='请输入你的备注' name='description' value='{{deviceDetail.description}}' disabled='{{disabled}}'></textarea>
+    <input type="text" placeholder='请输入你的备注' name='description' value='{{deviceDetail.description}}' disabled='{{disabled}}'></input>
   </view>
   <view class='table-bottom' style="left:0;"></view>
 

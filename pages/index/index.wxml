@@ -73,13 +73,13 @@
   <view class="flex table-item w9 dateSearch">
     <view class="grow flex relative picker-container">
       <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{startDate}}" bindchange="bindDateStart" class="w5">
-        <view class="picker center" style="">
+        <view class="picker center">
           {{startDate}}
         </view>
       </picker>
       <view class="absolute-center">-</view>
       <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{endDate}}" bindchange="bindDateEnd" class="w5">
-        <view class="picker center" style="">
+        <view class="picker center">
           {{endDate}}
         </view>
       </picker>
