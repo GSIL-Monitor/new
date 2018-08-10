@@ -4,12 +4,14 @@ const wxCharts = require('../../utils/wxcharts.js')
 
 Page({
   data: {
-    title: wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName'),
     topSku: [],
     statisticalData: [],
     startDate: app.getTime(0, 0, 0, -10).substr(0, 10),
     endDate: app.getTime().substr(0, 10),
     selectedTab: 'day',
+    get title(){
+      return wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
+    },
     get adsPermit() {
       return app.checkPermission('Pages.Tenant.Ads')
     },

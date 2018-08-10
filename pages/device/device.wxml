@@ -19,6 +19,16 @@
   <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;" bind:tap="scan"></image>
   <view class='w10 scanTip'>扫一扫添加设备</view>
 </view>
+
+
+<view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
+  <view>
+    <image src='/source/images/device/暂无设备@2x.png'></image>
+  </view>
+  <text>暂无设备</text>
+</view>
+
+
 <view class="container">
   <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
     <view class='flex w8 search-container auto'>

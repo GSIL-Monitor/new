@@ -41,6 +41,14 @@
 </view>
 
 <view class="container ads" wx:if="{{nowTab=='Ads'}}">
+
+  <view class='w10 noData center' wx:if="{{adList.length===totalCount_ad&&adList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无广告@2x.png'></image>
+    </view>
+    <text>暂无广告</text>
+  </view>
+
   <view class="flex w10 flex-wrap">
     <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
       <image src='{{item.fileUrl}}'></image>
@@ -60,7 +68,18 @@
   <infinite-scroll isCompleted='{{adList.length===totalCount_ad}}'></infinite-scroll>
 </view>
 
+
+
+
 <view class="container apps" wx:if="{{nowTab=='Apps'}}">
+
+  <view class='w10 noData center' wx:if="{{appList.length===totalCount_ap&&appList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无应用@2x.png'></image>
+    </view>
+    <text>暂无应用</text>
+  </view>
+
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
       <image src='{{item.largeImageUrl}}'></image>
@@ -77,6 +96,15 @@
 </view>
 
 <view class="container products" wx:if="{{nowTab=='Products'}}">
+
+  <view class='w10 noData center' wx:if="{{productList.length===totalCount_p&&productList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无商品@2x.png'></image>
+    </view>
+    <text>暂无商品</text>
+  </view>
+
+
   <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
     <view class='flex search-container auto'>
       <view class="icon-search icon"></view>
@@ -107,6 +135,14 @@
 
 
 <view class="container coupons" wx:if="{{nowTab=='Coupons'}}">
+  <view class='w10 noData center' wx:if="{{couponList.length===totalCount_c&&couponList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无红包@2x.png'></image>
+    </view>
+    <text>暂无红包</text>
+  </view>
+
+
   <view class="flex w10 flex-wrap">
     <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
       <image src='{{item.pictures}}'></image>
@@ -147,13 +183,13 @@
   <view class='flex w5 auto main'>
     <view catch:tap="publishEvent" data-actionName="restart-pc">
       <view class="overflow relative restart icon">
-        <image src='/source/images/device/restart.png' class="absolute-center;"></image>
+        <image src='/source/images/device/restart2.png' class="absolute-center;"></image>
       </view>
       <view>重启机器</view>
     </view>
     <view catch:tap="publishEvent" data-actionName="shutdown-pc">
       <view class="overflow relative close icon">
-        <image src='/source/images/device/close.png' class="absolute-center;"></image>
+        <image src='/source/images/device/close2.png' class="absolute-center;"></image>
       </view>
       <view>关闭机器</view>
     </view>

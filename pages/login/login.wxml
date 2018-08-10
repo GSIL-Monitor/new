@@ -1,8 +1,8 @@
 <view hidden='{{hidden}}'>
-  <!-- <view class="relative">
+  <view class="relative">
     <image src='/source/images/login.png' class="w10" style="height:366rpx;"></image>
     <image src='/source/images/logo.png' class="absolute-center" style="width:210rpx;height:175rpx"></image>
-  </view> -->
+  </view>
 
   <form bindsubmit="formSubmit">
     <view class='flex auto w9 m6'>

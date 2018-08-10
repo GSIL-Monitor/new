@@ -1,12 +1,12 @@
 {
   "pages": [
     "pages/login/login",
-    "pages/device/deviceTabs/deviceTabs",
     "pages/index/index",
+    "pages/device/deviceTabs/deviceTabs",
     "pages/device/device",
     "pages/device/search/search",
     "pages/device/detail/detail",
-    "pages/user/user",  
+    "pages/user/user",
     "pages/logs/logs"
   ],
   "window": {
