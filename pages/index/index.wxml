@@ -1,8 +1,10 @@
-<view wx:if="{{dashboardPermit}}">
+<view class='relative'>
   <image src='/source/images/header.png' class="w10" style="height:190rpx;"></image>
-
   <view class='absolute w10 center title'>{{title}}</view>
+</view>
 
+
+<block wx:if="{{dashboardPermit}}">
   <view wx:if="{{productsPermit}}">
     <view class="topSkus-head m3">
       热销商品排行(月)
@@ -90,5 +92,13 @@
   </view>
   <view class='relative'>
     <canvas canvas-id="myCanvas" style="opacity:{{loadingCanvas?'0.5':'1'}}"></canvas>
+  </view>
+</block>
+
+<view wx:if="{{!dashboardPermit}}" class='noPermission'>
+  <image src='/source/images/noPermission.png' class='absolute-center'></image>
+  <view class='absolute w10 center'>
+    <image src='/source/images/warn.png'></image>
+    对不起,您还没有访问权限
   </view>
 </view>

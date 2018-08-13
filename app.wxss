@@ -199,6 +199,22 @@ textarea {
   font-size: 40rpx;
 }
 
+.noPermission>image {
+  height: 280rpx;
+  width: 280rpx;
+}
+
+.noPermission .absolute {
+  top: 50%;
+  margin-top: 140rpx;
+  font-size: 36rpx;
+}
+
+.noPermission .absolute image {
+  width: 40rpx;
+  height: 40rpx;
+}
+
 /* icon-font */
 
 @font-face {

@@ -29,11 +29,14 @@ Page({
     }
   },
   onShow() {
+    if (!this.data.dashboardPermit){
+      return
+    }
     app.promise(app.req)({
       method: 'POST',
       url: '/o/api/services/app/Report/TopSkus',
       data: {
-        "startTime": app.getTime(0, 0, 0, -30),
+        "startTime": app.getTime(0, 0, -1, 0),
         "endTime": app.getTime(),
         "top": 3
       }

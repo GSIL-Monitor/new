@@ -51,7 +51,8 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
-      <image src='{{item.fileUrl}}'></image>
+      <image src='{{item.fileUrl}}' wx:if="{{item.resourceType&&item.resourceType=='Image'&&item.fileUrl}}"></image>
+      <image src='/source/images/device/暂无广告.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
       <view class='title'>{{item.name}}</view>
       <view class='flex w9 auto m1'>
         <!-- <view class='size'>{{item.creationTime}}</view> -->
@@ -82,7 +83,8 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
-      <image src='{{item.largeImageUrl}}'></image>
+      <image src='{{item.largeImageUrl}}' wx:if="{{item.largeImageUrl}}"></image>
+      <image src='/source/images/device/暂无应用@2x.png' wx:if="{{!item.largeImageUrl}}"></image>
       <view class='title'>{{item.name}} | {{item.alias}}</view>
       <view class='flex w9 auto m1'>
         <view class='size'>{{item.endTime}}</view>
@@ -113,7 +115,9 @@
   </form>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
-      <image src='{{item.picUrl}}'></image>
+      <image src='{{item.picUrl}}' wx:if="{{item.picUrl}}"></image>
+      <image src='/source/images/device/暂无商品@2x.png' wx:if="{{!item.picUrl}}"></image>
+      
       <view class='title'>{{item.title}}</view>
       <!-- <view class='flex w9 auto m1'>
         <view class='size'>{{item.creationTime}}</view>
@@ -145,7 +149,9 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
-      <image src='{{item.pictures}}'></image>
+      <image src='{{item.pictures}}' wx:if="{{!item.pictures}}"></image>
+      <image src='/source/images/device/暂无红包@2x.png' wx:if="{{!item.pictures}}"></image>
+      
       <view class='title'>{{item.title}}</view>
       <view class='flex w9 auto m1'>
         <view class='size'>{{item.start_time}}</view>

@@ -9,7 +9,7 @@ const getTime = (s = 0, m = 0, h = 0, d = 0) => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('-') + 'T' + [hour, minute, second].map(formatNumber).join(':')
+  return [year, month, day].map(formatNumber).join('-') + 'T' + [hour, minute, second].map(formatNumber).join(':') 
 }
 const formatNumber = n => {
   n = n.toString()

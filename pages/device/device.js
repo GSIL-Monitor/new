@@ -7,7 +7,13 @@ Page({
     onlineCount: '',
     filter: '',
     page: 0,
-    MaxResultCount: 12
+    MaxResultCount: 12,
+    get devicesPermit() {
+      return app.checkPermission('Pages.Tenant.Devices')
+    },
+    get title() {
+      return wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
+    },
   },
   bindconfirm(e) {
     console.log(e)
@@ -79,7 +85,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onShow: function(options) {
     // app.promise(app.req)({
     //   url: '/s/AbpUserConfiguration/GetAll'
     // }).then(res => {
@@ -91,26 +97,29 @@ Page({
     //   }
     // })
 
-    if (app.checkPermission('Pages.Tenant.Devices')) {
+    if (this.data.devicesPermit) {
       this.getDeviceList();
       this.getOnlineDeviceCount();
-    } else {
-      console.log('没有权限');
     }
   },
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.setData({
-      stopReachBottom: false,
-      onlineCount: '',
-      filter: '',
-      deviceList: [],
-      page: 0
-    })
-    this.getDeviceList();
-    this.getOnlineDeviceCount();
+    if (this.data.devicesPermit){
+      this.setData({
+        stopReachBottom: false,
+        onlineCount: '',
+        filter: '',
+        deviceList: [],
+        page: 0
+      })
+      this.getDeviceList();
+      this.getOnlineDeviceCount();
+    }else{
+      wx.stopPullDownRefresh();
+    }
+
   },
 
   /**

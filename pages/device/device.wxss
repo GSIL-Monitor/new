@@ -1,4 +1,9 @@
 /* pages/deviceManagement/deviceManagement.wxss */
+.title {
+  font-size: 36rpx;
+  color: #fff;
+  top: 60rpx;
+}
 
 .header {
   width: 690rpx;

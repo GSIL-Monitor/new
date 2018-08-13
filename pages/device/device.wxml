@@ -1,62 +1,72 @@
-<image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
-<view class='header ff overflow center'>
-  <view class='flex'>
-    <view class='grow flex'>
-      <view>
-        设备总数
-      </view>
-      <view class='text'>{{totalCount}}</view>
-    </view>
-    <view class='grow relative flex'>
-      <view class='relative'>
-        <view class="point green"></view>
-        开机运行数
-      </view>
-      <view class='text'>{{onlineCount}}</view>
-    </view>
-  </view>
-  <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
-  <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;" bind:tap="scan"></image>
-  <view class='w10 scanTip'>扫一扫添加设备</view>
+<view class='relative'>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
+  <view class='absolute w10 center title' wx:if="{{!devicesPermit}}">{{title}}</view>
 </view>
-
-
-<view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
-  <view>
-    <image src='/source/images/device/暂无设备@2x.png'></image>
-  </view>
-  <text>暂无设备</text>
-</view>
-
-
-<view class="container">
-  <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
-    <view class='flex w8 search-container auto'>
-      <view class="icon-search icon"></view>
-      <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
-    </view>
-  </form>
-  <view class="auto table-container">
-    <block wx:for="{{deviceList}}" wx:key="*this.id">
-      <view class="flex table-item" bind:tap="goDevice" data-deviceId="{{item.id}}">
-        <view class="w1">
-          <image src='{{item.deviceType.iconUrl}}'></image>
-        </view>
-        <view class="grow">{{item.name}}</view>
-        <view class="w1 relative">
-          <view wx:if="{{item.status==1}}" class="point absolute-center green"></view>
-          <view wx:if="{{item.status==0}}" class="point absolute-center grey"></view>
-        </view>
-        <view class="w1">
-          <view wx:if="{{item.status==1}}">ON</view>
-          <view wx:if="{{item.status==0}}">OFF</view>
-        </view>
+<block wx:if="{{devicesPermit}}">
+  <view class='header ff overflow center'>
+    <view class='flex'>
+      <view class='grow flex'>
         <view>
-          <view class="icon-chevron-right icon"></view>
+          设备总数
         </view>
+        <view class='text'>{{totalCount}}</view>
       </view>
-      <view class='table-bottom'></view>
-    </block>
+      <view class='grow relative flex'>
+        <view class='relative'>
+          <view class="point green"></view>
+          开机运行数
+        </view>
+        <view class='text'>{{onlineCount}}</view>
+      </view>
+    </view>
+    <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+    <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;" bind:tap="scan"></image>
+    <view class='w10 scanTip'>扫一扫添加设备</view>
   </view>
-  <infinite-scroll isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
+  <view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无设备@2x.png'></image>
+    </view>
+    <text>暂无设备</text>
+  </view>
+  <view class="container">
+    <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
+      <view class='flex w8 search-container auto'>
+        <view class="icon-search icon"></view>
+        <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
+      </view>
+    </form>
+    <view class="auto table-container">
+      <block wx:for="{{deviceList}}" wx:key="*this.id">
+        <view class="flex table-item" bind:tap="goDevice" data-deviceId="{{item.id}}">
+          <view class="w1">
+            <image src='{{item.deviceType.iconUrl}}'></image>
+          </view>
+          <view class="grow">{{item.name}}</view>
+          <view class="w1 relative">
+            <view wx:if="{{item.status==1}}" class="point absolute-center green"></view>
+            <view wx:if="{{item.status==0}}" class="point absolute-center grey"></view>
+          </view>
+          <view class="w1">
+            <view wx:if="{{item.status==1}}">ON</view>
+            <view wx:if="{{item.status==0}}">OFF</view>
+          </view>
+          <view>
+            <view class="icon-chevron-right icon"></view>
+          </view>
+        </view>
+        <view class='table-bottom'></view>
+      </block>
+    </view>
+    <infinite-scroll isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
+  </view>
+
+</block>
+
+<view wx:if="{{!devicesPermit}}" class='noPermission'>
+  <image src='/source/images/noPermission.png' class='absolute-center'></image>
+  <view class='absolute w10 center'>
+    <image src='/source/images/warn.png'></image>
+    对不起,您还没有访问权限
+  </view>
 </view>
