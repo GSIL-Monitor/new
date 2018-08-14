@@ -193,7 +193,12 @@ Component({
           id: res.peripherals[i].peripheralId
         })
       }
-      if (res.shutdownTime) res.shutdownTime = res.shutdownTime.slice(11, 16)
+      console.log(res.shutdownTime)
+      if (res.shutdownTime) {
+        res.shutdownTime = res.shutdownTime.slice(11, 16)
+      } else {
+        res.shutdownTime = ''
+      }
       this.setData({
         deviceDetail: Object.assign({}, res),
         initDeviceDetail: Object.assign({}, res),

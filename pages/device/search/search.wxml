@@ -2,7 +2,7 @@
 <view class='fixed w10 searchHead'>
   <view class='flex search-container w5'>
     <view class="icon-search icon"></view>
-    <input placeholder='搜索商品' class='w10' confirm-type="search" bindconfirm="bindconfirm" wx:bind="goSearch" value='{{filter}}' maxlength="15" bind:tap="showHistory"></input>
+    <input placeholder='搜索' class='w10' confirm-type="search" bindconfirm="bindconfirm" wx:bind="goSearch" value='{{filter}}' maxlength="15" bind:tap="showHistory"></input>
   </view>
 </view>
 
@@ -10,7 +10,13 @@
   <view wx:for="{{historyArray}}" wx:key="*this" catch:tap="bindconfirm" data-detail="{{item}}">{{item}}</view>
 </view>
 
-<view class="container products" wx:if="{{showList}}">
+<view class="container products" wx:if="{{type=='Products'&&showList}}">
+  <view class='w10 noData center' wx:if="{{productList.length===totalCount_p&&productList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无商品@2x.png'></image>
+    </view>
+    <text>暂无商品</text>
+  </view>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
       <image src='{{item.picUrl}}'></image>
@@ -28,4 +34,77 @@
     </view>
   </view>
   <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
+</view>
+
+
+<view class="container ads" wx:if="{{type=='Ads'&&showList}}">
+  <view class='w10 noData center' wx:if="{{adList.length===totalCount_ad&&adList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无广告@2x.png'></image>
+    </view>
+    <text>暂无广告</text>
+  </view>
+  <view class="flex w10 flex-wrap">
+    <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
+      <image mode="aspectFit" src='{{item.fileUrl}}' wx:if="{{item.resourceType&&item.resourceType=='Image'&&item.fileUrl}}"></image>
+      <image src='/source/images/device/暂无广告@2x.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
+      <view class='title'>{{item.name}}</view>
+      <view class='flex w9 auto m1'>
+        <!-- <view class='size'>{{item.creationTime}}</view> -->
+        <view class='w6 size'>年龄:{{item.ageScope}}</view>
+        <view class='type'>{{item.resourceType}}</view>
+      </view>
+      <view class='flex w9 auto tags'>
+        <block wx:for="{{item.adsTags}}" wx:key="{{index}}">
+          <view wx:if="{{index<3}}">{{item.name}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="container apps" wx:if="{{type=='Apps'&&showList}}">
+  <view class='w10 noData center' wx:if="{{appList.length===totalCount_ap&&appList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无应用@2x.png'></image>
+    </view>
+    <text>暂无应用</text>
+  </view>
+  <view class="flex w10 flex-wrap">
+    <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
+      <image mode="aspectFit" src='{{item.largeImageUrl}}' wx:if="{{item.largeImageUrl}}"></image>
+      <image src='/source/images/device/暂无应用@2x.png' wx:if="{{!item.largeImageUrl}}"></image>
+      <view class='title'>{{item.name}} | {{item.alias}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.endTime}}</view>
+      </view>
+      <view class='flex w9 auto'>
+        <view>运行环境 : {{item.envType}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+
+<view class="container coupons" wx:if="{{type=='Coupons'&&showList}}">
+  <view class='w10 noData center' wx:if="{{couponList.length===totalCount_c&&couponList.length==0}}">
+    <view>
+      <image src='/source/images/device/暂无红包@2x.png'></image>
+    </view>
+    <text>暂无红包</text>
+  </view>
+  <view class="flex w10 flex-wrap">
+    <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
+      <image mode="aspectFit" src='{{item.pictures}}' wx:if="{{item.pictures}}"></image>
+      <image src='/source/images/device/暂无红包@2x.png' wx:if="{{!item.pictures}}"></image>
+      <view class='title'>{{item.title}}</view>
+      <view class='flex w9 auto m1'>
+        <view class='size'>{{item.start_time}}</view>
+      </view>
+      <view class='flex w9 auto'>
+        <view>金额 : {{item.amount}}</view>
+      </view>
+    </view>
+  </view>
 </view>

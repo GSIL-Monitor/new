@@ -145,6 +145,11 @@ Page({
         SkipCount: this.data.page_ad * this.data.MaxResultCount_ad
       }
     }).then(res => {
+      res.items.map((item) => {
+        if (!item.ageScope) {
+          item.ageScope = '-'
+        }
+      })
       res.items = app.changeFileUrl(res.items, 'fileUrl');
       for (var item of res.items) {
         item.creationTime = app.formatTime(item.creationTime)
@@ -172,7 +177,7 @@ Page({
       }
     }).then(res => {
       console.log(res)
-      // res.items = app.changeFileUrl(res.items, 'picUrl');
+      res.items = app.changeFileUrl(res.items, 'picUrl');
       for (var item of res.items) {
         item.creationTime = app.formatTime(item.creationTime)
       }
@@ -186,9 +191,9 @@ Page({
       })
     })
   },
-  goSearch(){
+  goSearch() {
     wx.navigateTo({
-      url: '/pages/device/search/search'
+      url: '/pages/device/search/search?type='+this.data.nowTab
     })
   },
   //红包

@@ -12,9 +12,9 @@ Page({
   Cancellation() {
     wx.removeStorageSync('tenantId');
     wx.removeStorageSync('accessToken');
-    wx.redirectTo({
-      url: '../login/login'
-    });
+    wx.reLaunch({
+      url: '../login/login',
+    })
     // // wx.clearStorageSync();
     // wx.reLaunch({
     //   url: '/pages/index/index'

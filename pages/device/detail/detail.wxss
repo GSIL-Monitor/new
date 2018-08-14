@@ -4,6 +4,9 @@ image {
   height: 750rpx;
 }
 
+.goBack{
+  margin-left:0;
+}
 .name {
   margin-top: 15rpx;
   margin-bottom: 15rpx;
@@ -17,13 +20,25 @@ image {
 
 .value {
   font-size: 28rpx;
-  color: #333;  
+  color: #333;
 }
 
 checkbox {
   margin-left: 50rpx;
 }
 
-.tag{
+.tag {
   margin-right: 15rpx;
+}
+
+view {
+  margin-left: 30rpx;
+}
+
+view view {
+  margin-left: 0;
+}
+
+.greyBack {
+  margin-left: 0;
 }

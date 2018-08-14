@@ -1,41 +1,48 @@
-<view class='relative'>
-  <image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
+<view class="fixed ff w10" style='height:460rpx;top:0;'></view>
+<view class='fixed w10'>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:270rpx;"></image>
   <view class='absolute w10 center title' wx:if="{{!devicesPermit}}">{{title}}</view>
 </view>
 <block wx:if="{{devicesPermit}}">
-  <view class='header ff overflow center'>
-    <view class='flex'>
-      <view class='grow flex'>
-        <view>
-          设备总数
+  <view class='fixed w10'>
+    <view class='header ff overflow center flex'>
+      <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+      <view class='flex w5 relative' style="flex-wrap:wrap">
+        <view class='w10 grow flex'>
+          <view class=' w5'>
+            设备总数
+          </view>
+          <view class='text'>{{totalCount}}</view>
         </view>
-        <view class='text'>{{totalCount}}</view>
+        <view class='w10 grow relative flex'>
+          <view class='relative w5'>
+            <view class="point green"></view>
+            开机运行数
+          </view>
+          <view class='text'>{{onlineCount}}</view>
+        </view>
       </view>
-      <view class='grow relative flex'>
-        <view class='relative'>
-          <view class="point green"></view>
-          开机运行数
-        </view>
-        <view class='text'>{{onlineCount}}</view>
+      <view class='flex relative w5'>
+        <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;top:23%;" bind:tap="scan"></image>
+        <view class='w10 scanTip'>扫一扫添加设备</view>
       </view>
     </view>
-    <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
-    <image src='/source/images/device/scan.png' class="absolute-center" style="height:96rpx;width:96rpx;" bind:tap="scan"></image>
-    <view class='w10 scanTip'>扫一扫添加设备</view>
   </view>
+  <form class="w10 fixed" style="top:370rpx;" bindsubmit="formSubmit" bindreset="formReset">
+    <view class='flex w8 search-container auto'>
+      <view class="icon-search icon"></view>
+      <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
+    </view>
+  </form>
+
+  <view style='height:400rpx;'></view>
   <view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
     <view>
       <image src='/source/images/device/暂无设备@2x.png'></image>
     </view>
     <text>暂无设备</text>
   </view>
-  <view class="container">
-    <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
-      <view class='flex w8 search-container auto'>
-        <view class="icon-search icon"></view>
-        <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
-      </view>
-    </form>
+  <view class="container relative">
     <view class="auto table-container">
       <block wx:for="{{deviceList}}" wx:key="*this.id">
         <view class="flex table-item" bind:tap="goDevice" data-deviceId="{{item.id}}">

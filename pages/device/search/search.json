@@ -1,5 +1,5 @@
 {
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,
   "usingComponents": {
     "infinite-scroll": "../../../components/infinite-scroll/infinite-scroll"

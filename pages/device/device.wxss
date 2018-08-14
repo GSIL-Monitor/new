@@ -1,16 +1,21 @@
 /* pages/deviceManagement/deviceManagement.wxss */
+
 .title {
   font-size: 36rpx;
   color: #fff;
   top: 60rpx;
 }
 
+.container {
+  padding-top: 55rpx;
+}
+
 .header {
   width: 690rpx;
-  height: 288rpx;
+  height: 180rpx;
   margin: 0 auto;
   position: relative;
-  top: 90rpx;
+  top: 138rpx;
   border-radius: 10rpx;
   padding-top: 40rpx;
 }
@@ -31,7 +36,7 @@
 
 .header .grow .green {
   position: absolute;
-  left: -30rpx;
+  left: -10rpx;
   top: 8rpx;
 }
 

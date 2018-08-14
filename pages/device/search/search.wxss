@@ -1,3 +1,5 @@
+@import "../deviceTabs/deviceTabs.wxss";
+
 .pageTitle {
   font-size: 36rpx;
   color: #fff;
@@ -5,7 +7,7 @@
 }
 
 .container {
-  padding: 145rpx 30rpx;
+  padding: 145rpx 0rpx;
 }
 
 .searchHead {

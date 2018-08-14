@@ -9,7 +9,7 @@ const getTime = (s = 0, m = 0, h = 0, d = 0) => {
   const minute = date.getMinutes()
   const second = date.getSeconds()
 
-  return [year, month, day].map(formatNumber).join('-') + 'T' + [hour, minute, second].map(formatNumber).join(':') 
+  return [year, month, day].map(formatNumber).join('-') + 'T' + [hour, minute, second].map(formatNumber).join(':')
 }
 const formatNumber = n => {
   n = n.toString()
@@ -18,8 +18,8 @@ const formatNumber = n => {
 
 
 //对后端传来的时间进行处理,变为所需展示或处理的时间
-const formatTime = t =>{
-  return t.substr(0,19).replace('T',' ')
+const formatTime = t => {
+  return t.substr(0, 19).replace('T', ' ')
 }
 
 //检测权限
@@ -29,12 +29,21 @@ const checkPermission = name => {
 
 
 const changeFileUrl = (array, attrName, attrName2) => {
-  const httpHead = 'https://s.api.troncell.com:443/';
+  // const httpHead = 'https://s.api.troncell.com:443/';
+  const httpHead = 'https://s.api.troncell.com/';
   return array.map(function(item) {
     if (attrName2 && item[attrName] && item[attrName][attrName2]) {
-      item[attrName][attrName2] = (httpHead + item[attrName][attrName2]).replace(/\\/g, '/');
+      if (item[attrName][attrName2].indexOf('http') < 0) {
+        item[attrName][attrName2] = (httpHead + item[attrName][attrName2]).replace(/\\/g, '/');
+      }else{
+        item[attrName][attrName2] = (item[attrName][attrName2]).replace(/\\/g, '/');
+      }
     } else if (item[attrName]) {
-      item[attrName] = (httpHead + item[attrName]).replace(/\\/g, '/');
+      if (item[attrName].indexOf('http') < 0) {
+        item[attrName] = (httpHead + item[attrName]).replace(/\\/g, '/');
+      }else{
+        item[attrName] = (item[attrName]).replace(/\\/g, '/');
+      }
     }
     return item
   })

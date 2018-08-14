@@ -1,11 +1,9 @@
+<view class='fixed ff w10' style='height:450rpx;' wx:if="{{nowTab!='Detail'&&nowTab!='Control'}}"></view>
 <view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
 <view class='fixed w10 ff'>
-  <image src='/source/images/header.png' class="w10 absolute;" style="height:190rpx;"></image>
-  <view class='header ff overflow center'>
-    <view class='relative text m1'>
-      2:09:38
-    </view>
-    <view class='flex'>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:270rpx;"></image>
+  <view class='header ff overflow center flex'>
+    <view class='flex w4 relative' style="top:36%;margin-left:6%;">
       <view class='grow relative flex'>
         <view class='relative'>
           <view class="point green"></view>
@@ -13,7 +11,10 @@
         </view>
       </view>
     </view>
-    <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+    <view class='relative text' style='top:23%;'>
+      2:09:38
+    </view>
+    <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:132rpx;bottom:0;left:0;"></image>
   </view>
 
   <view class="w10 center">
@@ -30,14 +31,15 @@
     <view class='bottom'></view>
   </view>
 </view>
+<form class="w9" wx:if="{{nowTab!='Detail'&&nowTab!='Control'}}" bindsubmit="formSubmit" bindreset="formReset" style='position:fixed;top:350rpx;left:5%;z-index:10;'>
+  <view class='flex search-container auto'>
+    <view class="icon-search icon"></view>
+    <input placeholder='搜索' class='w10' confirm-type="search" bindconfirm="bindconfirm" disabled='true' bind:tap="goSearch"></input>
+  </view>
+</form>
 
-
-<view class="container" wx:if="{{nowTab=='Detail'}}">
+<view class="container" wx:if="{{nowTab=='Detail'}}" style="padding-top:360rpx;">
   <device-component class="w10" deviceId="{{deviceId}}"></device-component>
-  <!-- 硬件序列号{{deviceDetail.hardwareCode}} 设备编码{{deviceDetail.outerId}} 名称{{deviceDetail.name}} Mac{{deviceDetail.mac}} IP地址{{deviceDetail.intranetIP}} 系统{{deviceDetail.os}} 密钥{{deviceDetail.subKey}} 分辨率{{deviceDetail.resolution_Width}}{{deviceDetail.resolution_Height}}
-  外设{{deviceDetail}}
-  地址{{deviceDetail.address}} 电商类别{{deviceDetail.onlineTrafficTarget}} 设备类型{{deviceDetail.deviceTypeId}} 所属组织机构{{deviceDetail.organizationUnitName}} 描述{{deviceDetail.description}} -->
-
 </view>
 
 <view class="container ads" wx:if="{{nowTab=='Ads'}}">
@@ -51,8 +53,8 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
-      <image src='{{item.fileUrl}}' wx:if="{{item.resourceType&&item.resourceType=='Image'&&item.fileUrl}}"></image>
-      <image src='/source/images/device/暂无广告.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
+      <image mode="aspectFit" src='{{item.fileUrl}}' wx:if="{{item.resourceType&&item.resourceType=='Image'&&item.fileUrl}}"></image>
+      <image src='/source/images/device/暂无广告@2x.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
       <view class='title'>{{item.name}}</view>
       <view class='flex w9 auto m1'>
         <!-- <view class='size'>{{item.creationTime}}</view> -->
@@ -69,9 +71,6 @@
   <infinite-scroll isCompleted='{{adList.length===totalCount_ad}}'></infinite-scroll>
 </view>
 
-
-
-
 <view class="container apps" wx:if="{{nowTab=='Apps'}}">
 
   <view class='w10 noData center' wx:if="{{appList.length===totalCount_ap&&appList.length==0}}">
@@ -83,7 +82,7 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
-      <image src='{{item.largeImageUrl}}' wx:if="{{item.largeImageUrl}}"></image>
+      <image mode="aspectFit" src='{{item.largeImageUrl}}' wx:if="{{item.largeImageUrl}}"></image>
       <image src='/source/images/device/暂无应用@2x.png' wx:if="{{!item.largeImageUrl}}"></image>
       <view class='title'>{{item.name}} | {{item.alias}}</view>
       <view class='flex w9 auto m1'>
@@ -106,18 +105,11 @@
     <text>暂无商品</text>
   </view>
 
-
-  <form class="w10" bindsubmit="formSubmit" bindreset="formReset">
-    <view class='flex search-container auto'>
-      <view class="icon-search icon"></view>
-      <input placeholder='搜索商品' class='w10' confirm-type="search" bindconfirm="bindconfirm" disabled='true' bind:tap="goSearch"></input>
-    </view>
-  </form>
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
-      <image src='{{item.picUrl}}' wx:if="{{item.picUrl}}"></image>
+      <image mode="aspectFit" src='{{item.picUrl}}' wx:if="{{item.picUrl}}"></image>
       <image src='/source/images/device/暂无商品@2x.png' wx:if="{{!item.picUrl}}"></image>
-      
+
       <view class='title'>{{item.title}}</view>
       <!-- <view class='flex w9 auto m1'>
         <view class='size'>{{item.creationTime}}</view>
@@ -137,7 +129,6 @@
   <infinite-scroll isCompleted='{{productList.length===totalCount_p}}'></infinite-scroll>
 </view>
 
-
 <view class="container coupons" wx:if="{{nowTab=='Coupons'}}">
   <view class='w10 noData center' wx:if="{{couponList.length===totalCount_c&&couponList.length==0}}">
     <view>
@@ -149,9 +140,9 @@
 
   <view class="flex w10 flex-wrap">
     <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
-      <image src='{{item.pictures}}' wx:if="{{!item.pictures}}"></image>
+      <image mode="aspectFit" src='{{item.pictures}}' wx:if="{{item.pictures}}"></image>
       <image src='/source/images/device/暂无红包@2x.png' wx:if="{{!item.pictures}}"></image>
-      
+
       <view class='title'>{{item.title}}</view>
       <view class='flex w9 auto m1'>
         <view class='size'>{{item.start_time}}</view>
@@ -166,7 +157,7 @@
 
 
 
-<view class="container control" wx:if="{{nowTab=='Control'}}">
+<view class="container control" wx:if="{{nowTab=='Control'}}" style="padding-top:360rpx;">
   <view class='m3'>最后资源更新时间 : </view>
   <view class='flex update' catch:tap="publishEvent" data-actionName="update-resource">
     <image src='/source/images/device/update.png'></image>

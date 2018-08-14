@@ -2,12 +2,12 @@
 
 .header {
   width: 690rpx;
-  height: 160rpx;
+  height: 132rpx;
   margin: 0 auto;
   position: relative;
-  top: 90rpx;
+  top: 138rpx;
   border-radius: 10rpx;
-  padding-top: 20rpx;
+  /* padding-top: 20rpx; */
 }
 
 .header .text {
@@ -71,7 +71,7 @@
 
 swiper {
   height: 55rpx !important;
-  margin-top: 110rpx;
+  margin-top: 169rpx;
   font-size: 32rpx;
 }
 
@@ -81,7 +81,7 @@ swiper+.bottom {
 }
 
 .container {
-  padding-top: 350rpx;
+  padding-top: 455rpx;
 }
 
 .search-container {
@@ -129,7 +129,9 @@ swiper+.bottom {
 
 .ads .title, .apps .title, .products .title, .coupons .title {
   font-size: 28rpx;
-  text-align: center;
+  /* text-align: center; */
+  width:90%;
+  margin-left:5%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

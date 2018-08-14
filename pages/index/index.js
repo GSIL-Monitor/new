@@ -36,14 +36,16 @@ Page({
       method: 'POST',
       url: '/o/api/services/app/Report/TopSkus',
       data: {
-        "startTime": app.getTime(0, 0, -1, 0),
+        "startTime": app.getTime(0, 0, 0, -30),
         "endTime": app.getTime(),
         "top": 3
       }
     }).then(res => {
       console.log(JSON.parse(res))
+      var topSku = JSON.parse(res)
+      topSku = app.changeFileUrl(topSku, 'PicUrl');
       this.setData({
-        topSku: JSON.parse(res)
+        topSku
       })
     })
 
@@ -225,5 +227,13 @@ Page({
     this.setData({
       endDate: e.detail.value
     })
+  },
+  loadImageError(e){
+    var index = e.target.dataset.index
+    this.data.topSku[index].PicUrl = '/source/images/device/default.png'
+    this.setData({
+      topSku: this.data.topSku
+    })
+    console.log(this.data.topSku)
   }
 })
