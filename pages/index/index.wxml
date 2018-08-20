@@ -21,7 +21,7 @@
       </view>
     </view>
     <view class="flex topSkus-body">
-      <view wx:for="{{topSku}}" wx:key="*this.SkuId" class="grow">
+      <view wx:for="{{topSku}}" wx:key="*this.SkuId" style="width:33%">
         <view class="w6 auto relative;">
           <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
           <image mode="aspectFit"  binderror="loadImageError" src='{{item.PicUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>

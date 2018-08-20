@@ -68,9 +68,41 @@ Page({
     wx.scanCode({
       scanType: ['qrCode'],
       success: (res) => {
+        console.log(res.result.split(';'))
+        var arr = res.result.split(';')
+        if (arr.length == 8 && arr[0] == 'tron' && arr[7] == 'cell') {
+          // console.log('符合标准')
+          app.promise(app.req)({
+            method: 'POST',
+            url: '/s/api/services/app/Device/CreateDevice',
+            data: {
+              name: '新增设备',
+              mac: arr[1],
+              os: arr[2],
+              resolution_Width: arr[3],
+              resolution_Height: arr[4],
+              intranetIP: arr[5],
+              hardwareCodearr: arr[6]
+            }
+          }).then(res => {
+            console.log(res.id)
+            wx.setStorageSync('deviceId', res.id);
+            wx.navigateTo({
+              url: '/pages/device/deviceTabs/deviceTabs',
+            })
+          })
+        } else {
+          wx.showModal({
+            title: '提示',
+            content: '二维码格式不符,请重新扫描',
+            showCancel: false
+          })
+        }
+      },
+      fail: (res) => {
         wx.showModal({
           title: '提示',
-          content: res.result,
+          content: '未找到二维码,请重新扫描',
           showCancel: false
         })
       }
@@ -82,6 +114,7 @@ Page({
       url: '/pages/device/deviceTabs/deviceTabs',
     })
   },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -98,6 +131,10 @@ Page({
     // })
 
     if (this.data.devicesPermit) {
+      this.setData({ //每次调用wx.scanCode都会重新触发onShow,因此需要重置
+        deviceList: [],
+        page: 0
+      })
       this.getDeviceList();
       this.getOnlineDeviceCount();
     }
@@ -106,7 +143,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    if (this.data.devicesPermit){
+    if (this.data.devicesPermit) {
       this.setData({
         stopReachBottom: false,
         onlineCount: '',
@@ -116,7 +153,7 @@ Page({
       })
       this.getDeviceList();
       this.getOnlineDeviceCount();
-    }else{
+    } else {
       wx.stopPullDownRefresh();
     }
 
