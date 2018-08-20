@@ -38,7 +38,7 @@
   <view style='height:400rpx;'></view>
   <view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
     <view>
-      <image src='/source/images/device/暂无设备@2x.png'></image>
+      <image src='/source/images/device/noDevices.png'></image>
     </view>
     <text>暂无设备</text>
   </view>

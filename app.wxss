@@ -181,7 +181,8 @@ textarea {
   font-size: 70rpx;
   position: fixed;
   left: 25rpx;
-  top: 45rpx;
+  top: 20rpx;
+  margin-top:2.5vh;
   z-index: 99;
   transform: rotateZ(90deg);
 }

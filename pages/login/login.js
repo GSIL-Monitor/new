@@ -123,10 +123,10 @@ Page({
     if (options.showTip) { //来自注销或过期
       wx.removeStorageSync('tenantId');
       wx.removeStorageSync('accessToken');
-      wx.showModal({
-        title: '提示',
-        content: '登陆已过期，请重新登陆',
-        showCancel: false
+      wx.showToast({
+        title: '登陆已过期，请重新登陆',
+        icon: 'none',
+        duration: 2000
       })
     }
   },

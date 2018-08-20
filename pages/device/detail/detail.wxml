@@ -2,7 +2,7 @@
 
 <block wx:if="{{type=='apps'}}">
   <image mode="aspectFit"  class="w10" wx:if="{{detail.largeImageUrl}}" src='{{detail.largeImageUrl}}'></image>
-  <image class="w10" wx:if="{{!detail.largeImageUrl}}" src='/source/images/device/暂无应用@2x.png'></image>
+  <image class="w10" wx:if="{{!detail.largeImageUrl}}" src='/source/images/device/noApps.png'></image>
   <view class='name'>{{detail.name}}</view>
   <view class='m2 title'>{{detail.alias}}</view>
   <view class="greyBack"></view>
@@ -15,7 +15,7 @@
 
 <block wx:if="{{type=='ads'}}">
   <image mode="aspectFit" class="w10" wx:if="{{detail.fileUrl&&detail.resourceType=='Image'}}" src='{{detail.fileUrl}}'></image>
-  <image class="w10" wx:if="{{!detail.fileUrl||detail.resourceType!='Image'}}" src='/source/images/device/暂无广告@2x.png'></image>
+  <image class="w10" wx:if="{{!detail.fileUrl||detail.resourceType!='Image'}}" src='/source/images/device/noAds.png'></image>
   <view class='name'>{{detail.name}}</view>
   <view class="greyBack"></view>
   <view class='flex w10 m3'>
@@ -36,7 +36,7 @@
 
 <block wx:if="{{type=='products'}}">
   <image mode="aspectFit" class="w10" wx:if="{{detail.picUrl}}" src='{{detail.picUrl}}'></image>
-  <image class="w10" wx:if="{{!detail.picUrl}}" src='/source/images/device/暂无商品@2x.png'></image>
+  <image class="w10" wx:if="{{!detail.picUrl}}" src='/source/images/device/noProducts.png'></image>
   
   <view class='name'>{{detail.title}}</view>
   <view class='title m2' wx:if="{{detail.subTitle}}">{{detail.subTitle}}</view>
@@ -65,7 +65,7 @@
 
 <block wx:if="{{type=='coupons'}}">
   <image mode="aspectFit" class="w10" wx:if="{{detail.picUrl}}" src='{{detail.pictures}}'></image>
-  <image class="w10" wx:if="{{!detail.picUrl}}" src='/source/images/device/暂无红包@2x.png'></image>
+  <image class="w10" wx:if="{{!detail.picUrl}}" src='/source/images/device/noCoupons.png'></image>
   
   <view class='name'>{{detail.title}}</view>
   <view class="greyBack"></view>

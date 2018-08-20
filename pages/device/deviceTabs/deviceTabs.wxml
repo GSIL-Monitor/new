@@ -46,7 +46,7 @@
 
   <view class='w10 noData center' wx:if="{{adList.length===totalCount_ad&&adList.length==0}}">
     <view>
-      <image src='/source/images/device/暂无广告@2x.png'></image>
+      <image src='/source/images/device/noAds.png'></image>
     </view>
     <text>暂无广告</text>
   </view>
@@ -54,7 +54,7 @@
   <view class="flex w10 flex-wrap">
     <view wx:for="{{adList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="ads" data-item='{{item}}'>
       <image mode="aspectFit" src='{{item.fileUrl}}' wx:if="{{item.resourceType&&item.resourceType=='Image'&&item.fileUrl}}"></image>
-      <image src='/source/images/device/暂无广告@2x.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
+      <image src='/source/images/device/noAds.png' wx:if="{{!item.resourceType||item.resourceType!='Image'||!item.fileUrl}}"></image>
       <view class='title'>{{item.name}}</view>
       <view class='flex w9 auto m1'>
         <!-- <view class='size'>{{item.creationTime}}</view> -->
@@ -75,7 +75,7 @@
 
   <view class='w10 noData center' wx:if="{{appList.length===totalCount_ap&&appList.length==0}}">
     <view>
-      <image src='/source/images/device/暂无应用@2x.png'></image>
+      <image src='/source/images/device/noApps.png'></image>
     </view>
     <text>暂无应用</text>
   </view>
@@ -83,7 +83,7 @@
   <view class="flex w10 flex-wrap">
     <view wx:for="{{appList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="apps" data-item='{{item}}'>
       <image mode="aspectFit" src='{{item.largeImageUrl}}' wx:if="{{item.largeImageUrl}}"></image>
-      <image src='/source/images/device/暂无应用@2x.png' wx:if="{{!item.largeImageUrl}}"></image>
+      <image src='/source/images/device/noApps.png' wx:if="{{!item.largeImageUrl}}"></image>
       <view class='title'>{{item.name}} | {{item.alias}}</view>
       <view class='flex w9 auto m1'>
         <view class='size'>{{item.endTime}}</view>
@@ -100,7 +100,7 @@
 
   <view class='w10 noData center' wx:if="{{productList.length===totalCount_p&&productList.length==0}}">
     <view>
-      <image src='/source/images/device/暂无商品@2x.png'></image>
+      <image src='/source/images/device/noProducts.png'></image>
     </view>
     <text>暂无商品</text>
   </view>
@@ -108,7 +108,7 @@
   <view class="flex w10 flex-wrap">
     <view wx:for="{{productList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="products" data-item='{{item}}'>
       <image mode="aspectFit" src='{{item.picUrl}}' wx:if="{{item.picUrl}}"></image>
-      <image src='/source/images/device/暂无商品@2x.png' wx:if="{{!item.picUrl}}"></image>
+      <image src='/source/images/device/noProducts.png' wx:if="{{!item.picUrl}}"></image>
 
       <view class='title'>{{item.title}}</view>
       <!-- <view class='flex w9 auto m1'>
@@ -132,7 +132,7 @@
 <view class="container coupons" wx:if="{{nowTab=='Coupons'}}">
   <view class='w10 noData center' wx:if="{{couponList.length===totalCount_c&&couponList.length==0}}">
     <view>
-      <image src='/source/images/device/暂无红包@2x.png'></image>
+      <image src='/source/images/device/noCoupons.png'></image>
     </view>
     <text>暂无红包</text>
   </view>
@@ -141,7 +141,7 @@
   <view class="flex w10 flex-wrap">
     <view wx:for="{{couponList}}" wx:key="*this.id" class="listItem" catch:tap="goDetailPage" data-type="coupons" data-item='{{item}}'>
       <image mode="aspectFit" src='{{item.pictures}}' wx:if="{{item.pictures}}"></image>
-      <image src='/source/images/device/暂无红包@2x.png' wx:if="{{!item.pictures}}"></image>
+      <image src='/source/images/device/noCoupons.png' wx:if="{{!item.pictures}}"></image>
 
       <view class='title'>{{item.title}}</view>
       <view class='flex w9 auto m1'>
