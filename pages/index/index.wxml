@@ -24,7 +24,7 @@
       <view wx:for="{{topSku}}" wx:key="*this.SkuId" style="width:33%">
         <view class="w6 auto relative;">
           <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
-          <image mode="aspectFit"  binderror="loadImageError" src='{{item.PicUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
+          <image mode="aspectFit" binderror="loadImageError" src='{{item.PicUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
         </view>
         <view class='w10 center sales'>
           <text>销量</text>
@@ -67,6 +67,8 @@
       <view>会员总数</view>
     </view>
   </view>
+
+  <view class="w10 absolute" style='height:666rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></view>
   <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
     <view class="grow {{selectedTab=='month'?'selected':''}}" bind:tap="changeTab" data-type="month">月</view>
     <view class="grow {{selectedTab=='day'?'selected':''}}" bind:tap="changeTab" data-type="day">日</view>
@@ -74,13 +76,13 @@
   </view>
   <view class="flex table-item w9 dateSearch">
     <view class="grow flex relative picker-container">
-      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{startDate}}" bindchange="bindDateStart" class="w5">
+      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{startDate}}" bindchange="bindDateStart" class="w5" end="{{endDate}}">
         <view class="picker center">
           {{startDate}}
         </view>
       </picker>
       <view class="absolute-center">-</view>
-      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{endDate}}" bindchange="bindDateEnd" class="w5">
+      <picker mode="{{selectedTab=='hour'?'time':'date'}}" value="{{endDate}}" bindchange="bindDateEnd" class="w5" start="{{startDate}}">
         <view class="picker center">
           {{endDate}}
         </view>
@@ -91,7 +93,8 @@
     </view>
   </view>
   <view class='relative'>
-    <canvas canvas-id="myCanvas" style="opacity:{{loadingCanvas?'0.5':'1'}}"></canvas>
+    <canvas canvas-id="myCanvas"></canvas>
+    <!-- <view class="w10 absolute" style='height:100%;background:rgba(255,255,255,0.5);top:0;' wx:if="{{loadingCanvas}}"></view> -->
   </view>
 </block>
 
