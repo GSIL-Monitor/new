@@ -7,7 +7,8 @@
     "pages/device/search/search",
     "pages/device/detail/detail",
     "pages/user/user",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/device/addDevice/addDevice"
   ],
   "window": {
     "backgroundTextStyle": "dark",

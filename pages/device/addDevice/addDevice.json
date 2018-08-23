@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "device-component": "../../../components/device-component/device-component"
+  }
+}

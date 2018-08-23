@@ -1,0 +1,1 @@
+<device-component class="w10" detail="{{deviceDetail}}"></device-component>

@@ -6,7 +6,8 @@ Component({
    * 组件的属性列表
    */
   properties: {
-    deviceId: String
+    deviceId: String,
+    detail: String
   },
 
   /**
@@ -57,6 +58,12 @@ Component({
    * 组件的方法列表
    */
   methods: {
+    create(){
+      this.setData({
+        deviceDetail: JSON.parse(this.data.detail)
+      })
+      console.log(this.data.deviceDetail)
+    },
     bindPickerChange: function(e) {
       var index = e.detail.value;
       for (var i = 0; i < this.data.peripheralsValueArr.length; i++) {
@@ -175,6 +182,7 @@ Component({
     }
   },
   ready() {
+    if (!this.data.deviceId) return
     wx.showLoading({
       title: '加载中,请稍候',
       mask: true,

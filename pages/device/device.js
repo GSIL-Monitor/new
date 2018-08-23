@@ -68,28 +68,38 @@ Page({
     wx.scanCode({
       scanType: ['qrCode'],
       success: (res) => {
-        console.log(res.result.split(';'))
         var arr = res.result.split(';')
         if (arr.length == 8 && arr[0] == 'tron' && arr[7] == 'cell') {
           // console.log('符合标准')
-          app.promise(app.req)({
-            method: 'POST',
-            url: '/s/api/services/app/Device/CreateDevice',
-            data: {
-              name: '新增设备',
-              mac: arr[1],
-              os: arr[2],
-              resolution_Width: arr[3],
-              resolution_Height: arr[4],
-              intranetIP: arr[5],
-              hardwareCodearr: arr[6]
-            }
-          }).then(res => {
-            console.log(res.id)
-            wx.setStorageSync('deviceId', res.id);
-            wx.navigateTo({
-              url: '/pages/device/deviceTabs/deviceTabs',
-            })
+          // app.promise(app.req)({
+          //   method: 'POST',
+          //   url: '/s/api/services/app/Device/CreateDevice',
+          //   data: {
+          //     name: '新增设备',
+          //     mac: arr[1],
+          //     os: arr[2],
+          //     resolution_Width: arr[3],
+          //     resolution_Height: arr[4],
+          //     intranetIP: arr[5],
+          //     hardwareCodearr: arr[6]
+          //   }
+          // }).then(res => {
+          //   console.log(res.id)
+          //   wx.setStorageSync('deviceId', res.id);
+          //   wx.navigateTo({
+          //     url: '/pages/device/deviceTabs/deviceTabs',
+          //   })
+          // })
+          var data = {
+            mac: arr[1],
+            os: arr[2],
+            resolution_Width: arr[3],
+            resolution_Height: arr[4],
+            intranetIP: arr[5],
+            hardwareCodearr: arr[6]
+          }
+          wx.navigateTo({
+            url: '/pages/device/addDevice/addDevice?data=' + JSON.stringify(data),
           })
         } else {
           wx.showModal({
