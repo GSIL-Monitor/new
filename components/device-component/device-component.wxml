@@ -1,10 +1,10 @@
 <!--components/device-component/device-component.wxml-->
 <form bindsubmit="goSave">
-  <block wx:for="{{inputList}}" wx:key="{{index}}">
+  <block wx:for="{{inputList}}" wx:key="{{index}}" wx:if="{{deviceId}}">
     <view class="flex table-item w10">
       <view class="w3">{{item.name}}</view>
       <view class="grow">
-        <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}' disabled='{{disabled}}' value='{{deviceDetail[item.inputName]}}'></input>
+        <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}' disabled='{{disabled&&deviceId}}' value='{{deviceDetail[item.inputName]}}'></input>
       </view>
       <view class="w1">
         <view class="icon-pencil icon"></view>
@@ -12,28 +12,40 @@
     </view>
     <view class='table-bottom'></view>
   </block>
-
-  <view class="flex table-item w10">
-    <view class="w3">外设</view>
-    <view class="grow">
-      <picker name="peripheralIds" bindchange="bindPickerChange" value="{{peripheralsValueArr}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
-        <view class="picker">
-          <block wx:for="{{peripheralsValueArr}}" wx:key="{{index}}">
-            {{item.name}}
-          </block>
-        </view>
-      </picker>
+  <block wx:for="{{inputList2}}" wx:key="{{index}}" wx:if="{{!deviceId}}">
+    <view class="flex table-item w10">
+      <view class="w3">{{item.name}}</view>
+      <view class="grow">
+        <input type='text' name='{{item.inputName}}' placeholder='{{item.placeholder}}' disabled='{{disabled&&deviceId}}' value='{{deviceDetail[item.inputName]}}'></input>
+      </view>
+      <view class="w1">
+        <view class="icon-pencil icon"></view>
+      </view>
     </view>
-    <view class="w1">
-      <view class="icon-chevron-down icon"></view>
+    <view class='table-bottom'></view>
+  </block>
+  <block wx:if="{{deviceId}}">
+    <view class="flex table-item w10">
+      <view class="w3">外设</view>
+      <view class="grow">
+        <picker name="peripheralIds" bindchange="bindPickerChange" value="{{peripheralsValueArr}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled&&deviceId}}'>
+          <view class="picker">
+            <block wx:for="{{peripheralsValueArr}}" wx:key="{{index}}">
+              {{item.name}}
+            </block>
+          </view>
+        </picker>
+      </view>
+      <view class="w1">
+        <view class="icon-chevron-down icon"></view>
+      </view>
     </view>
-  </view>
-  <view class='table-bottom'></view>
-
+    <view class='table-bottom'></view>
+  </block>
   <!-- <view class="flex table-item w10">
   <view class="w3">所属组织</view>
   <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled}}'>
+    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled&&deviceId}}'>
       <view class="picker">
         {{peripheralRange[index]}}
       </view>
@@ -45,67 +57,70 @@
 </view>
 <view class='table-bottom'></view> -->
 
-  <view class="flex table-item w10">
-    <view class="w3">设备类型</view>
-    <view class="grow">
-      <picker bindchange="bindTypeChange" name="deviceTypeId" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled}}'>
-        <view class="picker">
-          {{deviceTypeRange?deviceTypeRange[typeIndex]:deviceDetail.deviceType.name}}
-        </view>
-      </picker>
+  <block wx:if="{{deviceId}}">
+    <view class="flex table-item w10">
+      <view class="w3">设备类型</view>
+      <view class="grow">
+        <picker bindchange="bindTypeChange" name="deviceTypeId" value="{{deviceTypeArray[typeIndex].value}}" range="{{deviceTypeRange}}" class="w10" disabled='{{disabled&&deviceId}}'>
+          <view class="picker">
+            {{deviceTypeRange?deviceTypeRange[typeIndex]:deviceDetail.deviceType.name}}
+          </view>
+        </picker>
+      </view>
+      <view class="w1">
+        <view class="icon-chevron-down icon"></view>
+      </view>
     </view>
-    <view class="w1">
-      <view class="icon-chevron-down icon"></view>
+    <view class='table-bottom'></view>
+  </block>
+  <block wx:if="{{deviceId}}">
+    <view class="flex table-item w10">
+      <view class="w3">关机时间</view>
+      <view class="grow">
+        <picker mode="time" name="shutdownTime" value="{{deviceDetail.shutdownTime}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled&&deviceId}}'>
+          <view class="picker">
+            {{deviceDetail.shutdownTime}}
+          </view>
+        </picker>
+      </view>
+      <view class="w1">
+        <view class="icon-chevron-down icon"></view>
+      </view>
     </view>
-  </view>
-  <view class='table-bottom'></view>
-
-  <view class="flex table-item w10">
-    <view class="w3">关机时间</view>
-    <view class="grow">
-      <picker mode="time" name="shutdownTime" value="{{deviceDetail.shutdownTime}}" bindchange="bindTimeChange" class="w10" disabled='{{disabled}}'>
-        <view class="picker">
-          {{deviceDetail.shutdownTime}}
-        </view>
-      </picker>
+    <view class='table-bottom'></view>
+  </block>
+  <block wx:if="{{deviceId}}">
+    <view class="flex table-item w10">
+      <view class="w3">所属组织</view>
+      <view class="grow">
+        <input type='text' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
+      </view>
+      <view class="w1"></view>
     </view>
-    <view class="w1">
-      <view class="icon-chevron-down icon"></view>
-    </view>
-  </view>
-  <view class='table-bottom'></view>
-
-  <view class="flex table-item w10">
-    <view class="w3">所属组织</view>
-    <view class="grow">
-      <input type='text' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
-    </view>
-    <view class="w1"></view>
-  </view>
-  <view class='table-bottom'></view>
-
-  <view class="flex table-item w10">
+    <view class='table-bottom'></view>
+  </block>
+  <view class="flex table-item w10" wx:if="{{deviceId}}">
     <view class="w3">Subkey</view>
     <view class="grow">
       <!-- <input type='text' placeholder='暂无' disabled='true' value="{{deviceDetail.subKey}}"></input> -->
       <text selectable="true" style="font-size:30rpx;">{{deviceDetail.subKey}}</text>
     </view>
   </view>
-  <view class='table-bottom'></view>
 
-  <view class="greyBack"></view>
-  <view class="flex table-item w10">
-    <view class="w3">备注</view>
-  </view>
-  <view class='table-bottom' style="left:0;"></view>
-  <view class="flex table-item w10">
-    <input type="text" class="w9" placeholder='请输入你的备注' name='description' value='{{deviceDetail.description}}' disabled='{{disabled}}'></input>
-    <view class="w1">
-      <view class="icon-pencil icon"></view>
+  <block wx:if="{{deviceId}}">
+    <view class="greyBack"></view>
+    <view class="flex table-item w10">
+      <view class="w3">备注</view>
     </view>
-  </view>
-  <view class='table-bottom' style="left:0;"></view>
-
+    <view class='table-bottom' style="left:0;"></view>
+    <view class="flex table-item w10">
+      <input type="text" class="w9" placeholder='请输入你的备注' name='description' value='{{deviceDetail.description}}' disabled='{{disabled&&deviceId}}'></input>
+      <view class="w1">
+        <view class="icon-pencil icon"></view>
+      </view>
+    </view>
+    <view class='table-bottom' style="left:0;"></view>
+  </block>
   <view style='height:98rpx;'></view>
 
   <view class='flex fixed center w10 save' wx:if="{{deviceId&&!disabled}}">
@@ -117,6 +132,6 @@
   </view>
 
   <view class='flex fixed center w10 save' wx:if="{{!deviceId}}">
-    <view class='grow' bind:tap="create">添加</view>
+    <button class='grow' form-type='submit'>添加</button>
   </view>
 </form>

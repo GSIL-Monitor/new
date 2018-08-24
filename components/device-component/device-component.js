@@ -37,6 +37,39 @@ Component({
       placeholder: '输入IP地址',
       inputName: 'intranetIP'
     }, {
+      name: 'MAC',
+      placeholder: 'MAC',
+      inputName: 'mac'
+    }, {
+      name: '操作系统',
+      placeholder: '输入操作系统',
+      inputName: 'os'
+    }, {
+      name: '分辨率(宽)',
+      placeholder: '分辨率(宽)',
+      inputName: 'resolution_Width'
+    }, {
+      name: '分辨率(高)',
+      placeholder: '分辨率(高)',
+      inputName: 'resolution_Height'
+    }],
+    inputList2: [{
+      name: '硬件序列号',
+      placeholder: '输入硬件序列号',
+      inputName: 'hardwareCode'
+    }, {
+      name: '设备名称',
+      placeholder: '输入设备名称',
+      inputName: 'name'
+    }, {
+      name: 'IP地址',
+      placeholder: '输入IP地址',
+      inputName: 'intranetIP'
+    }, {
+      name: 'MAC',
+      placeholder: 'MAC',
+      inputName: 'mac'
+    }, {
       name: '操作系统',
       placeholder: '输入操作系统',
       inputName: 'os'
@@ -58,12 +91,6 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    create(){
-      this.setData({
-        deviceDetail: JSON.parse(this.data.detail)
-      })
-      console.log(this.data.deviceDetail)
-    },
     bindPickerChange: function(e) {
       var index = e.detail.value;
       for (var i = 0; i < this.data.peripheralsValueArr.length; i++) {
@@ -143,35 +170,64 @@ Component({
     },
     goSave(e) {
       var submitObj = Object.assign({}, e.detail.value);
-      if (submitObj.peripheralIds) {
-        submitObj.peripheralIds = submitObj.peripheralIds.map((item) => {
-          return item.id
-        })
-      }
-      if (submitObj.shutdownTime) {
-        submitObj.shutdownTime = '2017-12-31T' + submitObj.shutdownTime + ':00'
-      }
-      submitObj.id = this.data.deviceId;
-      wx.showLoading({
-        title: '处理中,请稍候',
-        mask: true
-      })
-      app.promise(app.req)({
-        method: 'PUT',
-        url: '/s/api/services/app/Device/UpdateDevice',
-        data: submitObj
-      }).then(res => {
-        wx.hideLoading()
+      if(!submitObj.name){
         wx.showToast({
-          title: '保存成功',
+          icon:'none',
+          title: '请填写设备名称',
           duration: 1000
         })
-        this.setData({
-          initDeviceDetail: Object.assign({}, this.data.deviceDetail),
-          disabled: true,
-          initPeripheralsValueArr: this.data.peripheralsValueArr.concat()
+        return 
+      }
+      if (this.data.deviceId) {
+        if (submitObj.peripheralIds) {
+          submitObj.peripheralIds = submitObj.peripheralIds.map((item) => {
+            return item.id
+          })
+        }
+        if (submitObj.shutdownTime) {
+          submitObj.shutdownTime = '2017-12-31T' + submitObj.shutdownTime + ':00'
+        }
+        submitObj.id = this.data.deviceId;
+        wx.showLoading({
+          title: '处理中,请稍候',
+          mask: true
         })
-      })
+        app.promise(app.req)({
+          method: 'PUT',
+          url: '/s/api/services/app/Device/UpdateDevice',
+          data: submitObj
+        }).then(res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '保存成功',
+            duration: 1000
+          })
+          this.setData({
+            initDeviceDetail: Object.assign({}, this.data.deviceDetail),
+            disabled: true,
+            initPeripheralsValueArr: this.data.peripheralsValueArr.concat()
+          })
+        })
+      } else {//通过扫码添加设备
+        console.log(submitObj)
+        wx.showLoading({
+          title: '处理中,请稍候',
+          mask: true
+        })
+        app.promise(app.req)({
+          method: 'POST',
+          url: '/s/api/services/app/Device/CreateDeviceFromScanCode',
+          data: submitObj
+        }).then(res => {
+          wx.hideLoading()
+          wx.showToast({
+            title: '添加成功',
+            duration: 1000
+          })
+          wx.navigateBack();
+        })
+      }
+
     },
     cancelEdit() {
       this.setData({
@@ -182,38 +238,45 @@ Component({
     }
   },
   ready() {
-    if (!this.data.deviceId) return
-    wx.showLoading({
-      title: '加载中,请稍候',
-      mask: true,
-    })
-    app.promise(app.req)({
-      url: '/s/api/services/app/Device/GetDeviceById',
-      data: {
-        Id: this.data.deviceId
-      }
-    }).then(res => {
-      wx.hideLoading()
-      var peripheralsValueArr = [];
-      for (var i = 0; i < res.peripherals.length; i++) {
-        peripheralsValueArr.push({
-          name: res.peripherals[i].peripheral.name,
-          id: res.peripherals[i].peripheralId
-        })
-      }
-      console.log(res.shutdownTime)
-      if (res.shutdownTime) {
-        res.shutdownTime = res.shutdownTime.slice(11, 16)
-      } else {
-        res.shutdownTime = ''
-      }
+    if (!this.data.deviceId) {
       this.setData({
-        deviceDetail: Object.assign({}, res),
-        initDeviceDetail: Object.assign({}, res),
-        peripheralsValueArr,
-        initPeripheralsValueArr: peripheralsValueArr.concat()
+        deviceDetail: JSON.parse(this.data.detail)
       })
+      console.log(this.data.deviceDetail)
+    } else {
+      wx.showLoading({
+        title: '加载中,请稍候',
+        mask: true,
+      })
+      app.promise(app.req)({
+        url: '/s/api/services/app/Device/GetDeviceById',
+        data: {
+          Id: this.data.deviceId
+        }
+      }).then(res => {
+        wx.hideLoading()
+        var peripheralsValueArr = [];
+        for (var i = 0; i < res.peripherals.length; i++) {
+          peripheralsValueArr.push({
+            name: res.peripherals[i].peripheral.name,
+            id: res.peripherals[i].peripheralId
+          })
+        }
+        console.log(res.shutdownTime)
+        if (res.shutdownTime) {
+          res.shutdownTime = res.shutdownTime.slice(11, 16)
+        } else {
+          res.shutdownTime = ''
+        }
+        this.setData({
+          deviceDetail: Object.assign({}, res),
+          initDeviceDetail: Object.assign({}, res),
+          peripheralsValueArr,
+          initPeripheralsValueArr: peripheralsValueArr.concat()
+        })
 
-    })
+      })
+    }
+
   }
 })

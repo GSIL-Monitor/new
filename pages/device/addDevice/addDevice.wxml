@@ -1,1 +1,4 @@
+<view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
+<image src='/source/images/header.png' class="w10 fixed" style="height:180rpx;"></image>
+<view style='height:180rpx;'></view>
 <device-component class="w10" detail="{{deviceDetail}}"></device-component>

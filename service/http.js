@@ -31,8 +31,9 @@ function req(param){
       }else if(res.statusCode == 401){
         wx.redirectTo({ url: '../login/login?showTip=1' });
       }else{
+        wx.hideLoading()
         wx.showToast({
-          title: res.data.err.message,
+          title: res.data.error.message,
           icon: 'none',
           duration: 3000
         })

@@ -81,7 +81,7 @@ Page({
           //     resolution_Width: arr[3],
           //     resolution_Height: arr[4],
           //     intranetIP: arr[5],
-          //     hardwareCodearr: arr[6]
+          //     hardwareCode: arr[6]
           //   }
           // }).then(res => {
           //   console.log(res.id)
@@ -96,7 +96,7 @@ Page({
             resolution_Width: arr[3],
             resolution_Height: arr[4],
             intranetIP: arr[5],
-            hardwareCodearr: arr[6]
+            hardwareCode: arr[6]
           }
           wx.navigateTo({
             url: '/pages/device/addDevice/addDevice?data=' + JSON.stringify(data),
