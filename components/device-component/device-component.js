@@ -213,6 +213,14 @@ Component({
         })
       } else { //通过扫码添加设备
         console.log(submitObj)
+        if(!this.data.OU){
+          wx.showToast({
+            icon: 'none',
+            title: '请选择组织机构',
+            duration: 1000
+          })
+          return
+        }
         for(var i=0;i<this.data.showOuList.length;i++){
           if (this.data.OU == this.data.showOuList[i].name){
             var ouId = this.data.showOuList[i].id
