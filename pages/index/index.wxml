@@ -68,7 +68,7 @@
     </view>
   </view>
 
-  <view class="w10 absolute" style='height:666rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></view>
+  <cover-view class="w10 absolute" style='height:666rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></cover-view>
   <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
     <view class="grow {{selectedTab=='month'?'selected':''}}" bind:tap="changeTab" data-type="month">月</view>
     <view class="grow {{selectedTab=='day'?'selected':''}}" bind:tap="changeTab" data-type="day">日</view>

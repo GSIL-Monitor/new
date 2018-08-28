@@ -42,21 +42,6 @@
     </view>
     <view class='table-bottom'></view>
   </block>
-  <!-- <view class="flex table-item w10">
-  <view class="w3">所属组织</view>
-  <view class="grow">
-    <picker bindchange="bindPickerChange" value="{{peripheralArray[index].id}}" range="{{peripheralRange}}" class="w10" disabled='{{disabled&&deviceId}}'>
-      <view class="picker">
-        {{peripheralRange[index]}}
-      </view>
-    </picker>
-  </view>
-  <view class="w1">
-    <view class="icon-chevron-down icon"></view>
-  </view>
-</view>
-<view class='table-bottom'></view> -->
-
   <block wx:if="{{deviceId}}">
     <view class="flex table-item w10">
       <view class="w3">设备类型</view>
@@ -89,20 +74,24 @@
     </view>
     <view class='table-bottom'></view>
   </block>
-  <block wx:if="{{deviceId}}">
-    <view class="flex table-item w10">
-      <view class="w3">所属组织</view>
-      <view class="grow">
-        <input type='text' placeholder='暂无' disabled='true' value='{{deviceDetail.organizationUnitName}}'></input>
-      </view>
-      <view class="w1"></view>
+
+  <view class="flex table-item w10">
+    <view class="w3">所属组织</view>
+    <view class="grow">
+      <input type='text' placeholder='暂无' disabled='{{deviceId}}' value='{{deviceDetail.organizationUnitName}}' bindfocus="ouFocus" bindconfirm="ouConfirm" bindinput="ouInput" value='{{OU}}'></input>
     </view>
-    <view class='table-bottom'></view>
-  </block>
+    <view class="w1"></view>
+  </view>
+  <view class='table-bottom'></view>
+
+  <picker-view indicator-style="height:50px;" style="height:600rpx;" bindchange="ouPickerChange" class='w10 center' hidden='{{hidePicker}}'>
+    <picker-view-column>
+      <view wx:for="{{showOuList}}" wx:key="{{item.id}}" style="line-height:50px;">{{item.name}}</view>
+    </picker-view-column>
+  </picker-view>
   <view class="flex table-item w10" wx:if="{{deviceId}}">
     <view class="w3">Subkey</view>
     <view class="grow">
-      <!-- <input type='text' placeholder='暂无' disabled='true' value="{{deviceDetail.subKey}}"></input> -->
       <text selectable="true" style="font-size:30rpx;">{{deviceDetail.subKey}}</text>
     </view>
   </view>
@@ -127,11 +116,11 @@
     <view class='grow' bind:tap="cancelEdit">取消</view>
     <button class='grow' form-type='submit'>保存</button>
   </view>
-  <view class='flex fixed center w10 save' wx:if="{{deviceId&&disabled}}">
+  <view class='flex fixed center w10 save' wx:if="{{deviceId&&disabled&&editPermission}}">
     <view class='grow' bind:tap="goEdit">编辑</view>
   </view>
 
-  <view class='flex fixed center w10 save' wx:if="{{!deviceId}}">
+  <view class='flex fixed center w10 save' wx:if="{{!deviceId&&createPermission}}">
     <button class='grow' form-type='submit'>添加</button>
   </view>
 </form>

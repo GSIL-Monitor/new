@@ -14,6 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
+    hidePicker:true,
     deviceDetail: {},
     disabled: true,
     inputList: [{
@@ -84,7 +85,10 @@ Component({
     }],
     deviceTypeArray: [],
     peripheralArray: [],
-    peripheralsValueArr: []
+    peripheralsValueArr: [],
+    editPermission: app.checkPermission('Pages.Tenant.Devices.Edit'),
+    publishPermission: app.checkPermission('Pages.Tenant.Devices.Publish'),
+    createPermission: app.checkPermission('Pages.Tenant.Devices.Create')
   },
 
   /**
@@ -166,17 +170,16 @@ Component({
           peripheralRange
         })
       })
-
     },
     goSave(e) {
       var submitObj = Object.assign({}, e.detail.value);
-      if(!submitObj.name){
+      if (!submitObj.name) {
         wx.showToast({
-          icon:'none',
+          icon: 'none',
           title: '请填写设备名称',
           duration: 1000
         })
-        return 
+        return
       }
       if (this.data.deviceId) {
         if (submitObj.peripheralIds) {
@@ -208,8 +211,23 @@ Component({
             initPeripheralsValueArr: this.data.peripheralsValueArr.concat()
           })
         })
-      } else {//通过扫码添加设备
+      } else { //通过扫码添加设备
         console.log(submitObj)
+        for(var i=0;i<this.data.showOuList.length;i++){
+          if (this.data.OU == this.data.showOuList[i].name){
+            var ouId = this.data.showOuList[i].id
+          }
+        }
+        if(!ouId){
+          wx.showToast({
+            icon: 'none',
+            title: '请选择正确的组织机构',
+            duration: 1000
+          })
+          return
+        }else{
+          submitObj.registerSource = ouId
+        }
         wx.showLoading({
           title: '处理中,请稍候',
           mask: true
@@ -235,14 +253,58 @@ Component({
         disabled: true,
         peripheralsValueArr: this.data.initPeripheralsValueArr.concat()
       })
+    },
+    ouPickerChange(e) {
+      console.log(e.detail.value[0])
+      this.setData({
+        OU: this.data.showOuList[e.detail.value[0]].name
+      })
+    },
+    ouFocus(){
+      this.setData({
+        hidePicker:false
+      })
+    },
+    ouConfirm(){
+      this.setData({
+        hidePicker: true
+      })
+    },
+    ouInput(e){
+      this.setData({
+        showOuList:this.data.ouList.filter(item=>{
+          return item.name.indexOf(e.detail.value) > -1
+        })
+      })
+      if(this.data.showOuList.length==1){
+        this.setData({
+          OU: this.data.showOuList[0].name
+        })
+      }
     }
   },
   ready() {
     if (!this.data.deviceId) {
-      this.setData({
-        deviceDetail: JSON.parse(this.data.detail)
+      wx.showLoading({
+        title: '加载中,请稍候',
+        mask: true,
       })
-      console.log(this.data.deviceDetail)
+      app.promise(app.req)({
+        url: '/s/api/services/app/OrganizationUnit/GetOrganizationUnits',
+      }).then(res => {
+        wx.hideLoading()
+        var ouList = res.items.map(item => {
+          return {
+            id: item.id,
+            name: item.displayName
+          }
+        })
+        this.setData({
+          ouList: ouList,
+          showOuList: Object.assign({}, ouList),
+          deviceDetail: JSON.parse(this.data.detail)
+        })
+      })
     } else {
       wx.showLoading({
         title: '加载中,请稍候',

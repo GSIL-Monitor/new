@@ -32,7 +32,7 @@
       </view>
     </view>
     <view class='w9 auto m8'>
-      <button form-type='submit'>登陆</button>
+      <button form-type='submit'>登录</button>
     </view>
   </form>
 </view>
