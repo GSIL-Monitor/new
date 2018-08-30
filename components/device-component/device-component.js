@@ -234,7 +234,8 @@ Component({
           })
           return
         }else{
-          submitObj.registerSource = ouId
+          submitObj.organizationUnitId
+ = ouId
         }
         wx.showLoading({
           title: '处理中,请稍候',
