@@ -8,12 +8,8 @@ Page({
     filter: '',
     page: 0,
     MaxResultCount: 12,
-    get devicesPermit() {
-      return app.checkPermission('Pages.Tenant.Devices')
-    },
-    get title() {
-      return wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
-    },
+    devicesPermit: false,
+    title: '',
   },
   bindconfirm(e) {
     console.log(e)
@@ -139,7 +135,10 @@ Page({
     //     console.log('没有权限');
     //   }
     // })
-
+    this.setData({
+      devicesPermit: app.checkPermission('Pages.Tenant.Devices'),
+      title: wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
+    })
     if (this.data.devicesPermit) {
       this.setData({ //每次调用wx.scanCode都会重新触发onShow,因此需要重置
         deviceList: [],
