@@ -31,11 +31,11 @@ checkbox {
   margin-right: 15rpx;
 }
 
-view {
+view view{
   margin-left: 30rpx;
 }
 
-view view {
+view view view{
   margin-left: 0;
 }
 

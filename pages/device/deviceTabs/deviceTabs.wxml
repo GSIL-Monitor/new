@@ -1,7 +1,7 @@
 <view class='fixed ff w10' style='height:450rpx;' wx:if="{{nowTab!='Detail'&&nowTab!='Control'}}"></view>
 <view class='goBack icon-chevron-down icon' bindtap='goBack'></view>
 <view class='fixed w10 ff'>
-  <image src='/source/images/header.png' class="w10 absolute;" style="height:270rpx;"></image>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:250rpx;"></image>
   <view class='header ff overflow center flex'>
     <view class='flex w4 relative' style="top:36%;margin-left:6%;">
       <view class='grow relative flex'>

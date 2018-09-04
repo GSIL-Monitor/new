@@ -48,10 +48,8 @@
 }
 
 .table-bottom {
-  height: 1px;
-  border-bottom: 1px solid #eee;
-  position: relative;
   left: 10%;
+  width: 90%;
 }
 
 .table-container {

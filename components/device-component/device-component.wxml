@@ -90,9 +90,9 @@
     </picker-view-column>
   </picker-view>
   <view class="flex table-item w10" wx:if="{{deviceId}}">
-    <view class="w3">Subkey</view>
+    <view class='w3'>Subkey</view>
     <view class="grow">
-      <text selectable="true" style="font-size:30rpx;">{{deviceDetail.subKey}}</text>
+      <text selectable="true" style="font-size:28rpx;letter-spacing:-1px;">{{deviceDetail.subKey}}</text>
     </view>
   </view>
 

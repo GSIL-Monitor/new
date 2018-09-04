@@ -64,11 +64,13 @@
         </view>
         <view class='table-bottom'></view>
       </block>
+
     </view>
     <infinite-scroll isCompleted='{{deviceList.length===totalCount}}'></infinite-scroll>
   </view>
 
 </block>
+
 
 <view wx:if="{{!devicesPermit}}" class='noPermission'>
   <image src='/source/images/noPermission.png' class='absolute-center'></image>
