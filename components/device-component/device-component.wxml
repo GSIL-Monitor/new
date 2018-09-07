@@ -78,7 +78,8 @@
   <view class="flex table-item w10">
     <view class="w3">所属组织</view>
     <view class="grow">
-      <input type='text' placeholder='暂无' disabled='{{deviceId}}' value='{{deviceDetail.organizationUnitName}}' bindfocus="ouFocus" bindconfirm="ouConfirm" bindinput="ouInput" value='{{OU}}'></input>
+      <input type='text' placeholder='暂无' disabled='{{deviceId}}' value='{{deviceDetail.organizationUnitName}}' bindfocus="ouFocus" bindconfirm="ouConfirm" bindinput="ouInput" wx:if="{{deviceId}}"></input>
+      <input type='text' placeholder='暂无' disabled='{{deviceId}}' bindfocus="ouFocus" bindconfirm="ouConfirm" bindinput="ouInput" value='{{OU}}' wx:if="{{!deviceId}}"></input>
     </view>
     <view class="w1"></view>
   </view>
