@@ -131,8 +131,7 @@ Page({
         startTime,
         endTime,
         type,
-        organizationUnitIds: [Number(wx.getStorageSync('ouStore').id)]
-        // organizationUnitIds: [30552, 30564, 40580, 40583, 30560, 10058, 30558, 10054, 30550, 30551, 30561, 30559, 10057, 10055, 10053, 10056, 10052]
+        organizationUnitIds: Number(wx.getStorageSync('ouStore').id)?[Number(wx.getStorageSync('ouStore').id)]:[]
       }
     }).then(res => {
       this.setData({
