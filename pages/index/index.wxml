@@ -24,11 +24,11 @@
       <view wx:for="{{topSku}}" wx:key="*this.SkuId" style="width:33%">
         <view class="w6 auto relative;">
           <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
-          <image mode="aspectFit" binderror="loadImageError" src='{{item.PicUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
+          <image mode="aspectFit" binderror="loadImageError" src='{{item.picUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
         </view>
         <view class='w10 center sales'>
           <text>销量</text>
-          <view>{{item.TotalPayment}}</view>
+          <view>{{item.saleAmout}}</view>
         </view>
       </view>
     </view>
@@ -68,11 +68,15 @@
     </view>
   </view>
 
-  <cover-view class="w10 absolute" style='height:666rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></cover-view>
+  <cover-view class="w10 absolute" style='height:750rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></cover-view>
   <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
     <view class="grow {{selectedTab=='month'?'selected':''}}" bind:tap="changeTab" data-type="month">月</view>
     <view class="grow {{selectedTab=='day'?'selected':''}}" bind:tap="changeTab" data-type="day">日</view>
     <view class="grow {{selectedTab=='hour'?'selected':''}}" bind:tap="changeTab" data-type="hour">时</view>
+  </view>
+  <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
+    <view class="grow {{selectedTab2=='click'?'selected':''}}" bind:tap="changeTab2" data-type="click">点击次数</view>
+    <view class="grow {{selectedTab2=='enter'?'selected':''}}" bind:tap="changeTab2" data-type="enter">感应人数</view>
   </view>
   <view class="flex table-item w9 dateSearch">
     <view class="grow flex relative picker-container">

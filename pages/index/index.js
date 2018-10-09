@@ -1,15 +1,15 @@
 //获取应用实例
 const app = getApp()
 const wxCharts = require('../../utils/wxcharts.js')
-
 Page({
   data: {
     topSku: [],
     statisticalData: [],
-    startDate: app.getTime(0, 0, 0, -10).substr(0, 10),
+    startDate: app.getTime(0, 0, 0, -7).substr(0, 10),
     endDate: app.getTime().substr(0, 10),
     selectedTab: 'day',
-    get title(){
+    selectedTab2: 'click',
+    get title() {
       return wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
     },
     get adsPermit() {
@@ -29,7 +29,7 @@ Page({
     }
   },
   onShow() {
-    if (!this.data.dashboardPermit){
+    if (!this.data.dashboardPermit) {
       return
     }
     app.promise(app.req)({
@@ -41,9 +41,15 @@ Page({
         "top": 3
       }
     }).then(res => {
-      console.log(JSON.parse(res))
-      var topSku = JSON.parse(res)
-      topSku = app.changeFileUrl(topSku, 'PicUrl');
+      // console.log(JSON.parse(res))
+      // var topSku = JSON.parse(res)
+      console.log(res)
+      var topSku = res;
+      topSku = app.changeFileUrl(topSku, 'picUrl');
+      topSku = topSku.map((item) => {
+        item.saleAmout = item.saleAmout.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元'
+        return item
+      })
       this.setData({
         topSku
       })
@@ -71,7 +77,7 @@ Page({
     }).then(res => {
       this.setData({
         'statisticalData.orderCount': JSON.parse(res)[0].OrderCount,
-        'statisticalData.totalSales': JSON.parse(res)[0].TotalSales,
+        'statisticalData.totalSales': JSON.parse(res)[0].TotalSales.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元',
       })
     })
     //会员
@@ -107,15 +113,15 @@ Page({
     var startTime, endTime, type;
     if (this.data.selectedTab == "day") {
       startTime = this.data.startDate + "T00:00:00.000Z";
-      endTime = this.data.endDate + "T23:59:59.999Z";
+      endTime = this.data.endDate + "T23:59:00.999Z";
       type = 'dd';
     } else if (this.data.selectedTab == "month") {
       startTime = this.data.startDate + "T00:00:00.000Z";
-      endTime = this.data.endDate + "T23:59:59.999Z";
+      endTime = this.data.endDate + "T23:59:00.999Z";
       type = 'mm';
     } else if (this.data.selectedTab == "hour") {
       startTime = app.getTime().substr(0, 11) + this.data.startDate + ":00.000Z";
-      endTime = app.getTime().substr(0, 11) + this.data.endDate + ":59.999Z";
+      endTime = app.getTime().substr(0, 11) + this.data.endDate + ":00.999Z";
       type = 'hh';
     }
     this.setData({
@@ -126,12 +132,13 @@ Page({
       method: 'POST',
       url: '/d/api/services/app/Report/GetBehaviorChartReport',
       data: {
-        actions: "click,enter",
+        // actions: "click,enter",
+        actions: this.data.selectedTab2,
         categories: null,
         startTime,
         endTime,
         type,
-        organizationUnitIds: Number(wx.getStorageSync('ouStore').id)?[Number(wx.getStorageSync('ouStore').id)]:[]
+        organizationUnitIds: Number(wx.getStorageSync('ouStore').id) ? [Number(wx.getStorageSync('ouStore').id)] : []
       }
     }).then(res => {
       this.setData({
@@ -141,17 +148,23 @@ Page({
       var categories = res[0].chartItems.map((item) => {
         return item.date
       })
-      var clickData = res[0].chartItems.map((item) => {
+      // var clickData = res[0].chartItems.map((item) => {
+      //   return item.value
+      // })
+      // var enterData = res[1].chartItems.map((item) => {
+      //   return item.value
+      // })
+      // this.drawCanvas(categories, clickData, enterData)
+      var data = res[0].chartItems.map((item) => {
         return item.value
       })
-      var enterData = res[1].chartItems.map((item) => {
-        return item.value
-      })
-      this.drawCanvas(categories, clickData, enterData)
+      var title = res[0].title;
+      this.drawCanvas(categories, data, title)
     })
 
   },
-  drawCanvas(categories, clickData, enterData) {
+  // drawCanvas(categories, clickData, enterData) {
+  drawCanvas(categories, data, title) {
     var windowWidth = wx.getSystemInfoSync().windowWidth;
     var columnChart = new wxCharts({
       canvasId: 'myCanvas',
@@ -160,20 +173,22 @@ Page({
       categories,
       dataPointShape: true,
       series: [{
-        name: '点击次数',
-        color: '#ff1744',
-        data: clickData,
-        format: function(val, name) {
-          return val;
+          name: title,
+          color: '#ff1744',
+          data: data,
+          format: function(val, name) {
+            return val;
+          }
         }
-      }, {
-        name: '感应人数',
-        color: '#188df0',
-        data: enterData,
-        format: function(val, name) {
-          return val;
-        }
-      }],
+        // , {
+        //   name: '感应人数',
+        //   color: '#188df0',
+        //   data: enterData,
+        //   format: function(val, name) {
+        //     return val;
+        //   }
+        // }
+      ],
       yAxis: {
         format: function(val) {
           return val;
@@ -197,7 +212,7 @@ Page({
     var i = e.currentTarget.dataset.type,
       startDate, endDate;
     if (i == 'day') {
-      startDate = app.getTime(0, 0, 0, -10).substr(0, 10)
+      startDate = app.getTime(0, 0, 0, -7).substr(0, 10)
       endDate = app.getTime().substr(0, 10)
     } else if (i == 'month') {
       startDate = app.getTime(0, 0, 0, -365).substr(0, 10)
@@ -215,6 +230,12 @@ Page({
     // this.drawCanvas([],[],[])
     this.getChartReport()
   },
+  changeTab2(e) {
+    this.setData({
+      selectedTab2: e.currentTarget.dataset.type
+    })
+    this.getChartReport()
+  },
   bindDateStart(e) {
     console.log(e.detail.value)
     this.setData({
@@ -227,9 +248,10 @@ Page({
       endDate: e.detail.value
     })
   },
-  loadImageError(e){
+  loadImageError(e) {
+    console.log('errerr')
     var index = e.target.dataset.index
-    this.data.topSku[index].PicUrl = '/source/images/device/default.png'
+    this.data.topSku[index].picUrl = '/source/images/device/default.png'
     this.setData({
       topSku: this.data.topSku
     })
