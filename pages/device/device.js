@@ -32,9 +32,8 @@ Page({
         SkipCount: this.data.page * this.data.MaxResultCount
       }
     }).then(res => {
-      // console.log(res)
-      res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
       console.log(res)
+      res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
       this.setData({
         deviceList: this.data.deviceList.concat(res.items),
         totalCount: res.totalCount

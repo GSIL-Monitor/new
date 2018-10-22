@@ -35,13 +35,13 @@ const changeFileUrl = (array, attrName, attrName2) => {
     if (attrName2 && item[attrName] && item[attrName][attrName2]) {
       if (item[attrName][attrName2].indexOf('http') < 0) {
         item[attrName][attrName2] = (httpHead + item[attrName][attrName2]).replace(/\\/g, '/');
-      }else{
+      } else {
         item[attrName][attrName2] = (item[attrName][attrName2]).replace(/\\/g, '/');
       }
-    } else if (item[attrName]) {
+    } else if (item[attrName] && item[attrName].indexOf) {
       if (item[attrName].indexOf('http') < 0) {
         item[attrName] = (httpHead + item[attrName]).replace(/\\/g, '/');
-      }else{
+      } else {
         item[attrName] = (item[attrName]).replace(/\\/g, '/');
       }
     }
