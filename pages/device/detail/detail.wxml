@@ -5,8 +5,13 @@
     <image mode="aspectFit" class="w10" wx:if="{{detail.largeImageUrl}}" src='{{detail.largeImageUrl}}'></image>
     <image class="w10" wx:if="{{!detail.largeImageUrl}}" src='/source/images/device/noApps.png'></image>
     <view class='name'>{{detail.name}}</view>
-    <view class='m2 title'>{{detail.alias}}</view>
+    <view class='m2 title' wx:if="{{detail.alias}}">{{detail.alias}}</view>
+
     <view class="greyBack"></view>
+
+    <view class='m3 start' catch:tap="publishEvent" data-actionName="switch-app">
+      <view>运行</view>
+    </view>
     <view class='m3 title'>是否默认启动
       <checkbox value="{{item.name}}" checked="{{item.checked}}" disabled='{{disabled}}' />
     </view>

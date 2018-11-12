@@ -1,27 +1,56 @@
 // pages/device/detail/detail.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    disabled:true,
+    disabled: true,
     get type() {
       return wx.getStorageSync('detailData').type
     },
     get detail() {
       return wx.getStorageSync('detailData').detail
+    },
+    get deviceId() {
+      return wx.getStorageSync('deviceId')
     }
   },
   goBack() {
     wx.navigateBack();
+  },
+  publishEvent(e) {
+    wx.showLoading({
+      title: '处理中,请稍候',
+      mask: true,
+    })
+    app.promise(app.req)({
+      method: 'POST',
+      url: '/s/api/services/app/DeviceAction/PublishEvent',
+      data: {
+        actionName: e.currentTarget.dataset.actionname,
+        deviceId: this.data.deviceId,
+        appId: this.data.detail.softwareId
+      }
+    }).then(res => {
+      wx.hideLoading();
+      if (res === true) {
+        wx.showToast({
+          title: '切换成功',
+          icon: 'success',
+          duration: 1500
+        })
+      }
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    
+
   },
 
   /**

@@ -42,3 +42,13 @@ view view view{
 .greyBack {
   margin-left: 0;
 }
+
+.start {
+  background-image: linear-gradient(165deg, #f04095 2%, #c3228a 73%, #b31785 100%);
+  box-shadow: 0 6px 8px 0 #ffdbf1;
+  border-radius: 100rpx;
+  color: #fff;
+  padding: 16rpx 35rpx;
+  width: 100rpx;
+  text-align: center;
+}
