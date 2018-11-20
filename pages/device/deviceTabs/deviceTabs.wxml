@@ -12,7 +12,7 @@
       </view>
     </view>
     <view class='relative text' style='top:23%;'>
-      2:09:38
+      {{todayOnlineTime}}
     </view>
     <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:132rpx;bottom:0;left:0;"></image>
   </view>

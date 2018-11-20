@@ -3,6 +3,7 @@ Page({
   data: {
     currentIndex: 0,
     deviceId: {},
+    todayOnlineTime: '-',
     permissions: {
       Detail: {
         name: '详情',
@@ -193,7 +194,7 @@ Page({
   },
   goSearch() {
     wx.navigateTo({
-      url: '/pages/device/search/search?type='+this.data.nowTab
+      url: '/pages/device/search/search?type=' + this.data.nowTab
     })
   },
   //红包
@@ -293,7 +294,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    app.promise(app.req)({
+      url: '/d/api/services/app/Report/GetDeviceRunTime',
+      data: {
+        DeviceId: this.data.deviceId,
+        startTime: app.getTime().substr(0, 10) + "T00:00:00.000Z",
+        endTime: app.getTime().substr(0, 10) + "T23:59:00.999Z"
+      }
+    }).then(res => {
+      this.setData({
+        todayOnlineTime: res
+      })
+    })
   },
 
   /**

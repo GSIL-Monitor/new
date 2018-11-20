@@ -14,7 +14,7 @@ Component({
    * 组件的初始数据
    */
   data: {
-    hidePicker:true,
+    hidePicker: true,
     deviceDetail: {},
     disabled: true,
     inputList: [{
@@ -213,7 +213,7 @@ Component({
         })
       } else { //通过扫码添加设备
         console.log(submitObj)
-        if(!this.data.OU){
+        if (!this.data.OU) {
           wx.showToast({
             icon: 'none',
             title: '请选择组织机构',
@@ -221,21 +221,20 @@ Component({
           })
           return
         }
-        for(var i=0;i<this.data.showOuList.length;i++){
-          if (this.data.OU == this.data.showOuList[i].name){
+        for (var i = 0; i < this.data.showOuList.length; i++) {
+          if (this.data.OU == this.data.showOuList[i].name) {
             var ouId = this.data.showOuList[i].id
           }
         }
-        if(!ouId){
+        if (!ouId) {
           wx.showToast({
             icon: 'none',
             title: '请选择正确的组织机构',
             duration: 1000
           })
           return
-        }else{
-          submitObj.organizationUnitId
- = ouId
+        } else {
+          submitObj.organizationUnitId = ouId
         }
         wx.showLoading({
           title: '处理中,请稍候',
@@ -269,23 +268,23 @@ Component({
         OU: this.data.showOuList[e.detail.value[0]].name
       })
     },
-    ouFocus(){
+    ouFocus() {
       this.setData({
-        hidePicker:false
+        hidePicker: false
       })
     },
-    ouConfirm(){
+    ouConfirm() {
       this.setData({
         hidePicker: true
       })
     },
-    ouInput(e){
+    ouInput(e) {
       this.setData({
-        showOuList:this.data.ouList.filter(item=>{
+        showOuList: this.data.ouList.filter(item => {
           return item.name.indexOf(e.detail.value) > -1
         })
       })
-      if(this.data.showOuList.length==1){
+      if (this.data.showOuList.length == 1) {
         this.setData({
           OU: this.data.showOuList[0].name
         })
