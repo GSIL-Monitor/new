@@ -63,7 +63,9 @@ Page({
     wx.scanCode({
       scanType: ['qrCode'],
       success: (res) => {
-        var arr = res.result.split(';')
+        console.log(res.result)
+        var arr = res.result.trim().split(';')
+
         if (arr.length == 8 && arr[0] == 'tron' && arr[7] == 'cell') {
           // console.log('符合标准')
           // app.promise(app.req)({

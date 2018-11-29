@@ -246,10 +246,25 @@ Component({
           data: submitObj
         }).then(res => {
           wx.hideLoading()
-          wx.showToast({
-            title: '添加成功',
-            duration: 1000
+
+          var osType = res.osType;
+          var deviceId = res.id;
+
+          app.promise(app.req)({
+            method: 'POST',
+            url: '/e/api/services/app/DeviceAppPodVersion/SetDefaultAppPod',
+            data: {
+              osType: osType,
+              deviceId: deviceId
+            }
+          }).then(res => {
+            console.log(res)
+            wx.showToast({
+              title: '添加成功',
+              duration: 1000
+            })
           })
+
           wx.navigateBack();
         })
       }
@@ -301,12 +316,15 @@ Component({
         url: '/s/api/services/app/OrganizationUnit/GetOrganizationUnits',
       }).then(res => {
         wx.hideLoading()
-        var ouList = res.items.map(item => {
+        var ouList = [{
+          id: '',
+          name: '请选择OU'
+        }].concat(res.items.map(item => {
           return {
             id: item.id,
             name: item.displayName
           }
-        })
+        }))
         this.setData({
           ouList: ouList,
           showOuList: Object.assign({}, ouList),
