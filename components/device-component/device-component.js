@@ -212,7 +212,7 @@ Component({
           })
         })
       } else { //通过扫码添加设备
-        console.log(submitObj)
+        console.log(submitObj, 'submitObj')
         if (!this.data.OU) {
           wx.showToast({
             icon: 'none',
@@ -221,9 +221,19 @@ Component({
           })
           return
         }
-        for (var i = 0; i < this.data.showOuList.length; i++) {
+        var ouId;
+        console.log(this.data.showOuList)//这是个对象,不是数组
+        // for (var i = 0; i < this.data.showOuList.length; i++) {
+        //   console.log(i)
+        //   if (this.data.OU == this.data.showOuList[i].name) {
+        //     ouId = this.data.showOuList[i].id
+        //   }
+        // }
+
+        for (var i in this.data.showOuList) {
+          console.log(this.data.showOuList[i]);
           if (this.data.OU == this.data.showOuList[i].name) {
-            var ouId = this.data.showOuList[i].id
+            ouId = this.data.showOuList[i].id
           }
         }
         if (!ouId) {
