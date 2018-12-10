@@ -6,8 +6,9 @@
     <view class='flex w4 relative' style="top:36%;margin-left:6%;">
       <view class='grow relative flex'>
         <view class='relative'>
-          <view class="point green"></view>
-          今日运行时间
+          <view wx:if="{{deviceDetail.status==1}}" class="point green"></view>
+          <view wx:if="{{deviceDetail.status==0}}" class="point grey"></view>
+          今日已运行时间
         </view>
       </view>
     </view>
@@ -38,8 +39,9 @@
   </view>
 </form>
 
+
 <view class="container" wx:if="{{nowTab=='Detail'}}" style="padding-top:360rpx;">
-  <device-component class="w10" deviceId="{{deviceId}}"></device-component>
+  <device-component bind:getDeviceEvent="onDeviceEvent" class="w10" deviceId="{{deviceId}}"></device-component>
 </view>
 
 <view class="container ads" wx:if="{{nowTab=='Ads'}}">
@@ -158,33 +160,33 @@
 
 
 <view class="container control" wx:if="{{nowTab=='Control'}}" style="padding-top:360rpx;">
-  <view class='m3'>最后资源更新时间 : </view>
-  <view class='flex update' catch:tap="publishEvent" data-actionName="update-resource">
+  <view class='m3'>最后资源更新时间 : {{deviceDetail.latestResourceUpdateTime}}</view>
+  <view class='flex update' catch:tap="publishEvent" data-actionName="update-resource" data-actionTip="是否重新更新资源?">
     <image src='/source/images/device/update.png'></image>
     <view>重新更新资源</view>
   </view>
   <view class='flex appendix w10'>
-    <view class='flex' catch:tap="publishEvent" data-actionName="restart-app">
+    <view class='flex' catch:tap="publishEvent" data-actionName="restart-app" data-actionTip="是否重启应用?">
       <image src='/source/images/device/restart.png'></image>
       <view>重启应用</view>
     </view>
-    <view class='flex' catch:tap="publishEvent" data-actionName="close-app">
+    <view class='flex' catch:tap="publishEvent" data-actionName="close-app" data-actionTip="是否关闭应用?">
       <image src='/source/images/device/close.png'></image>
       <view>关闭应用</view>
     </view>
-    <view class='flex' catch:tap="publishEvent" data-actionName="close-container">
+    <view class='flex' catch:tap="publishEvent" data-actionName="close-container" data-actionTip="是否关闭AppPod?">
       <image src='/source/images/device/close.png'></image>
       <view>关闭AppPod</view>
     </view>
   </view>
   <view class='flex w5 auto main'>
-    <view catch:tap="publishEvent" data-actionName="restart-pc">
+    <view catch:tap="publishEvent" data-actionName="restart-pc" data-actionTip="是否重启机器?">
       <view class="overflow relative restart icon">
         <image src='/source/images/device/restart2.png' class="absolute-center;"></image>
       </view>
       <view>重启机器</view>
     </view>
-    <view catch:tap="publishEvent" data-actionName="shutdown-pc">
+    <view catch:tap="publishEvent" data-actionName="shutdown-pc" data-actionTip="是否关闭机器?">
       <view class="overflow relative close icon">
         <image src='/source/images/device/close2.png' class="absolute-center;"></image>
       </view>

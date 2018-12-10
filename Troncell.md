@@ -136,7 +136,7 @@ lilingtao@troncell.com
 
 
 ## 京东站点(布置了一个V3)
-* 114.67.83.171（公）
+* 114.67.81.88 （公）
 * administrator
 * 1@Troncell@1
 * https://jd.sensingstore.com

@@ -4,6 +4,7 @@ Page({
     currentIndex: 0,
     deviceId: {},
     todayOnlineTime: '-',
+    deviceDetail: {},
     permissions: {
       Detail: {
         name: '详情',
@@ -225,29 +226,48 @@ Page({
       })
     })
   },
+  onDeviceEvent(e) { //获取到deviceDetail
+    var deviceDetail = e.detail;
+    deviceDetail.latestResourceUpdateTime = app.formatTime(e.detail.latestResourceUpdateTime)
+    this.setData({
+      deviceDetail: deviceDetail
+    })
+  },
   //控制
   publishEvent(e) {
-    wx.showLoading({
-      title: '处理中,请稍候',
-      mask: true,
-    })
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/s/api/services/app/DeviceAction/PublishEvent',
-      data: {
-        actionName: e.currentTarget.dataset.actionname,
-        deviceId: this.data.deviceId
+    wx.showModal({
+      title: '',
+      content: e.currentTarget.dataset.actiontip,
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+          wx.showLoading({
+            title: '处理中,请稍候',
+            mask: true,
+          })
+          app.promise(app.req)({
+            method: 'POST',
+            url: '/s/api/services/app/DeviceAction/PublishEvent',
+            data: {
+              actionName: e.currentTarget.dataset.actionname,
+              deviceId: this.data.deviceId
+            }
+          }).then(res => {
+            wx.hideLoading();
+            if (res === true) {
+              wx.showToast({
+                title: '成功',
+                icon: 'success',
+                duration: 1500
+              })
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
-    }).then(res => {
-      wx.hideLoading();
-      if (res === true) {
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 1500
-        })
-      }
     })
+
   },
   goBack() {
     wx.navigateBack();

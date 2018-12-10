@@ -222,7 +222,7 @@ Component({
           return
         }
         var ouId;
-        console.log(this.data.showOuList)//这是个对象,不是数组
+        console.log(this.data.showOuList) //这是个对象,不是数组
         // for (var i = 0; i < this.data.showOuList.length; i++) {
         //   console.log(i)
         //   if (this.data.OU == this.data.showOuList[i].name) {
@@ -352,7 +352,9 @@ Component({
           Id: this.data.deviceId
         }
       }).then(res => {
-        wx.hideLoading()
+        wx.hideLoading();
+        console.log(res, 'getDevice')
+        this.triggerEvent('getDeviceEvent', res, {});
         var peripheralsValueArr = [];
         for (var i = 0; i < res.peripherals.length; i++) {
           peripheralsValueArr.push({
@@ -360,7 +362,6 @@ Component({
             id: res.peripherals[i].peripheralId
           })
         }
-        console.log(res.shutdownTime)
         if (res.shutdownTime) {
           res.shutdownTime = res.shutdownTime.slice(11, 16)
         } else {
