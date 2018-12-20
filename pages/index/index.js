@@ -24,74 +24,92 @@ Page({
     get couponsPermit() {
       return app.checkPermission('Pages.Tenant.Coupons')
     },
+    get orderPermit() {
+      return app.checkPermission('Pages.Tenant.OnlineStores.Order')
+    },
+    get memberPermit() {
+      return app.checkPermission('Pages.Tenant.OnlineStores.Member')
+    },
+    //有报表权限或为host才能看该页
     get dashboardPermit() {
       return app.checkPermission('Pages.Tenant.Dashboard')
+    },
+    get isHost() {
+      return !wx.getStorageSync('tenantId')
     }
   },
   onShow() {
-    if (!this.data.dashboardPermit) {
-      return
+    if (this.data.dashboardPermit) {
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/o/api/services/app/Report/TopSkus',
+        data: {
+          "startTime": app.getTime(0, 0, 0, -30),
+          "endTime": app.getTime(),
+          "top": 3
+        }
+      }).then(res => {
+        // console.log(JSON.parse(res))
+        // var topSku = JSON.parse(res)
+        console.log(res)
+        var topSku = res;
+        topSku = app.changeFileUrl(topSku, 'picUrl');
+        topSku = topSku.map((item) => {
+          item.saleAmout = item.saleAmout.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元'
+          return item
+        })
+        this.setData({
+          topSku
+        })
+      })
+      //订单 销量
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/o/api/services/app/Report/OrderCountAndSales',
+        data: {
+          storeId: null
+        }
+      }).then(res => {
+        this.setData({
+          'statisticalData.orderCount': JSON.parse(res)[0].OrderCount,
+          'statisticalData.totalSales': JSON.parse(res)[0].TotalSales.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元',
+        })
+      })
+      //会员
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/o/api/services/app/Report/MembersCount',
+        data: {
+          storeId: null
+        }
+      }).then(res => {
+        this.setData({
+          'statisticalData.member': JSON.parse(res)[0].Total
+        })
+      })
     }
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/o/api/services/app/Report/TopSkus',
-      data: {
-        "startTime": app.getTime(0, 0, 0, -30),
-        "endTime": app.getTime(),
-        "top": 3
-      }
-    }).then(res => {
-      // console.log(JSON.parse(res))
-      // var topSku = JSON.parse(res)
-      console.log(res)
-      var topSku = res;
-      topSku = app.changeFileUrl(topSku, 'picUrl');
-      topSku = topSku.map((item) => {
-        item.saleAmout = item.saleAmout.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元'
-        return item
-      })
-      this.setData({
-        topSku
-      })
-    })
 
-    //商品 广告 软件 红包
-    app.promise(app.req)({
-      url: '/s/api/services/app/Report/GetCountReport',
-    }).then(res => {
-      console.log(res)
-      this.setData({
-        'statisticalData.product': res[1].id,
-        'statisticalData.ads': res[2].id,
-        'statisticalData.software': res[4].id,
-        'statisticalData.coupon': res[5].id,
+
+    if (this.data.dashboardPermit || this.data.isHost) {
+      //商品 广告 软件 红包
+      app.promise(app.req)({
+        url: '/s/api/services/app/Report/GetCountReport',
+      }).then(res => {
+        console.log(res)
+        this.setData({
+          'statisticalData.product': res[1].id,
+          'statisticalData.ads': res[2].id,
+          'statisticalData.software': res[4].id,
+          'statisticalData.coupon': res[5].id,
+        })
+        if (this.data.isHost) {
+          this.setData({
+            'statisticalData.device': res[3].id,
+          })
+        }
       })
-    })
-    //订单 销量
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/o/api/services/app/Report/OrderCountAndSales',
-      data: {
-        storeId: null
-      }
-    }).then(res => {
-      this.setData({
-        'statisticalData.orderCount': JSON.parse(res)[0].OrderCount,
-        'statisticalData.totalSales': JSON.parse(res)[0].TotalSales.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '元',
-      })
-    })
-    //会员
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/o/api/services/app/Report/MembersCount',
-      data: {
-        storeId: null
-      }
-    }).then(res => {
-      this.setData({
-        'statisticalData.member': JSON.parse(res)[0].Total
-      })
-    })
+    }
+
 
   },
   onReady: function(e) {

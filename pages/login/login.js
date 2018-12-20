@@ -6,10 +6,12 @@ Page({
     nowFoucs: 0
   },
   formSubmit(e) {
-    if (!(e.detail.value.tenant && e.detail.value.account && e.detail.value.password)) {
+    // if (!(e.detail.value.tenant && e.detail.value.account && e.detail.value.password)) {
+    if (!(e.detail.value.account && e.detail.value.password)) {
       wx.showModal({
         title: '提示',
-        content: '请输入完整的租户，账号和密码',
+        // content: '请输入完整的租户，账号和密码',
+        content: '请输入完整的登录信息',
         showCancel: false
       })
       return
@@ -18,39 +20,60 @@ Page({
       title: '验证中,请稍候',
       mask: true,
     })
-    app.promise(app.req)({
-      method: 'POST',
-      url: '/s/api/services/app/Account/IsTenantAvailable',
-      data: {
-        tenancyName: e.detail.value.tenant
-      }
-    }).then(res => {
-      if (res.state == 1) {
-        wx.setStorageSync('tenantId', res.tenantId);
-        app.promise(app.req)({
-          method: 'POST',
-          url: '/s/api/TokenAuth/Authenticate',
-          data: {
-            password: e.detail.value.password,
-            userNameOrEmailAddress: e.detail.value.account,
-            rememberClient: false,
-            singleSignIn: false
-          }
-        }).then(res => {
-          console.log(res);
-          wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
-          wx.setStorageSync('userId', res.userId);
-          this.getPermission(true);
-        })
-      } else {
-        wx.hideLoading()
-        wx.showToast({
-          title: '该租户不存在或已被锁定',
-          icon: 'none',
-          duration: 2000
-        })
-      }
-    })
+    if (e.detail.value.tenant) {
+
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/s/api/services/app/Account/IsTenantAvailable',
+        data: {
+          tenancyName: e.detail.value.tenant
+        }
+      }).then(res => {
+        if (res.state == 1) {
+          wx.setStorageSync('tenantId', res.tenantId);
+          app.promise(app.req)({
+            method: 'POST',
+            url: '/s/api/TokenAuth/Authenticate',
+            data: {
+              password: e.detail.value.password,
+              userNameOrEmailAddress: e.detail.value.account,
+              rememberClient: false,
+              singleSignIn: false
+            }
+          }).then(res => {
+            console.log(res);
+            wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
+            wx.setStorageSync('userId', res.userId);
+            this.getPermission(true);
+          })
+        } else {
+          wx.hideLoading()
+          wx.showToast({
+            title: '该租户不存在或已被锁定',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
+    } else {
+      app.promise(app.req)({
+        method: 'POST',
+        url: '/s/api/TokenAuth/Authenticate',
+        data: {
+          password: e.detail.value.password,
+          userNameOrEmailAddress: e.detail.value.account,
+          rememberClient: false,
+          singleSignIn: false
+        }
+      }).then(res => {
+        console.log(res);
+        wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
+        wx.setStorageSync('userId', res.userId);
+        this.getPermission(true);
+      })
+    }
+
+
   },
   bindconfirm(e) { //下一个
     this.setData({
@@ -70,9 +93,9 @@ Page({
       }
     }).then(res => {
       wx.setStorageSync('permission', res.grantedPermissionNames);
-      if (needUserInfo){
+      if (needUserInfo) {
         this.getUserInfo();
-      }else{
+      } else {
         wx.hideLoading()
         wx.switchTab({
           url: '../index/index'
@@ -97,14 +120,17 @@ Page({
         }).then(picData => {
           wx.setStorageSync('headPic', 'data:image/png;base64,' + picData.profilePicture)
         })
-      }else{
+      } else {
         wx.removeStorageSync('headPic');
       }
       app.promise(app.req)({
         url: '/s/api/services/app/OrganizationUnit/GetCurrentUserOrganizationUnits'
       }).then(ou => {
         wx.hideLoading()
-        wx.setStorageSync('ouStore', { name: ou.items[0] ? ou.items[0].name : '暂无', id: ou.items[0] ? ou.items[0].value : ''})
+        wx.setStorageSync('ouStore', {
+          name: ou.items[0] ? ou.items[0].name : '暂无',
+          id: ou.items[0] ? ou.items[0].value : ''
+        })
         wx.setStorageSync('userName', res.user.name)
         wx.switchTab({
           url: '../index/index'

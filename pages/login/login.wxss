@@ -19,3 +19,15 @@ button{
   border-radius: 45rpx;
   box-shadow: 0 4px 10px 0 rgba(255,154,207,0.60);
 }
+
+.bottom{
+  color:#aaa;
+  font-size: 30rpx;
+  bottom:0;
+}
+
+.version{
+  color:#aaa;
+  bottom:0;
+  right: 20rpx;
+}

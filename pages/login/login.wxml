@@ -35,4 +35,7 @@
       <button form-type='submit'>登录</button>
     </view>
   </form>
+
+  <view class='fixed bottom center w10'>创思感知出品</view>
+  <view class='fixed version'>v1.0.1</view>
 </view>

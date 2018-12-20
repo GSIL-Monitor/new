@@ -4,49 +4,57 @@
 </view>
 
 
-<block wx:if="{{dashboardPermit}}">
-  <view wx:if="{{productsPermit}}">
-    <view class="topSkus-head m3">
-      热销商品排行(月)
-    </view>
-    <view class='flex topSkus-mid m2'>
-      <view>
-        <image src='/source/images/home/sales.png'></image>
+<block wx:if="{{dashboardPermit||isHost}}">
+  <block wx:if="{{dashboardPermit}}">
+    <view wx:if="{{productsPermit}}">
+      <view class="topSkus-head m3">
+        热销商品排行(月)
       </view>
-      <text class='text1'>
-    本月总销量
-  </text>
-      <view class='text2'>
-        {{statisticalData.totalSales}}
-      </view>
-    </view>
-    <view class="flex topSkus-body">
-      <view wx:for="{{topSku}}" wx:key="*this.SkuId" style="width:33%">
-        <view class="w6 auto relative;">
-          <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
-          <image mode="aspectFit" binderror="loadImageError" src='{{item.picUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
+      <view class='flex topSkus-mid m2'>
+        <view>
+          <image src='/source/images/home/sales.png'></image>
         </view>
-        <view class='w10 center sales'>
-          <text>销量</text>
-          <view>{{item.saleAmout}}</view>
+        <text class='text1'>
+        本月总销量
+      </text>
+        <view class='text2'>
+          {{statisticalData.totalSales}}
         </view>
       </view>
-    </view>
+      <view class="flex topSkus-body">
+        <view wx:for="{{topSku}}" wx:key="*this.SkuId" style="width:33%">
+          <view class="w6 auto relative;">
+            <image src='{{"/source/images/home/0"+(index+1)+"@2x.png"}}' class="rank"></image>
+            <image mode="aspectFit" binderror="loadImageError" src='{{item.picUrl}}' class="w10" style="height:120rpx;" data-index="{{index}}"></image>
+          </view>
+          <view class='w10 center sales'>
+            <text>销量</text>
+            <view>{{item.saleAmout}}</view>
+          </view>
+        </view>
+      </view>
 
-    <view class='greyBack'></view>
-  </view>
+      <view class='greyBack'></view>
+    </view>
+  </block>
+
   <view class="flex flex-wrap statistics center">
     <view wx:if="{{adsPermit}}" class="w3">
       <image src='/source/images/home/ads.png'></image>
       <view>{{statisticalData.ads}}</view>
       <view>广告总数</view>
     </view>
-    <view wx:if="{{softwarePermit}}" class="w3">
+    <view wx:if="{{softwarePermit||isHost}}" class="w3">
       <image src='/source/images/home/software.png'></image>
       <view>{{statisticalData.software}}</view>
       <view>App总数</view>
     </view>
-    <view wx:if="{{productsPermit}}" class="w3">
+    <view wx:if="{{isHost}}" class="w3">
+      <image src='/source/images/home/product.png'></image>
+      <view>{{statisticalData.device}}</view>
+      <view>设备总数</view>
+    </view>
+    <view wx:if="{{productsPermit||isHost}}" class="w3">
       <image src='/source/images/home/product.png'></image>
       <view>{{statisticalData.product}}</view>
       <view>商品总数</view>
@@ -56,17 +64,20 @@
       <view>{{statisticalData.coupon}}</view>
       <view>红包总数</view>
     </view>
-    <view class="w3">
+    <view wx:if="{{orderPermit}}" class="w3">
       <image src='/source/images/home/order.png'></image>
       <view>{{statisticalData.orderCount}}</view>
       <view>订单总数</view>
     </view>
-    <view class="w3">
+    <view wx:if="{{memberPermit}}" class="w3">
       <image src='/source/images/home/member.png'></image>
       <view>{{statisticalData.member}}</view>
       <view>会员总数</view>
     </view>
   </view>
+
+
+
 
   <cover-view class="w10 absolute" style='height:750rpx;background:rgba(255,255,255,0.5);z-index:666;' wx:if="{{loadingCanvas}}"></cover-view>
   <view class="flex table-item w9 dateSearch center ff" style="border:1px solid #B31786;margin-bottom:25rpx;color:#B31786;">
@@ -102,7 +113,7 @@
   </view>
 </block>
 
-<view wx:if="{{!dashboardPermit}}" class='noPermission'>
+<view wx:if="{{!(dashboardPermit||isHost)}}" class='noPermission'>
   <image src='/source/images/noPermission.png' class='absolute-center'></image>
   <view class='absolute w10 center'>
     <image src='/source/images/warn.png'></image>
