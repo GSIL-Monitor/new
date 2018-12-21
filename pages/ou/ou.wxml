@@ -1,0 +1,57 @@
+<view class="fixed ff w10" style='height:460rpx;top:0;'></view>
+<view class='fixed w10'>
+  <image src='/source/images/header.png' class="w10 absolute;" style="height:270rpx;"></image>
+  <view class='absolute w10 center title'>{{title}}</view>
+</view>
+<block wx:if="{{isHost&&tenantPermit}}">
+  <view class='fixed w10'>
+    <view class='header ff overflow center flex' style='height:124rpx;top:187rpx;'>
+      <image src='/source/images/device/addDevice.png' class="w10 absolute" style="height:168rpx;bottom:0;left:0;"></image>
+      <view class='flex w5 relative' style="flex-wrap:wrap">
+        <view class='w10 grow flex'>
+          <view class=' w5'>
+            租户总数
+          </view>
+          <view class='text'>{{totalCount}}</view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+  <form class="w10 fixed" style="top:370rpx;" bindsubmit="formSubmit" bindreset="formReset">
+    <view class='flex w8 search-container auto'>
+      <view class="icon-search icon"></view>
+      <input placeholder='搜索租户' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
+    </view>
+  </form>
+
+  <view style='height:400rpx;'></view>
+
+  <view class="container relative">
+    <view class="auto table-container">
+      <block wx:for="{{tenantList}}" wx:key="*this.id">
+        <view class="flex table-item" bind:tap="goTenant" data-tenantId="{{item.id}}">
+          <view class="grow">{{item.name}} ({{item.tenancyName}})</view>
+          <view class="w2 relative">
+            <view>查看详情</view>
+            <view class="icon-chevron-right icon absolute"></view>
+          </view>
+        </view>
+        <view class='table-bottom'></view>
+      </block>
+
+    </view>
+    <infinite-scroll isCompleted='{{tenantList.length===totalCount}}'></infinite-scroll>
+  </view>
+
+</block>
+
+
+
+<view wx:if="{{(isHost&&!tenantPermit)||(!isHost&&!ouPermit)}}" class='noPermission'>
+  <image src='/source/images/noPermission.png' class='absolute-center'></image>
+  <view class='absolute w10 center'>
+    <image src='/source/images/warn.png'></image>
+    对不起,您还没有访问权限
+  </view>
+</view>

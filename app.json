@@ -8,7 +8,9 @@
     "pages/device/search/search",
     "pages/device/detail/detail",
     "pages/user/user",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/ou/ou",
+    "pages/ou/ouDetail/ouDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -31,6 +33,12 @@
         "selectedIconPath": "/source/images/indexTabAct.png",
         "pagePath": "pages/index/index",
         "text": "首页"
+      },
+      {
+        "iconPath": "/source/images/userTab.png",
+        "selectedIconPath": "/source/images/userTabAct.png",
+        "pagePath": "pages/ou/ou",
+        "text": "组织机构"
       },
       {
         "iconPath": "/source/images/deviceTab.png",

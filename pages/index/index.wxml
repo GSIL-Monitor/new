@@ -49,7 +49,7 @@
       <view>{{statisticalData.software}}</view>
       <view>App总数</view>
     </view>
-    <view wx:if="{{isHost}}" class="w3">
+    <view wx:if="{{isHost&&devicePermit}}" class="w3">
       <image src='/source/images/home/product.png'></image>
       <view>{{statisticalData.device}}</view>
       <view>设备总数</view>
@@ -73,6 +73,11 @@
       <image src='/source/images/home/member.png'></image>
       <view>{{statisticalData.member}}</view>
       <view>会员总数</view>
+    </view>
+    <view wx:if="{{tenantPermit&&isHost}}" class="w3">
+      <image src='/source/images/home/member.png'></image>
+      <view>{{statisticalData.tenant}}</view>
+      <view>租户总数</view>
     </view>
   </view>
 

@@ -36,9 +36,24 @@ Page({
     },
     get isHost() {
       return !wx.getStorageSync('tenantId')
+    },
+    get tenantPermit() {
+      return app.checkPermission('Pages.Administration.OrganizationUnits')
+    },
+    get devicePermit() {
+      return app.checkPermission('Pages.Tenant.Devices')
     }
   },
   onShow() {
+    if (this.data.isHost){
+      wx.setTabBarItem({
+        index: 1,
+        text: '租户管理',
+        iconPath: "/source/images/userTab.png",
+        selectedIconPath: "/source/images/userTabAct.png"
+      })
+    }
+
     if (this.data.dashboardPermit) {
       app.promise(app.req)({
         method: 'POST',
@@ -105,6 +120,7 @@ Page({
         if (this.data.isHost) {
           this.setData({
             'statisticalData.device': res[3].id,
+            'statisticalData.tenant': res[6].id,
           })
         }
       })

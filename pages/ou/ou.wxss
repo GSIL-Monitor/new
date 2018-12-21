@@ -1,0 +1,79 @@
+.title {
+  font-size: 36rpx;
+  color: #fff;
+  top: 60rpx;
+}
+
+.container {
+  padding-top: 55rpx;
+}
+
+.header {
+  width: 690rpx;
+  height: 180rpx;
+  margin: 0 auto;
+  position: relative;
+  top: 138rpx;
+  border-radius: 10rpx;
+  padding-top: 40rpx;
+}
+
+.header .grow {
+  color: #666;
+  font-size: 28rpx;
+  justify-content: center;
+}
+
+.header .grow .text {
+  color: #ff1744;
+  font-size: 44rpx;
+  position: relative;
+  top: -13rpx;
+  margin-left: 15rpx;
+}
+
+.table-container {
+  padding-left: 15rpx;
+  padding-right: 15rpx;
+  font-size: 35rpx;
+  width: 92%;
+}
+
+.table-container image {
+  width: 60rpx;
+  height: 60rpx;
+  position: absolute;
+}
+
+.table-container .grow {
+  padding-left: 15rpx;
+}
+
+.table-item {
+  padding-top: 35rpx;
+  padding-bottom: 35rpx;
+  margin-left: 0;
+}
+
+.icon-chevron-right {
+  color: #ccc;
+  height: 100%;
+  font-size: 42rpx;
+  top: 4rpx;
+  right: -20rpx;
+}
+
+.search-container {
+  background: #eee;
+  padding: 15rpx 40rpx;
+  font-size: 26rpx;
+  border-radius: 12rpx;
+}
+
+.search-container view {
+  color: #b2b2b2;
+  margin-right: 8rpx;
+  top: 16rpx;
+  position: relative;
+  left: -8rpx;
+}

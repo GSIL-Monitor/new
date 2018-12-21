@@ -1,0 +1,14 @@
+<!--pages/ou/ouDetail/ouDetail.wxml-->
+<text>pages/ou/ouDetail/ouDetail.wxml</text>
+<view>
+  租户编码{{tenantDetail.tenancyName}} 租户名称{{tenantDetail.name}} 激活{{tenantDetail.isActive}}
+  订阅截止日期
+  <block wx:if="{{tenantDetail.subscriptionEndDateUtc}}">
+    {{tenantDetail.subscriptionEndDateUtc}}
+  </block>
+  <block wx:if="{{!tenantDetail.subscriptionEndDateUtc}}">
+    永久订阅
+  </block>
+  在试用期内{{tenantDetail.isInTrialPeriod}} 版本{{editionName}}
+</view>
+<view bind:tap="reLogin">模拟登录</view>
