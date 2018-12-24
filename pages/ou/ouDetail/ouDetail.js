@@ -46,9 +46,8 @@ Page({
           }
         }).then(res => {
           console.log(res)
-          // res.accessToken
-          wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
-          wx.redirectTo({ url: '../login/login' });
+          // wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
+          // wx.redirectTo({ url: '../login/login' });
         })
       })
 

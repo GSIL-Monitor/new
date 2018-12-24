@@ -110,3 +110,7 @@
   position: relative;
   left: -8rpx;
 }
+
+.search-container view.picker{
+  top:0;
+}

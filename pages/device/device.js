@@ -10,6 +10,21 @@ Page({
     MaxResultCount: 12,
     devicesPermit: false,
     title: '',
+    get isHost() {
+      return !wx.getStorageSync('tenantId')
+    },
+    tenantList: [],
+    tenantRange: [],
+    tenantIndex: 0
+  },
+  bindTenantChange: function (e) {
+    this.setData({
+      tenantIndex: e.detail.value,
+      stopReachBottom: false,
+      deviceList: [],
+      page: 0
+    })
+    this.getDeviceList();
   },
   bindconfirm(e) {
     console.log(e)
@@ -22,42 +37,101 @@ Page({
     this.getDeviceList();
   },
   getDeviceList(cb) {
+    var getDevicesInput = {
+      Filter: this.data.filter,
+      MaxResultCount: this.data.MaxResultCount,
+      SkipCount: this.data.page * this.data.MaxResultCount
+    }
+    if (this.data.isHost){
+      if (this.data.tenantList.length > 0 && this.data.tenantIndex != 0) {
+        getDevicesInput.TenantId = this.data.tenantList[this.data.tenantIndex].id
+      }
+      app.promise(app.req)({
+        url: '/s/api/services/app/Device/GetDevicesForHost',
+        data: getDevicesInput
+      }).then(res => {
+        console.log(res)
+        res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
+        this.setData({
+          deviceList: this.data.deviceList.concat(res.items),
+          totalCount: res.totalCount
+        })
+        wx.stopPullDownRefresh();
+        this.setData({
+          stopReachBottom: false
+        })
+      })
+      this.getOnlineDeviceCount(true,getDevicesInput.TenantId);
+    }else{
+      app.promise(app.req)({
+        url: '/s/api/services/app/Device/GetDevices',
+        data: getDevicesInput
+      }).then(res => {
+        console.log(res)
+        res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
+        this.setData({
+          deviceList: this.data.deviceList.concat(res.items),
+          totalCount: res.totalCount
+        })
+        wx.stopPullDownRefresh();
+        this.setData({
+          stopReachBottom: false
+        })
+      })
+      this.getOnlineDeviceCount(false);
+    }
+
+  },
+  getTenantList() {
     app.promise(app.req)({
-      url: '/s/api/services/app/Device/GetDevices',
+      url: '/s/api/services/app/Tenant/GetTenants',
       data: {
-        // Status: 0,
-        Sorting: 'name',
-        Filter: this.data.filter,
-        MaxResultCount: this.data.MaxResultCount,
-        SkipCount: this.data.page * this.data.MaxResultCount
+        Sorting: 'creationTime DESC',
+        // Filter: undefined,
+        MaxResultCount: 999,
+        SkipCount: 0,
+        // EditionIdSpecified: false
       }
     }).then(res => {
-      console.log(res)
-      res.items = app.changeFileUrl(res.items, 'deviceType', 'iconUrl');
-      this.setData({
-        deviceList: this.data.deviceList.concat(res.items),
-        totalCount: res.totalCount
+      res.items.unshift({name:'全部租户'});
+      var tenantRange = res.items.map(function(a) {
+        return a.name
       })
-      wx.stopPullDownRefresh();
+      console.log(tenantRange)
       this.setData({
-        stopReachBottom: false
+        tenantList: res.items,
+        tenantRange: tenantRange
       })
     })
   },
-  getOnlineDeviceCount() {
-    app.promise(app.req)({
-      url: '/s/api/services/app/Device/GetDevices',
-      data: {
-        Status: 1,
-        // Sorting: 'name',
-        MaxResultCount: 1,
-        SkipCount: 0
+  getOnlineDeviceCount(isHost,tenantId) {
+    var getDevicesInput = {
+      Status: 1,
+      MaxResultCount: 1,
+      SkipCount: 0
+    }
+    if(isHost){
+      if (this.data.tenantList.length > 0 && this.data.tenantIndex!=0) {
+        getDevicesInput.TenantId = this.data.tenantList[this.data.tenantIndex].id
       }
-    }).then(res => {
-      this.setData({
-        onlineCount: res.totalCount
+      app.promise(app.req)({
+        url: '/s/api/services/app/Device/GetDevicesForHost',
+        data: getDevicesInput
+      }).then(res => {
+        this.setData({
+          onlineCount: res.totalCount
+        })
       })
-    })
+    }else{
+      app.promise(app.req)({
+        url: '/s/api/services/app/Device/GetDevices',
+        data: getDevicesInput
+      }).then(res => {
+        this.setData({
+          onlineCount: res.totalCount
+        })
+      })
+    }
   },
   scan() {
     wx.scanCode({
@@ -136,6 +210,7 @@ Page({
     //     console.log('没有权限');
     //   }
     // })
+
     this.setData({
       devicesPermit: app.checkPermission('Pages.Tenant.Devices'),
       title: wx.getStorageSync('ouStore').name != '暂无' ? wx.getStorageSync('ouStore').name : wx.getStorageSync('userName')
@@ -146,7 +221,10 @@ Page({
         page: 0
       })
       this.getDeviceList();
-      this.getOnlineDeviceCount();
+      // this.getOnlineDeviceCount();
+      if (this.data.isHost) {
+        this.getTenantList();
+      }
     }
   },
   /**
@@ -162,7 +240,7 @@ Page({
         page: 0
       })
       this.getDeviceList();
-      this.getOnlineDeviceCount();
+      // this.getOnlineDeviceCount();
     } else {
       wx.stopPullDownRefresh();
     }

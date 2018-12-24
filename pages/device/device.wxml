@@ -29,11 +29,29 @@
     </view>
   </view>
   <form class="w10 fixed" style="top:370rpx;" bindsubmit="formSubmit" bindreset="formReset">
+
+
+    <view wx:if="{{isHost}}" class="flex w8 search-container auto relative" style="margin-bottom:10rpx;">
+      <view class="grow">
+        <picker bindchange="bindTenantChange" name="tenantId" value="{{tenantList[tenantIndex].id}}" range="{{tenantRange}}" class="w10">
+          <view class="picker">
+          {{tenantRange[tenantIndex]}}
+          </view>
+        </picker>
+      </view>
+      <view class="w1 absolute" style="left:93%;">
+        <view class="icon-chevron-down icon"></view>
+      </view>
+    </view>
+
+
     <view class='flex w8 search-container auto'>
       <view class="icon-search icon"></view>
       <input placeholder='搜索设备' class='w10' confirm-type="search" bindconfirm="bindconfirm" value='{{filter}}'></input>
     </view>
   </form>
+  <view wx:if="{{isHost}}" style='height:90rpx;'></view>
+  
 
   <view style='height:400rpx;'></view>
   <view class='w10 noData center' wx:if="{{deviceList.length===totalCount&&deviceList.length==0}}">
