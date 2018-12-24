@@ -10,8 +10,49 @@ Page({
     tenantDetail: {},
     editionName: ''
   },
-  reLogin:function(){
-    
+  reLogin: function() {
+    //找到userList,取其中admin的一个
+    app.promise(app.req)({
+      url: '/s/api/services/app/CommonLookup/FindUsers',
+      method: 'POST',
+      data: {
+        Id: this.data.tenantId,
+        filter: "admin",
+        maxResultCount: "10",
+        skipCount: 0,
+      }
+    }).then(res => {
+      console.log(res.items[0].value)
+      //使用目标租户Id和userId获取impersonationToken
+      app.promise(app.req)({
+        url: '/s/api/services/app/Account/Impersonate',
+        method: 'POST',
+        data: {
+          userId: res.items[0].value,
+          tenantId: this.data.tenantId
+        }
+      }).then(res => {
+        console.log(res)
+
+        wx.setStorageSync('tenantId', this.data.tenantId);
+        wx.removeStorageSync('accessToken')
+
+        //使用impersonationToken获取新的accessToken并进行登录
+        app.promise(app.req)({
+          url: '/s/api/TokenAuth/ImpersonatedAuthenticate',
+          method: 'POST',
+          data: {
+            impersonationToken: res.impersonationToken
+          }
+        }).then(res => {
+          console.log(res)
+          // res.accessToken
+          wx.setStorageSync('accessToken', 'Bearer ' + res.accessToken);
+          wx.redirectTo({ url: '../login/login' });
+        })
+      })
+
+    })
   },
   /**
    * 生命周期函数--监听页面加载
