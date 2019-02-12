@@ -40,8 +40,8 @@
 
 ## 添加语言种类
 看angular\node_modules\@angular\common\locales里对应的js名
-新增时在config里把后端名后缀指向js前缀
-
+新增时在appconfig.json/appconfig.production.json里把后端名后缀指向js前缀
+新版中还要angular\node_modules\ngx-bootstrap\chronos\esm5\i18n中加入zh-hk.js和ja-jp.js
 
 ## 如何设置版本和权限(只有版本和权限都符合时才能进入)
 项目启动时查看getall接口,寻找feature和permission的值

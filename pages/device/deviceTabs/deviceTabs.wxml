@@ -19,10 +19,20 @@
   </view>
 
   <view class="w10 center">
-    <swiper display-multiple-items="4" next-margin="75rpx" current="{{currentIndex}}">
+    <!-- <swiper display-multiple-items="4" next-margin="75rpx" current="{{currentIndex}}">
       <block wx:for="{{permissions}}" wx:key="*this.name">
-        <swiper-item>
-          <view wx:if="{{item.permit}}" data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}} ff relative">
+        <swiper-item wx:if="{{item.permit}}">
+          <view data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}} ff relative">
+            {{item.name}}
+            <view></view>
+          </view>
+        </swiper-item>
+      </block>
+    </swiper> -->
+    <swiper display-multiple-items="{{displayMultipleItems}}" next-margin="75rpx">
+      <block wx:for="{{permissions}}" wx:key="*this.name">
+        <swiper-item wx:if="{{item.permit}}">
+          <view data-tab="{{item.self}}" data-index="{{item.index}}" bind:tap="changeTab" class="{{nowTab==item.self?'selected':'unselected'}} ff relative">
             {{item.name}}
             <view></view>
           </view>

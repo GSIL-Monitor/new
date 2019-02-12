@@ -43,6 +43,7 @@ Page({
         index: 5
       }
     },
+    displayMultipleItems: 0,
     nowTab: 'Detail',
     stopReachBottom: false,
     //应用
@@ -68,15 +69,15 @@ Page({
   },
   changeTab(e) {
     var i = e.currentTarget.dataset.index;
-    var newIndex = 0;
-    if (i == 3) {
-      newIndex = 1
-    } else if (i > 3) {
-      newIndex = 2
-    }
+    // var newIndex = 0;
+    // if (i == 3) {
+    //   newIndex = 1
+    // } else if (i > 3) {
+    //   newIndex = 2
+    // }
     this.setData({
       nowTab: e.currentTarget.dataset.tab,
-      currentIndex: newIndex
+      // currentIndex: newIndex
     })
     this.goGetList(this.data.nowTab);
   },
@@ -280,26 +281,49 @@ Page({
     this.setData({
       deviceId: wx.getStorageSync('deviceId')
     })
-    // app.promise(app.req)({
-    //   url: '/s/AbpUserConfiguration/GetAll'
-    // }).then(res => {
-    //   console.log(res);
-    //   this.setData({
-    //     'permissions.Ads.permit': res.auth.grantedPermissions['Pages.Tenant.Ads'] == "true" ? true : false,
-    //     'permissions.Apps.permit': res.auth.grantedPermissions['Pages.Softwares'] == "true" ? true : false,
-    //     'permissions.Coupons.permit': res.auth.grantedPermissions['Pages.Tenant.Coupons'] == "true" ? true : false,
-    //     'permissions.Products.permit': res.auth.grantedPermissions['Pages.Tenant.Products'] == "true" ? true : false,
-    //     'permissions.Control.permit': res.auth.grantedPermissions['Pages.Tenant.Devices.Control'] == "true" ? true : false,
-    //   })
-    //   this.goGetList(this.data.nowTab);
-    // })
     this.setData({
       'permissions.Ads.permit': app.checkPermission('Pages.Tenant.Ads'),
       'permissions.Apps.permit': app.checkPermission('Pages.Softwares'),
       'permissions.Coupons.permit': app.checkPermission('Pages.Tenant.Coupons'),
       'permissions.Products.permit': app.checkPermission('Pages.Tenant.Products'),
-      'permissions.Control.permit': app.checkPermission('Pages.Tenant.Devices.Control')
+      'permissions.Control.permit': app.checkPermission('Pages.Tenant.Devices.Control') || app.checkPermission('Pages.Tenants')
     })
+
+    console.log(this.data.permissions)
+
+    var displayMultipleItems = 0;
+    for (let item in this.data.permissions) {
+      if (this.data.permissions[item].permit) {
+        displayMultipleItems++
+      }
+    }
+    this.setData({
+      displayMultipleItems: displayMultipleItems >= 4 ? 4 : displayMultipleItems
+    })
+
+    //用于校正
+    // var permitArr = [];
+    // for (let item in this.data.permissions) {
+    //   console.log(this.data.permissions[item])
+    //   permitArr[this.data.permissions[item].index] = this.data.permissions[item];
+    // }
+    // var newArr = [];
+    // for (var i = 0; i < permitArr.length; i++) {
+    //   if (permitArr[i].permit) {
+    //     newArr.push(permitArr[i])
+    //   }
+    // }
+    // for (var i = 0; i < newArr.length; i++) {
+    //   newArr[i].index = i
+    // }
+    // var newPermissions = {};
+    // for (var i = 0; i < newArr.length; i++) {
+    //   newPermissions[newArr[i].self] = newArr[i];
+    // }
+    // this.setData({
+    //   'permissions': newPermissions
+    // })
+
     this.goGetList(this.data.nowTab);
   },
 

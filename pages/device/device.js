@@ -42,6 +42,8 @@ Page({
       MaxResultCount: this.data.MaxResultCount,
       SkipCount: this.data.page * this.data.MaxResultCount
     }
+    // console.log(this.data.isHost, wx.getStorageSync('tenantId'))
+
     if (this.data.isHost){
       if (this.data.tenantList.length > 0 && this.data.tenantIndex != 0) {
         getDevicesInput.TenantId = this.data.tenantList[this.data.tenantIndex].id
